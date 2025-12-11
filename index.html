@@ -61,7 +61,7 @@
       </div>
     </div>
 
-    <!-- ROOM 1 — LIBRARY -->
+    <!-- ROOM 1 — VOCABULARY LIBRARY -->
     <div id="scene-lib" class="grid" style="display:none">
       <h2>Room 1 — Vocabulary Library</h2>
 
@@ -179,16 +179,17 @@
     <div id="scene-door" class="grid" style="display:none">
       <h2>The Final Door</h2>
 
-      <!-- Step A -->
+      <!-- Step A: season by meaning, not by initials -->
       <div id="doorA">
-        <p>On the arch a short poem about the year is projected. The first letters glow:</p>
+        <p>On the arch a short poem about the year is projected:</p>
         <blockquote class="ghost">
-          <b>A</b>fter heat, the air grows thin;<br/>
-          <b>U</b>nder trees, the fires dim;<br/>
-          <b>T</b>ired light turns copper, then;<br/>
-          <b>U</b>ntied winds bring leaves to spin;<br/>
-          <b>M</b>oss and smoke, a scented hymn;<br/>
-          <b>N</b>ight comes early. Name the season.
+          Rust-coloured leaves are dancing in the air;<br/>
+          Cold wind taps gently on the classroom window;<br/>
+          Evenings grow shorter and the sky turns copper;<br/>
+          People wrap their hands around hot coffee cups;<br/>
+          Streets smell of smoke and distant bonfires.<br/>
+          <br/>
+          <em>“Which season is this?”</em>
         </blockquote>
         <div class="row">
           <input id="doorSeason" placeholder="season (one word)">
@@ -198,19 +199,23 @@
         <div id="doorMsgA" class="msg"></div>
       </div>
 
-      <!-- Step B -->
+      <!-- Step B: phrasal verbs -->
       <div id="doorB" style="display:none">
-        <p>Three locks remain. Enter the knowledge you gathered:</p>
-        <ul class="small">
-          <li>Library code (4 digits)</li>
-          <li>Mirrors word (all caps)</li>
-          <li>The season (from the poem)</li>
-        </ul>
+        <p>The last screen shows three sentences. Complete the phrasal verbs using the correct particles.</p>
+        <blockquote class="ghost">
+          1. If you don’t know a word, you can <b>look&nbsp;__</b> it <b>__</b> in the dictionary.<br/>
+          2. My alarm didn’t <b>go&nbsp;__</b> this morning, so I was late.<br/>
+          3. She finally <b>turned&nbsp;__</b> the application form yesterday.<br/>
+        </blockquote>
+        <p class="small muted">
+          Use these verbs and particles: <code>look, go, turn</code> + <code>up, off, in</code>.<br/>
+          Write the three full phrasal verbs in the same order, comma-separated, no extra spaces. Example:
+          <code>look up,go off,turn in</code>.
+        </p>
         <div class="row">
-          <input id="lockLib" placeholder="code">
-          <input id="lockMir" placeholder="word">
-          <input id="lockSeason" placeholder="season">
+          <input id="doorPhrasal" placeholder="e.g. look up,go off,turn in">
           <button onclick="checkDoorB()">Open</button>
+          <button onclick="hint('doorB')">Hint</button>
         </div>
         <div id="doorMsgB" class="msg"></div>
       </div>
@@ -230,7 +235,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-/* TODO: ВСТАВЬ СВОЙ КОНФИГ */
 const firebaseConfig = {
   apiKey: "AIzaSyCe3jIpFH630mfdkdxdTjCmquEGdPMvFHA",
   authDomain: "polytalky-2228d.firebaseapp.com",
@@ -330,9 +334,9 @@ function hint(where){
     alcA: '1) present perfect, 2) past continuous, 3) future perfect. Write them exactly like this: present perfect,past continuous,future perfect.',
     alcB: 'In the three tense names only the letters C (100) and I (1) are Roman numerals. Together they make 301.',
     mirA: 'Read the backward word normally: NOITCELFER → REFLECTION.',
-    mirB: 'Interleave the two streams: C N D E I H T with A L G H T → C A N D L E L I G H T.',
-    doorA:'Read the acrostic: the first letters spell AUTUMN.',
-    doorB:'You need the library code (7307), the mirrors word (CANDLELIGHT), and the season (autumn).'
+    mirB: 'Interleave the two streams: C N D E I H T with A L G H T → CANDLELIGHT.',
+    doorA:'Think of the season with coloured leaves, colder air, bonfires and earlier evenings.',
+    doorB:'Use the verbs look, go, turn and the particles up, off, in. You need: look up, go off, turn in.'
   };
   alert(map[where]);
 }
@@ -348,12 +352,13 @@ document.getElementById('startBtn').addEventListener('click', ()=>{
 });
 
 /* ---------- ROOM 1: LIBRARY ---------- */
-function checkLibA(){
+window.checkLibA = function(){
   attempts.libA++;
   const v = document.getElementById('libWord').value.trim();
   const upper = v.toUpperCase();
+  answers.libWord = v; // всегда сохраняем последний ввод
+
   if(upper==='READ'){
-    answers.libWord = v;
     setMsg('libMsgA','<span class="ok">Exactly. The screen flashes: “Good readers make great learners.”</span>');
     hide(document.getElementById('libA'));
     showStep('libB');
@@ -364,16 +369,17 @@ function checkLibA(){
       attempts
     });
   } else {
-    setMsg('libMsgA', `<span class="bad">Not this word. Think of what you do with books: R(eading), E..., A..., D....</span>`);
-    updateSession({ currentScene:'lib', currentStep:'libA', attempts });
+    setMsg('libMsgA', '<span class="bad">Not this word. Think of what you do with books: R(eading), E..., A..., D....</span>');
+    updateSession({ currentScene:'lib', currentStep:'libA', answers, attempts });
   }
-}
+};
 
-function checkLibB(){
+window.checkLibB = function(){
   attempts.libB++;
   const v = document.getElementById('libCode').value.trim();
+  answers.libCode = v;
+
   if(v==='7307'){
-    answers.libCode = v;
     setMsg('libMsgB','<span class="ok">Correct code. The next door in the lab slides open…</span>');
     updateSession({
       currentScene: 'alc',
@@ -384,16 +390,17 @@ function checkLibB(){
     setTimeout(()=>{ showScene('scene-alc','alc'); showStep('alcA'); }, 800);
   }else{
     setMsg('libMsgB','<span class="bad">Nothing happens. Recalculate the letters of each word.</span>');
-    updateSession({ currentScene:'lib', currentStep:'libB', attempts });
+    updateSession({ currentScene:'lib', currentStep:'libB', answers, attempts });
   }
-}
+};
 
 /* ---------- ROOM 2: GRAMMAR LAB ---------- */
-function checkAlcA(){
+window.checkAlcA = function(){
   attempts.alcA++;
   const v = document.getElementById('alcWords').value.trim().toLowerCase();
+  answers.alcTenses = v;
+
   if(v==='present perfect,past continuous,future perfect'){
-    answers.alcTenses = v;
     setMsg('alcMsgA','<span class="ok">Nice! The system recognises the tenses and unlocks the next task.</span>');
     hide(document.getElementById('alcA')); showStep('alcB');
     updateSession({
@@ -404,15 +411,16 @@ function checkAlcA(){
     });
   }else{
     setMsg('alcMsgA','<span class="bad">Check the tense names and their order. Use lowercase, no spaces around commas.</span>');
-    updateSession({ currentScene:'alc', currentStep:'alcA', attempts });
+    updateSession({ currentScene:'alc', currentStep:'alcA', answers, attempts });
   }
-}
+};
 
-function checkAlcB(){
+window.checkAlcB = function(){
   attempts.alcB++;
   const v = document.getElementById('alcCode').value.trim();
+  answers.alcCode = v;
+
   if(v==='301'){
-    answers.alcCode = v;
     setMsg('alcMsgB','<span class="ok">The number is accepted. Another door in the lab opens…</span>');
     updateSession({
       currentScene:'mir',
@@ -423,17 +431,18 @@ function checkAlcB(){
     setTimeout(()=>{ showScene('scene-mir','mir'); showStep('mirA'); }, 800);
   }else{
     setMsg('alcMsgB','<span class="bad">Not this number. Count only Roman numeral letters in the three tense names.</span>');
-    updateSession({ currentScene:'alc', currentStep:'alcB', attempts });
+    updateSession({ currentScene:'alc', currentStep:'alcB', answers, attempts });
   }
-}
+};
 
 /* ---------- ROOM 3: MIRRORS ---------- */
-function checkMirA(){
+window.checkMirA = function(){
   attempts.mirA++;
   const v = document.getElementById('mirWord').value.trim();
   const upper = v.toUpperCase();
+  answers.mirWord = v;
+
   if(upper==='REFLECTION'){
-    answers.mirWord = v;
     setMsg('mirMsgA','<span class="ok">Correct. The mirrors rearrange and show another word puzzle…</span>');
     hide(document.getElementById('mirA')); showStep('mirB');
     updateSession({
@@ -444,16 +453,17 @@ function checkMirA(){
     });
   }else{
     setMsg('mirMsgA','<span class="bad">Try reading the backward word from right to left.</span>');
-    updateSession({ currentScene:'mir', currentStep:'mirA', attempts });
+    updateSession({ currentScene:'mir', currentStep:'mirA', answers, attempts });
   }
-}
+};
 
-function checkMirB(){
+window.checkMirB = function(){
   attempts.mirB++;
   const v = document.getElementById('mirFinal').value.trim();
   const upper = v.toUpperCase();
+  answers.mirFinal = v;
+
   if(upper==='CANDLELIGHT'){
-    answers.mirFinal = v;
     setMsg('mirMsgB','<span class="ok">Well done. A passage leads you to the final door…</span>');
     updateSession({
       currentScene:'door',
@@ -464,17 +474,18 @@ function checkMirB(){
     setTimeout(()=>{ showScene('scene-door','door'); showStep('doorA'); }, 800);
   }else{
     setMsg('mirMsgB','<span class="bad">The word should be a single, meaningful noun. Interleave the two streams carefully.</span>');
-    updateSession({ currentScene:'mir', currentStep:'mirB', attempts });
+    updateSession({ currentScene:'mir', currentStep:'mirB', answers, attempts });
   }
-}
+};
 
 /* ---------- ROOM 4: FINAL DOOR ---------- */
-function checkDoorA(){
+window.checkDoorA = function(){
   attempts.doorA++;
   const v = document.getElementById('doorSeason').value.trim().toLowerCase();
+  answers.season = v;
+
   if(v==='autumn'){
-    answers.season = v;
-    setMsg('doorMsgA','<span class="ok">Correct. The panel shows one last combination lock…</span>');
+    setMsg('doorMsgA','<span class="ok">Correct. The panel shows one last language task…</span>');
     hide(document.getElementById('doorA')); showStep('doorB');
     updateSession({
       currentScene:'door',
@@ -483,18 +494,18 @@ function checkDoorA(){
       attempts
     });
   }else{
-    setMsg('doorMsgA','<span class="bad">Look at the first letters of each line in the poem.</span>');
-    updateSession({ currentScene:'door', currentStep:'doorA', attempts });
+    setMsg('doorMsgA','<span class="bad">Think about colourful leaves, colder air and earlier evenings.</span>');
+    updateSession({ currentScene:'door', currentStep:'doorA', answers, attempts });
   }
-}
+};
 
-function checkDoorB(){
+window.checkDoorB = function(){
   attempts.doorB++;
-  const a = document.getElementById('lockLib').value.trim();
-  const b = document.getElementById('lockMir').value.trim().toUpperCase();
-  const c = document.getElementById('lockSeason').value.trim().toLowerCase();
-  if(a==='7307' && b==='CANDLELIGHT' && c==='autumn'){
-    setMsg('doorMsgB','<span class="ok">All three locks turn in unison…</span>');
+  const v = document.getElementById('doorPhrasal').value.trim().toLowerCase();
+  answers.doorPhrasal = v;
+
+  if(v === 'look up,go off,turn in'){
+    setMsg('doorMsgB','<span class="ok">Perfect phrasal verbs! The final lock opens…</span>');
     updateSession({
       currentScene:'end',
       currentStep :'end',
@@ -504,21 +515,11 @@ function checkDoorB(){
     });
     setTimeout(()=>{ showScene('scene-end','door'); }, 900);
   }else{
-    setMsg('doorMsgB','<span class="bad">The mechanism refuses. Check the library code, the mirrors word and the season again.</span>');
-    updateSession({ currentScene:'door', currentStep:'doorB', attempts });
+    setMsg('doorMsgB','<span class="bad">Check the particles and the order: look __, go __, turn __.</span>');
+    updateSession({ currentScene:'door', currentStep:'doorB', answers, attempts });
   }
-}
-// Сделать функции видимыми для onclick в разметке
-window.hint        = hint;
-window.checkLibA   = checkLibA;
-window.checkLibB   = checkLibB;
-window.checkAlcA   = checkAlcA;
-window.checkAlcB   = checkAlcB;
-window.checkMirA   = checkMirA;
-window.checkMirB   = checkMirB;
-window.checkDoorA  = checkDoorA;
-window.checkDoorB  = checkDoorB;
-  
+};
+
 /* ---------- INITIAL ---------- */
 initSession();
 showScene('scene-intro','intro'); // boot
