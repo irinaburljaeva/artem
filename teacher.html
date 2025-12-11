@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Language Lab — Teacher Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root{
+      --bg:#050509;
+      --panel:#11121a;
+      --card:#181924;
+      --ink:#f3e9d2;
+      --acc:#d4a373;
+      --acc2:#e7b67a;
+      --muted:#9997b5;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:radial-gradient(circle at top,#202338 0,#050509 55%);
+      color:var(--ink);
+      padding:16px;
+    }
+    h1{margin:0 0 4px;font-size:1.4rem}
+    h2{margin:12px 0 4px;font-size:1.05rem}
+    .top{
+      max-width:1100px;
+      margin:0 auto 12px;
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .panel{
+      max-width:1100px;
+      margin:0 auto;
+      background:var(--panel);
+      border-radius:14px;
+      padding:14px 16px 18px;
+      box-shadow:0 0 18px rgba(0,0,0,.6);
+      border:1px solid #23253a;
+    }
+    .muted{color:var(--muted);font-size:.9rem}
+    .tag{
+      padding:4px 10px;
+      border-radius:999px;
+      background:#1f2130;
+      border:1px solid #333654;
+      font-size:.8rem;
+      color:#d0d0ff;
+      white-space:nowrap;
+    }
+    #sessions{
+      margin-top:10px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:10px;
+    }
+    .card{
+      background:var(--card);
+      border-radius:10px;
+      padding:10px 11px;
+      border:1px solid #26283b;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      font-size:.88rem;
+    }
+    .card-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:6px;
+    }
+    .session-id{
+      font-weight:600;
+      font-size:.9rem;
+    }
+    .pill{
+      padding:2px 8px;
+      border-radius:999px;
+      font-size:.7rem;
+      background:#26283b;
+      color:#f3e9d2;
+    }
+    .scene{color:#ffba69;font-weight:600}
+    .step{color:#9ad8ff}
+    .answers{
+      margin-top:4px;
+      padding:6px 7px;
+      border-radius:8px;
+      background:#202233;
+      max-height:120px;
+      overflow:auto;
+      font-family:Menlo,Consolas,monospace;
+      font-size:.75rem;
+      white-space:pre-wrap;
+    }
+    .empty{
+      margin-top:16px;
+      text-align:center;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div>
+      <h1>Language Lab — Teacher Dashboard</h1>
+      <div class="muted">
+        Shows all current <code>escapeSessions</code> from Firestore in real time.
+      </div>
+    </div>
+    <div class="tag" id="statusTag">Connecting…</div>
+  </div>
+
+  <div class="panel">
+    <div class="muted" style="margin-bottom:6px;">
+      Each card is one student session. Sorted by last activity (most recent first).
+    </div>
+    <div id="sessions"></div>
+    <div id="emptyState" class="empty" style="display:none;">
+      No sessions yet. Ask your student to open the escape-room page.
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      query,
+      orderBy,
+      onSnapshot
+    } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    // 👉 ВСТАВЬ СЮДА СВОЙ КОНФИГ
+    const firebaseConfig = {
+      apiKey: "PASTE_YOUR_KEY_HERE",
+      authDomain: "PASTE_YOUR_DOMAIN_HERE",
+      projectId: "PASTE_YOUR_PROJECT_ID_HERE",
+      storageBucket: "PASTE_YOUR_BUCKET_HERE",
+      messagingSenderId: "PASTE_YOUR_SENDER_ID_HERE",
+      appId: "PASTE_YOUR_APP_ID_HERE"
+    };
+
+    // --- INIT ---
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const sessionsEl = document.getElementById('sessions');
+    const emptyStateEl = document.getElementById('emptyState');
+    const statusTag = document.getElementById('statusTag');
+
+    const sceneLabels = {
+      intro: 'Intro',
+      lib: 'Room 1 — Vocabulary Library',
+      alc: 'Room 2 — Grammar Lab',
+      mir: 'Room 3 — Hall of Mirrors',
+      door: 'Room 4 — Final Door',
+      end: 'Finished'
+    };
+
+    const stepLabels = {
+      libA: 'Library — word from initials',
+      libB: 'Library — 4-digit code',
+      alcA: 'Grammar — tense names',
+      alcB: 'Grammar — Roman numeral sum',
+      mirA: 'Mirrors — reversed word',
+      mirB: 'Mirrors — final word',
+      doorA: 'Door — season',
+      doorB: 'Door — final lock'
+    };
+
+    function formatTimestamp(ms){
+      if (!ms) return '—';
+      try{
+        return new Date(ms).toLocaleString('ru-RU', {
+          hour:'2-digit', minute:'2-digit', second:'2-digit',
+          day:'2-digit', month:'2-digit'
+        });
+      }catch(e){
+        return String(ms);
+      }
+    }
+
+    function renderSessions(snapshot){
+      sessionsEl.innerHTML = '';
+      if (snapshot.empty){
+        emptyStateEl.style.display = 'block';
+        return;
+      }
+      emptyStateEl.style.display = 'none';
+
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data() || {};
+        const id = docSnap.id;
+        const scene = data.currentScene || 'intro';
+        const step = data.currentStep || 'intro';
+        const answers = data.answers || {};
+        const updatedAt = data.updatedAt;
+
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const header = document.createElement('div');
+        header.className = 'card-header';
+
+        const left = document.createElement('div');
+        left.innerHTML = `
+          <div class="session-id">Session: <b>${id}</b></div>
+          <div class="muted">Last update: ${formatTimestamp(updatedAt)}</div>
+        `;
+
+        const right = document.createElement('div');
+        right.innerHTML = `
+          <span class="pill">Scene: <span class="scene">${sceneLabels[scene] || scene}</span></span><br/>
+          <span class="pill">Step: <span class="step">${stepLabels[step] || step}</span></span>
+        `;
+
+        header.appendChild(left);
+        header.appendChild(right);
+        card.appendChild(header);
+
+        const ansBlock = document.createElement('div');
+        ansBlock.className = 'answers';
+        ansBlock.textContent = JSON.stringify(answers, null, 2);
+        card.appendChild(ansBlock);
+
+        sessionsEl.appendChild(card);
+      });
+    }
+
+    function initListener(){
+      const q = query(
+        collection(db, 'escapeSessions'),
+        orderBy('updatedAt', 'desc')
+      );
+
+      onSnapshot(q,
+        (snapshot) => {
+          statusTag.textContent = 'Live: connected';
+          renderSessions(snapshot);
+        },
+        (error) => {
+          console.error(error);
+          statusTag.textContent = 'Error connecting';
+        }
+      );
+    }
+
+    statusTag.textContent = 'Connecting…';
+    initListener();
+  </script>
+</body>
+</html>
