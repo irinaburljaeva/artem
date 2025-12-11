@@ -508,7 +508,17 @@ function checkDoorB(){
     updateSession({ currentScene:'door', currentStep:'doorB', attempts });
   }
 }
-
+// Сделать функции видимыми для onclick в разметке
+window.hint        = hint;
+window.checkLibA   = checkLibA;
+window.checkLibB   = checkLibB;
+window.checkAlcA   = checkAlcA;
+window.checkAlcB   = checkAlcB;
+window.checkMirA   = checkMirA;
+window.checkMirB   = checkMirB;
+window.checkDoorA  = checkDoorA;
+window.checkDoorB  = checkDoorB;
+  
 /* ---------- INITIAL ---------- */
 initSession();
 showScene('scene-intro','intro'); // boot
