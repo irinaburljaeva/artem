@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Language Lab — Live View</title>
+<style>
+  :root{
+    --bg:#0d0d10; --panel:rgba(10,10,12,.86); --ink:#f3e9d2;
+    --acc:#d4a373; --acc2:#e7b67a; --err:#ff6b6b; --ok:#7df9b7;
+  }
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,Segoe UI,Georgia,serif;overflow:hidden}
+  #stage{
+    position:relative;width:100vw;height:100vh;background:#000 center/cover no-repeat;
+    display:flex;flex-direction:column;justify-content:flex-end;padding:40px;box-sizing:border-box
+  }
+  .panel{background:var(--panel);border:1px solid #2c2c39;border-radius:14px;max-width:880px;padding:22px 24px;box-shadow:0 0 18px rgba(0,0,0,.55)}
+  h1,h2{margin:.2em 0;text-align:center;color:#ff7a00;font-weight:700}
+  p{margin:.6em 0}
+  .row{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  input,select{
+    background:#15151c;border:1px solid #2c2c39;color:#fff;border-radius:8px;
+    padding:10px 12px;min-width:180px
+  }
+  button{
+    background:#444;border:0;color:#bbb;padding:10px 18px;border-radius:10px;
+    cursor:not-allowed;font-weight:600;opacity:.6
+  }
+  .ghost{opacity:.7;font-style:italic;color:#b9b6cc}
+  .msg{margin-top:8px;min-height:22px}
+  .ok{color:var(--ok);font-weight:700}
+  .bad{color:var(--err);font-weight:700}
+  .controls{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+  .grid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+  .fade{animation:fade .9s}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .muted{opacity:.6}
+  .small{font-size:.95em}
+  .tag{padding:2px 8px;border:1px dashed #444;border-radius:999px;font-size:.85em;color:#ccc}
+  .center{text-align:center}
+  .space{height:10px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="panel" class="panel fade">
+    <h1>Language Lab — Live View</h1>
+    <p class="center small ghost">
+      This page mirrors the student’s escape room in real time (read-only).
+    </p>
+    <p id="sessionInfo" class="center small muted"></p>
+    <div class="space"></div>
+
+    <!-- INTRO -->
+    <div id="scene-intro" class="grid">
+      <p>You stayed late in the language lab to finish your homework. When you finally stand up, the automatic door is locked. The screen on the wall lights up:</p>
+      <p class="ghost center"><em>“Complete every English task and the door will open.”</em></p>
+      <div class="controls center">
+        <span id="hintCounter" class="tag">Hints left: <b>3</b></span>
+      </div>
+    </div>
+
+    <!-- ROOM 1 — LIBRARY -->
+    <div id="scene-lib" class="grid" style="display:none">
+      <h2>Room 1 — Vocabulary Library</h2>
+
+      <!-- Step A -->
+      <div id="libA">
+        <p>On one shelf you see four course folders:</p>
+        <ul>
+          <li><b>R</b>eading Strategies</li>
+          <li><b>E</b>xtensive Listening</li>
+          <li><b>A</b>cademic Writing</li>
+          <li><b>D</b>aily Conversation</li>
+        </ul>
+        <p class="ghost">A note on the screen says: <em>“Their initials tell you what you should do with books.”</em></p>
+        <div class="row">
+          <input id="libWord" placeholder="secret word (one word)" disabled>
+          <button disabled>Confirm</button>
+          <button disabled>Hint</button>
+        </div>
+        <div id="libMsgA" class="msg"></div>
+      </div>
+
+      <!-- Step B -->
+      <div id="libB" style="display:none">
+        <p>New words appear across the whiteboard:</p>
+        <blockquote>
+          <b>grammar</b><br/>
+          <b>pronunciation</b><br/>
+          <b>vocabulary</b><br/>
+          <b>fluency</b>
+        </blockquote>
+        <p class="ghost">Follow the rule to get a four-digit code:</p>
+        <ul class="small">
+          <li>Take the number of letters in <b>grammar</b> and keep it as it is.</li>
+          <li>Take the number of letters in <b>pronunciation</b> and use only the last digit.</li>
+          <li>Do the same with <b>vocabulary</b> and <b>fluency</b>.</li>
+        </ul>
+        <div class="row">
+          <input id="libCode" placeholder="4-digit code" disabled>
+          <button disabled>Unlock</button>
+          <button disabled>Hint</button>
+        </div>
+        <div id="libMsgB" class="msg"></div>
+      </div>
+    </div>
+
+    <!-- ROOM 2 — GRAMMAR LAB -->
+    <div id="scene-alc" class="grid" style="display:none">
+      <h2>Room 2 — Grammar Lab</h2>
+
+      <!-- Step A -->
+      <div id="alcA">
+        <p>On the desk you see three example sentences on sticky notes:</p>
+        <blockquote class="ghost">
+          1. <b>I have already finished the report.</b><br/>
+          2. <b>She was cooking when he came home.</b><br/>
+          3. <b>By next July, they will have moved abroad.</b>
+        </blockquote>
+        <p>Write the <b>names of the three tenses</b> in the correct order, comma-separated.</p>
+        <p class="small muted">Use lowercase, English names, no spaces around commas.</p>
+        <div class="row">
+          <input id="alcWords" disabled>
+          <button disabled>Check</button>
+          <button disabled>Hint</button>
+        </div>
+        <div id="alcMsgA" class="msg"></div>
+      </div>
+
+      <!-- Step B -->
+      <div id="alcB" style="display:none">
+        <p>A circle on the screen says:</p>
+        <p class="ghost small"><em>“Now take the value of the Roman numerals hidden in the three tense names you just wrote.”</em></p>
+        <p class="small muted">Consider only the letters that are Roman numerals inside
+          <code>present perfect</code>, <code>past continuous</code>, and <code>future perfect</code>.</p>
+        <div class="row">
+          <input id="alcCode" placeholder="number (3 digits)" disabled>
+          <button disabled>Confirm</button>
+          <button disabled>Hint</button>
+        </div>
+        <div id="alcMsgB" class="msg"></div>
+      </div>
+    </div>
+
+    <!-- ROOM 3 — HALL OF MIRRORS -->
+    <div id="scene-mir" class="grid" style="display:none">
+      <h2>Room 3 — The Hall of Mirrors</h2>
+
+      <!-- Step A -->
+      <div id="mirA">
+        <p>On a glass panel a backward word appears: <code class="muted">NOITCELFER</code>.</p>
+        <p class="ghost">Write it as you would in a normal, non-mirrored world.</p>
+        <div class="row">
+          <input id="mirWord" placeholder="word" disabled>
+          <button disabled>Reveal</button>
+          <button disabled>Hint</button>
+        </div>
+        <div id="mirMsgA" class="msg"></div>
+      </div>
+
+      <!-- Step B -->
+      <div id="mirB" style="display:none">
+        <p>Letters arrange into a pattern, but every second letter is missing:</p>
+        <blockquote class="ghost"><code>C N D E I H T</code></blockquote>
+        <p>Under the frame you notice another repeating pattern: <code>A L G H T</code>.</p>
+        <p class="small muted">Interleave the two streams of letters to form one meaningful English word.</p>
+        <div class="row">
+          <input id="mirFinal" placeholder="final word" disabled>
+          <button disabled>Assemble</button>
+          <button disabled>Hint</button>
+        </div>
+        <div id="mirMsgB" class="msg"></div>
+      </div>
+    </div>
+
+    <!-- ROOM 4 — THE FINAL DOOR -->
+    <div id="scene-door" class="grid" style="display:none">
+      <h2>The Final Door</h2>
+
+      <!-- Step A -->
+      <div id="doorA">
+        <p>On the arch a short poem about the year is projected. The first letters glow:</p>
+        <blockquote class="ghost">
+          <b>A</b>fter heat, the air grows thin;<br/>
+          <b>U</b>nder trees, the fires dim;<br/>
+          <b>T</b>ired light turns copper, then;<br/>
+          <b>U</b>ntied winds bring leaves to spin;<br/>
+          <b>M</b>oss and smoke, a scented hymn;<br/>
+          <b>N</b>ight comes early. Name the season.
+        </blockquote>
+        <div class="row">
+          <input id="doorSeason" placeholder="season (one word)" disabled>
+          <button disabled>Confirm</button>
+          <button disabled>Hint</button>
+        </div>
+        <div id="doorMsgA" class="msg"></div>
+      </div>
+
+      <!-- Step B -->
+      <div id="doorB" style="display:none">
+        <p>Three locks remain. Enter the knowledge you gathered:</p>
+        <ul class="small">
+          <li>Library code (4 digits)</li>
+          <li>Mirrors word (all caps)</li>
+          <li>The season (from the poem)</li>
+        </ul>
+        <div class="row">
+          <input id="lockLib" placeholder="code" disabled>
+          <input id="lockMir" placeholder="word" disabled>
+          <input id="lockSeason" placeholder="season" disabled>
+          <button disabled>Open</button>
+        </div>
+        <div id="doorMsgB" class="msg"></div>
+      </div>
+    </div>
+
+    <!-- END -->
+    <div id="scene-end" class="grid center" style="display:none">
+      <h2>You Escaped the Language Lab! 🎉</h2>
+      <p>The lock clicks. The classroom lights turn on again, and the door finally slides open.</p>
+    </div>
+
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+/* тот же конфиг, что и у ученика */
+const firebaseConfig = {
+  apiKey: "AIzaSyCe3jIpFH630mfdkdxdTjCmquEGdPMvFHA",
+  authDomain: "polytalky-2228d.firebaseapp.com",
+  projectId: "polytalky-2228d",
+  storageBucket: "polytalky-2228d.firebasestorage.app",
+  messagingSenderId: "498740130503",
+  appId: "1:498740130503:web:5e2061ec4011ec983144e2",
+  measurementId: "G-3HCWZX1R92"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+const stage      = document.getElementById('stage');
+const hintBadge  = document.getElementById('hintCounter');
+const sessionEl  = document.getElementById('sessionInfo');
+
+/* фоновые картинки */
+const bg = {
+  intro: 'intro.png',
+  lib: 'library.png',
+  alc: 'alchemy.png',
+  mir: 'mirrors.png',
+  door: 'door.png'
+};
+
+/* helpers отображения */
+function showSceneDom(sceneKey){
+  let id;
+  switch(sceneKey){
+    case 'lib':   id = 'scene-lib';   break;
+    case 'alc':   id = 'scene-alc';   break;
+    case 'mir':   id = 'scene-mir';   break;
+    case 'door':  id = 'scene-door';  break;
+    case 'end':   id = 'scene-end';   break;
+    case 'intro':
+    default:      id = 'scene-intro'; break;
+  }
+  document.querySelectorAll('[id^="scene-"]').forEach(s=>s.style.display='none');
+  const el = document.getElementById(id);
+  if (el) el.style.display = 'grid';
+
+  const bgKey = sceneKey in bg ? sceneKey : 'intro';
+  stage.style.backgroundImage = `url(${bg[bgKey]})`;
+}
+
+function showStepDom(stepKey){
+  if (!stepKey) return;
+  const el = document.getElementById(stepKey);
+  if (!el) return;
+  // скрыть все шаги внутри сцен
+  ['libA','libB','alcA','alcB','mirA','mirB','doorA','doorB'].forEach(id=>{
+    const n = document.getElementById(id);
+    if (n) n.style.display = 'none';
+  });
+  el.style.display = 'block';
+}
+
+/* подставить ответы ученика в поля */
+function fillAnswers(answers = {}){
+  if (answers.libWord   && document.getElementById('libWord'))   document.getElementById('libWord').value = answers.libWord;
+  if (answers.libCode   && document.getElementById('libCode'))   document.getElementById('libCode').value = answers.libCode;
+  if (answers.alcTenses && document.getElementById('alcWords'))  document.getElementById('alcWords').value = answers.alcTenses;
+  if (answers.alcCode   && document.getElementById('alcCode'))   document.getElementById('alcCode').value = answers.alcCode;
+  if (answers.mirWord   && document.getElementById('mirWord'))   document.getElementById('mirWord').value = answers.mirWord;
+  if (answers.mirFinal  && document.getElementById('mirFinal'))  document.getElementById('mirFinal').value = answers.mirFinal;
+  if (answers.season    && document.getElementById('doorSeason'))document.getElementById('doorSeason').value = answers.season;
+}
+
+/* запуск */
+const params    = new URLSearchParams(window.location.search);
+const sessionId = params.get('session');
+
+if (!sessionId) {
+  sessionEl.textContent = 'No session id. Add ?session=XXXXX to the URL.';
+} else {
+  sessionEl.textContent = `Watching session: ${sessionId}`;
+  const ref = doc(db, "escapeSessions", sessionId);
+
+  onSnapshot(ref, (snap)=>{
+    const data = snap.data();
+    if (!data) return;
+
+    const { currentScene = 'intro', currentStep = 'intro', answers = {}, hintsLeft = 3 } = data;
+
+    // сцена и шаг
+    showSceneDom(currentScene);
+    showStepDom(currentStep);
+
+    // ответы
+    fillAnswers(answers);
+
+    // количество подсказок
+    if (hintBadge) {
+      hintBadge.innerHTML = `Hints left: <b>${hintsLeft}</b>`;
+    }
+  });
+}
+</script>
+</body>
+</html>
