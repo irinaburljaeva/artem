@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Haunted Escape — Advanced</title>
+<title>Language Lab Escape — Advanced (B2)</title>
 <style>
   :root{
     --bg:#0d0d10; --panel:rgba(10,10,12,.86); --ink:#f3e9d2;
@@ -46,33 +46,34 @@
 <body>
 <div id="stage">
   <div id="panel" class="panel fade">
-    <h1>🎃 Haunted Escape — Advanced</h1>
-    <p class="center small ghost">Solve every step to proceed. Hints are limited.</p>
+    <h1>Language Lab Escape — Advanced</h1>
+    <p class="center small ghost">Solve each language puzzle to move to the next room. Hints are limited.</p>
     <div class="space"></div>
 
     <!-- INTRO -->
     <div id="scene-intro" class="grid">
-      <p>It’s a stormy Halloween night. The power flickers as you wake in an old mansion. Somewhere inside, a key waits. The house speaks: <em>“Only the keen may walk free.”</em></p>
+      <p>You stayed late in the language lab to finish your homework. When you finally stand up, the automatic door is locked. The screen on the wall lights up:</p>
+      <p class="ghost center"><em>“Complete every English task and the door will open.”</em></p>
       <div class="controls center">
-        <button id="startBtn">Enter the Library</button>
+        <button id="startBtn">Enter the Vocabulary Library</button>
         <span id="hintCounter" class="tag">Hints left: <b>3</b></span>
       </div>
     </div>
 
     <!-- ROOM 1 — LIBRARY -->
     <div id="scene-lib" class="grid" style="display:none">
-      <h2>Room 1 — The Whispering Library</h2>
+      <h2>Room 1 — Vocabulary Library</h2>
 
       <!-- Step A -->
       <div id="libA">
-        <p>You find four bookmarks with titles:</p>
+        <p>On one shelf you see four course folders:</p>
         <ul>
-          <li><b>First</b> — “History of Kings”, page <b>1</b></li>
-          <li><b>Last</b> — “The End of Time”, page <b>999</b></li>
-          <li><b>Eternity</b> — the symbol <b>∞</b> inked on the margin</li>
-          <li><b>Echo</b> — a brass plate under the clock engraved <b>×2</b></li>
+          <li><b>R</b>eading Strategies</li>
+          <li><b>E</b>xtensive Listening</li>
+          <li><b>A</b>cademic Writing</li>
+          <li><b>D</b>aily Conversation</li>
         </ul>
-        <p class="ghost">A whisper: <em>“Name the path hidden in their first letters.”</em></p>
+        <p class="ghost">A note on the screen says: <em>“Their initials tell you what you should do with books.”</em></p>
         <div class="row">
           <input id="libWord" placeholder="secret word (one word)">
           <button onclick="checkLibA()">Confirm</button>
@@ -83,14 +84,19 @@
 
       <!-- Step B -->
       <div id="libB" style="display:none">
-        <p>Ink blooms across the cover:</p>
+        <p>New words appear across the whiteboard:</p>
         <blockquote>
-          First → take the first digit.<br/>
-          Last → take the last digit.<br/>
-          Eternity → turn ∞ into a number.<br/>
-          Echo ×2 → repeat the last digit twice.
+          <b>grammar</b><br/>
+          <b>pronunciation</b><br/>
+          <b>vocabulary</b><br/>
+          <b>fluency</b>
         </blockquote>
-        <p class="ghost">The three books and the plate should give a four-digit code.</p>
+        <p class="ghost">Follow the rule to get a four-digit code:</p>
+        <ul class="small">
+          <li>Take the number of letters in <b>grammar</b> and keep it as it is.</li>
+          <li>Take the number of letters in <b>pronunciation</b> and use only the last digit.</li>
+          <li>Do the same with <b>vocabulary</b> and <b>fluency</b>.</li>
+        </ul>
         <div class="row">
           <input id="libCode" placeholder="4-digit code">
           <button onclick="checkLibB()">Unlock</button>
@@ -100,24 +106,23 @@
       </div>
     </div>
 
-    <!-- ROOM 2 — ALCHEMIST -->
+    <!-- ROOM 2 — GRAMMAR LAB -->
     <div id="scene-alc" class="grid" style="display:none">
-      <h2>Room 2 — The Alchemist’s Workshop</h2>
+      <h2>Room 2 — Grammar Lab</h2>
 
       <!-- Step A -->
       <div id="alcA">
-        <p>On the table a parchment shows a four-line acrostic. The capital letters glow faintly:</p>
+        <p>On the desk you see three example sentences on sticky notes:</p>
         <blockquote class="ghost">
-          <b>L</b>et <u>us</u> cross the night with spark;<br/>
-          <b>V</b>oices of air will guide the mark;<br/>
-          <b>U</b>nder the shade we hide our flame; <br/>
-          <b>M</b>emory keeps the hidden name.
+          1. <b>I have already finished the report.</b><br/>
+          2. <b>She was cooking when he came home.</b><br/>
+          3. <b>By next July, they will have moved abroad.</b>
         </blockquote>
-        <p>Write the three Latin words (comma-separated) the acrostic points to. Order matters.</p>
-        <p class="small muted">Expected language: Latin. No spaces around commas.</p>
+        <p>Write the <b>names of the three tenses</b> in the correct order, comma-separated.</p>
+        <p class="small muted">Use lowercase, English names, no spaces around commas. Example: <code>present perfect,past simple,future simple</code>.</p>
         <div class="row">
-          <input id="alcWords" placeholder="e.g. lux,ventus,umbra">
-          <button onclick="checkAlcA()">Mix</button>
+          <input id="alcWords" placeholder="e.g. present perfect,past...,future...">
+          <button onclick="checkAlcA()">Check</button>
           <button onclick="hint('alcA')">Hint</button>
         </div>
         <div id="alcMsgA" class="msg"></div>
@@ -125,11 +130,13 @@
 
       <!-- Step B -->
       <div id="alcB" style="display:none">
-        <p>A copper ring reads: <em>“Take the value of the Roman numerals hidden in the three words.”</em></p>
-        <p class="ghost small">Consider only the letters that are Roman numerals: I V X L C D M. Sum them across all three words.</p>
+        <p>A circle on the screen says:</p>
+        <p class="ghost small"><em>“Now take the value of the Roman numerals hidden in the three tense names you just wrote.”</em></p>
+        <p class="small muted">Consider only the letters that are Roman numerals (<code>I, V, X, L, C, D, M</code>) inside the words
+          <code>present perfect</code>, <code>past continuous</code>, and <code>future perfect</code>. Add their values together.</p>
         <div class="row">
-          <input id="alcCode" placeholder="4-digit number">
-          <button onclick="checkAlcB()">Distill</button>
+          <input id="alcCode" placeholder="number (3 digits)">
+          <button onclick="checkAlcB()">Confirm</button>
           <button onclick="hint('alcB')">Hint</button>
         </div>
         <div id="alcMsgB" class="msg"></div>
@@ -142,7 +149,7 @@
 
       <!-- Step A -->
       <div id="mirA">
-        <p>On misted glass a backward word appears: <code class="muted">NOITCELFER</code>.</p>
+        <p>On a glass panel a backward word appears: <code class="muted">NOITCELFER</code>.</p>
         <p class="ghost">Write it as you would in a normal, non-mirrored world.</p>
         <div class="row">
           <input id="mirWord" placeholder="word">
@@ -154,10 +161,10 @@
 
       <!-- Step B -->
       <div id="mirB" style="display:none">
-        <p>Shards arrange into a sentence, but every second letter is missing:</p>
+        <p>Letters arrange into a pattern, but every second letter is missing:</p>
         <blockquote class="ghost"><code>C N D E I H T</code></blockquote>
-        <p>Rebuild the word by inserting the letters you got from the mirrors’ frames: they repeat the pattern <code>A L G H T</code> under low light.</p>
-        <p class="small muted">Combine the two streams to form one meaningful word.</p>
+        <p>Under the frame you notice another repeating pattern: <code>A L G H T</code>.</p>
+        <p class="small muted">Interleave the two streams of letters to form one meaningful English word.</p>
         <div class="row">
           <input id="mirFinal" placeholder="final word">
           <button onclick="checkMirB()">Assemble</button>
@@ -173,7 +180,7 @@
 
       <!-- Step A -->
       <div id="doorA">
-        <p>On the arch a poem is carved. The first letters glow:</p>
+        <p>On the arch a short poem about the year is projected. The first letters glow:</p>
         <blockquote class="ghost">
           <b>A</b>fter heat, the air grows thin;<br/>
           <b>U</b>nder trees, the fires dim;<br/>
@@ -196,7 +203,7 @@
         <ul class="small">
           <li>Library code (4 digits)</li>
           <li>Mirrors word (all caps)</li>
-          <li>The season (from the arch)</li>
+          <li>The season (from the poem)</li>
         </ul>
         <div class="row">
           <input id="lockLib" placeholder="code">
@@ -210,8 +217,8 @@
 
     <!-- END -->
     <div id="scene-end" class="grid center" style="display:none">
-      <h2>You Escaped! 🌕</h2>
-      <p>The door yields. Leaves spiral into the night as the mansion exhales a last, warm breath.</p>
+      <h2>You Escaped the Language Lab! 🎉</h2>
+      <p>The lock clicks. The classroom lights turn on again, and the door finally slides open.</p>
     </div>
 
   </div>
@@ -253,14 +260,14 @@ function useHint(){
 function hint(where){
   if(!useHint()) return;
   const map = {
-    libA: 'Look at the FIRST letters of the four labels (First, Last, Eternity, Echo).',
-    libB: 'Pages give 1 (first) and 9 (last of 999); eternity turned sideways is 8; echo ×2 means repeat the last digit → 1988.',
-    alcA: 'The capitals L V U M hide Latin words: LUX (light), VENTUS (wind), UMBRA (shadow). Order them as they appear.',
-    alcB: 'Sum Roman numerals inside the three words: L=50, X=10, V=5, M=1000. 50+10+5+1000 = 1065.',
-    mirA: 'Read the backward word normally.',
-    mirB: 'Interleave streams: C N D E I H T with A L G H T → C A N D L E L I G H T (CANDLELIGHT).',
+    libA: 'Look at the FIRST letters of the four folders: Reading, Extensive, Academic, Daily.',
+    libB: 'Count letters: grammar (7), pronunciation (13 → last digit 3), vocabulary (10 → 0), fluency (8). This gives 7-3-0-8 → 7308.',
+    alcA: '1) present perfect, 2) past continuous, 3) future perfect. Write them exactly like this: present perfect,past continuous,future perfect.',
+    alcB: 'In the three tense names only the letter C (100) and I (1) are Roman numerals. Together they make 301.',
+    mirA: 'Read the backward word normally: NOITCELFER → REFLECTION.',
+    mirB: 'Interleave the two streams: C N D E I H T with A L G H T → C A N D L E L I G H T.',
     doorA:'Read the acrostic: the first letters spell AUTUMN.',
-    doorB:'You need the library code (1988), the mirrors word (CANDLELIGHT), and the season (autumn).'
+    doorB:'You need the library code (7308), the mirrors word (CANDLELIGHT), and the season (autumn).'
   };
   alert(map[where]);
 }
@@ -274,44 +281,44 @@ document.getElementById('startBtn').addEventListener('click', ()=>{
 function checkLibA(){
   attempts.libA++;
   const v = document.getElementById('libWord').value.trim().toUpperCase();
-  if(v==='FLEE'){
-    setMsg('libMsgA','<span class="ok">The shelves murmur: “Go on.” Hidden ink appears…</span>');
+  if(v==='READ'){
+    setMsg('libMsgA','<span class="ok">Exactly. The screen flashes: “Good readers make great learners.”</span>');
     hide(document.getElementById('libA'));
     showStep('libB');
   } else {
-    setMsg('libMsgA', `<span class="bad">Not this word. Think of <b>F</b>irst, <b>L</b>ast, <b>E</b>ternity, <b>E</b>cho.</span>`);
+    setMsg('libMsgA', `<span class="bad">Not this word. Think of what you do with books: R(eading), E..., A..., D....</span>`);
   }
 }
 function checkLibB(){
   attempts.libB++;
   const v = document.getElementById('libCode').value.trim();
-  if(v==='1988'){
-    setMsg('libMsgB','<span class="ok">The lock clicks open. A cold draft invites you onward…</span>');
+  if(v==='7308'){
+    setMsg('libMsgB','<span class="ok">Correct code. The next door in the lab slides open…</span>');
     setTimeout(()=>{ showScene('scene-alc','alc'); showStep('alcA'); }, 800);
   }else{
-    setMsg('libMsgB','<span class="bad">Nothing happens. Re-read the four lines.</span>');
+    setMsg('libMsgB','<span class="bad">Nothing happens. Recalculate the letters of each word.</span>');
   }
 }
 
-/* ---------- ROOM 2: ALCHEMIST ---------- */
+/* ---------- ROOM 2: GRAMMAR LAB ---------- */
 function checkAlcA(){
   attempts.alcA++;
   const v = document.getElementById('alcWords').value.trim().toLowerCase();
-  if(v==='lux,ventus,umbra'){
-    setMsg('alcMsgA','<span class="ok">The mixture glows silver-blue. Symbols rise from the ring…</span>');
+  if(v==='present perfect,past continuous,future perfect'){
+    setMsg('alcMsgA','<span class="ok">Nice! The system recognises the tenses and unlocks the next task.</span>');
     hide(document.getElementById('alcA')); showStep('alcB');
   }else{
-    setMsg('alcMsgA','<span class="bad">The brew turns green and hisses. Use Latin words and the right order.</span>');
+    setMsg('alcMsgA','<span class="bad">Check the tense names and their order. Use lowercase, no spaces around commas.</span>');
   }
 }
 function checkAlcB(){
   attempts.alcB++;
   const v = document.getElementById('alcCode').value.trim();
-  if(v==='1065'){
-    setMsg('alcMsgB','<span class="ok">The retort sings softly. A hidden door slides aside…</span>');
+  if(v==='301'){
+    setMsg('alcMsgB','<span class="ok">The number is accepted. Another door in the lab opens…</span>');
     setTimeout(()=>{ showScene('scene-mir','mir'); showStep('mirA'); }, 800);
   }else{
-    setMsg('alcMsgB','<span class="bad">The copper ring stays cold. Count only Roman numeral letters.</span>');
+    setMsg('alcMsgB','<span class="bad">Not this number. Count only Roman numeral letters in the three tense names.</span>');
   }
 }
 
@@ -320,20 +327,20 @@ function checkMirA(){
   attempts.mirA++;
   const v = document.getElementById('mirWord').value.trim().toUpperCase();
   if(v==='REFLECTION'){
-    setMsg('mirMsgA','<span class="ok">The fog clears, revealing scattered letters…</span>');
+    setMsg('mirMsgA','<span class="ok">Correct. The mirrors rearrange and show another word puzzle…</span>');
     hide(document.getElementById('mirA')); showStep('mirB');
   }else{
-    setMsg('mirMsgA','<span class="bad">Your breath blurs the glass again. Read it normally.</span>');
+    setMsg('mirMsgA','<span class="bad">Try reading the backward word from right to left.</span>');
   }
 }
 function checkMirB(){
   attempts.mirB++;
   const v = document.getElementById('mirFinal').value.trim().toUpperCase();
   if(v==='CANDLELIGHT'){
-    setMsg('mirMsgB','<span class="ok">Shards fuse into a warm glow. A passage opens to the hall…</span>');
+    setMsg('mirMsgB','<span class="ok">Well done. A passage leads you to the final door…</span>');
     setTimeout(()=>{ showScene('scene-door','door'); showStep('doorA'); }, 800);
   }else{
-    setMsg('mirMsgB','<span class="bad">The shards rattle apart. Interleave the two streams correctly.</span>');
+    setMsg('mirMsgB','<span class="bad">The word should be a single, meaningful noun. Interleave the two streams carefully.</span>');
   }
 }
 
@@ -342,10 +349,10 @@ function checkDoorA(){
   attempts.doorA++;
   const v = document.getElementById('doorSeason').value.trim().toLowerCase();
   if(v==='autumn'){
-    setMsg('doorMsgA','<span class="ok">The arch warms. Two more locks remain…</span>');
+    setMsg('doorMsgA','<span class="ok">Correct. The panel shows one last combination lock…</span>');
     hide(document.getElementById('doorA')); showStep('doorB');
   }else{
-    setMsg('doorMsgA','<span class="bad">The wind stays silent. Read the first letters of each line.</span>');
+    setMsg('doorMsgA','<span class="bad">Look at the first letters of each line in the poem.</span>');
   }
 }
 function checkDoorB(){
@@ -353,11 +360,11 @@ function checkDoorB(){
   const a = document.getElementById('lockLib').value.trim();
   const b = document.getElementById('lockMir').value.trim().toUpperCase();
   const c = document.getElementById('lockSeason').value.trim().toLowerCase();
-  if(a==='1988' && b==='CANDLELIGHT' && c==='autumn'){
+  if(a==='7308' && b==='CANDLELIGHT' && c==='autumn'){
     setMsg('doorMsgB','<span class="ok">All three locks turn in unison…</span>');
     setTimeout(()=>{ showScene('scene-end','door'); }, 900);
   }else{
-    setMsg('doorMsgB','<span class="bad">The mechanism resists. Ensure all three answers are correct.</span>');
+    setMsg('doorMsgB','<span class="bad">The mechanism refuses. Check the library code, the mirrors word and the season again.</span>');
   }
 }
 
