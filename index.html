@@ -54,6 +54,7 @@
     <div id="scene-intro" class="grid">
       <p>You stayed late in the language lab to finish your homework. When you finally stand up, the automatic door is locked. The screen on the wall lights up:</p>
       <p class="ghost center"><em>“Complete every English task and the door will open.”</em></p>
+      <p id="sessionInfo" class="center small muted"></p>
       <div class="controls center">
         <button id="startBtn">Enter the Vocabulary Library</button>
         <span id="hintCounter" class="tag">Hints left: <b>3</b></span>
@@ -224,7 +225,65 @@
   </div>
 </div>
 
-<script>
+<script type="module">
+/* ---------- FIREBASE (WRITE-ONLY SESSION TRACKING) ---------- */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+/* TODO: ВСТАВЬ СВОЙ КОНФИГ */
+const firebaseConfig = {
+  // apiKey: "...",
+  // authDomain: "...",
+  // projectId: "...",
+  // ...
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getFirestore(app);
+
+let sessionId = null;
+let answers   = {};
+
+/* генерация / чтение кода сессии */
+function generateSessionId(){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let s = '';
+  for (let i = 0; i < 5; i++) {
+    s += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return s;
+}
+
+async function updateSession(patch = {}) {
+  if (!db || !sessionId) return;
+  try {
+    const ref = doc(db, "escapeSessions", sessionId);
+    await setDoc(ref, {
+      sessionId,
+      ...patch,
+      updatedAt: Date.now()
+    }, { merge: true });
+  } catch (e) {
+    console.error('updateSession error', e);
+  }
+}
+
+function initSession() {
+  const params = new URLSearchParams(window.location.search);
+  sessionId = params.get('session') || generateSessionId();
+
+  const infoEl = document.getElementById('sessionInfo');
+  if (infoEl) {
+    infoEl.textContent = `Session code: ${sessionId}`;
+  }
+
+  updateSession({
+    currentScene: 'intro',
+    currentStep : 'intro',
+    answers
+  });
+}
+
 /* ---------- ASSETS / BACKGROUNDS ---------- */
 const bg = {
   intro: 'intro.png',
@@ -233,10 +292,10 @@ const bg = {
   mir: 'mirrors.png',
   door: 'door.png'
 };
-const stage = document.getElementById('stage');
+const stage     = document.getElementById('stage');
 const hintBadge = document.getElementById('hintCounter');
-let hintsLeft = 3;
-let attempts = {libA:0, libB:0, alcA:0, alcB:0, mirA:0, mirB:0, doorA:0, doorB:0};
+let hintsLeft   = 3;
+let attempts    = {libA:0, libB:0, alcA:0, alcB:0, mirA:0, mirB:0, doorA:0, doorB:0};
 
 /* ---------- VIEW HELPERS ---------- */
 function showScene(id, bgKey){
@@ -245,14 +304,17 @@ function showScene(id, bgKey){
   stage.style.backgroundImage = `url(${bg[bgKey]})`;
 }
 function showStep(stepId){
-  document.getElementById(stepId).style.display='block';
-  document.getElementById(stepId).classList.add('fade');
+  const el = document.getElementById(stepId);
+  el.style.display='block';
+  el.classList.add('fade');
 }
 function hide(el){ el.style.display='none'; }
 function setMsg(id, html){ document.getElementById(id).innerHTML = html; }
 function useHint(){
   if (hintsLeft<=0) return false;
-  hintsLeft--; hintBadge.innerHTML = `Hints left: <b>${hintsLeft}</b>`;
+  hintsLeft--;
+  hintBadge.innerHTML = `Hints left: <b>${hintsLeft}</b>`;
+  updateSession({ hintsLeft });
   return true;
 }
 
@@ -261,13 +323,13 @@ function hint(where){
   if(!useHint()) return;
   const map = {
     libA: 'Look at the FIRST letters of the four folders: Reading, Extensive, Academic, Daily.',
-    libB: 'Count letters: grammar (7), pronunciation (13 → last digit 3), vocabulary (10 → 0), fluency (8). This gives 7-3-0-8 → 7308.',
+    libB: 'Count letters: grammar (7), pronunciation (13 → last digit 3), vocabulary (10 → 0), fluency (7). This gives 7-3-0-7 → 7307.',
     alcA: '1) present perfect, 2) past continuous, 3) future perfect. Write them exactly like this: present perfect,past continuous,future perfect.',
-    alcB: 'In the three tense names only the letter C (100) and I (1) are Roman numerals. Together they make 301.',
+    alcB: 'In the three tense names only the letters C (100) and I (1) are Roman numerals. Together they make 301.',
     mirA: 'Read the backward word normally: NOITCELFER → REFLECTION.',
     mirB: 'Interleave the two streams: C N D E I H T with A L G H T → C A N D L E L I G H T.',
     doorA:'Read the acrostic: the first letters spell AUTUMN.',
-    doorB:'You need the library code (7308), the mirrors word (CANDLELIGHT), and the season (autumn).'
+    doorB:'You need the library code (7307), the mirrors word (CANDLELIGHT), and the season (autumn).'
   };
   alert(map[where]);
 }
@@ -275,28 +337,51 @@ function hint(where){
 /* ---------- FLOW ---------- */
 document.getElementById('startBtn').addEventListener('click', ()=>{
   showScene('scene-lib','lib');  // to library
+  updateSession({
+    currentScene: 'lib',
+    currentStep : 'libA',
+    answers
+  });
 });
 
 /* ---------- ROOM 1: LIBRARY ---------- */
 function checkLibA(){
   attempts.libA++;
-  const v = document.getElementById('libWord').value.trim().toUpperCase();
-  if(v==='READ'){
+  const v = document.getElementById('libWord').value.trim();
+  const upper = v.toUpperCase();
+  if(upper==='READ'){
+    answers.libWord = v;
     setMsg('libMsgA','<span class="ok">Exactly. The screen flashes: “Good readers make great learners.”</span>');
     hide(document.getElementById('libA'));
     showStep('libB');
+    updateSession({
+      currentScene: 'lib',
+      currentStep : 'libB',
+      answers,
+      attempts
+    });
   } else {
     setMsg('libMsgA', `<span class="bad">Not this word. Think of what you do with books: R(eading), E..., A..., D....</span>`);
+    updateSession({ currentScene:'lib', currentStep:'libA', attempts });
   }
 }
+
 function checkLibB(){
   attempts.libB++;
   const v = document.getElementById('libCode').value.trim();
-  if(v==='7308'){
+  if(v==='7307'){
+    answers.libCode = v;
     setMsg('libMsgB','<span class="ok">Correct code. The next door in the lab slides open…</span>');
+    updateSession({
+      currentScene: 'alc',
+      currentStep : 'alcA',
+      answers,
+      attempts
+    });
     setTimeout(()=>{ showScene('scene-alc','alc'); showStep('alcA'); }, 800);
   }else{
     setMsg('libMsgB','<span class="bad">Nothing happens. Recalculate the letters of each word.</span>');
+    updateSession({ currentScene:'lib', currentStep:'libB', attempts });
   }
 }
 
@@ -305,42 +390,78 @@ function checkAlcA(){
   attempts.alcA++;
   const v = document.getElementById('alcWords').value.trim().toLowerCase();
   if(v==='present perfect,past continuous,future perfect'){
+    answers.alcTenses = v;
     setMsg('alcMsgA','<span class="ok">Nice! The system recognises the tenses and unlocks the next task.</span>');
     hide(document.getElementById('alcA')); showStep('alcB');
+    updateSession({
+      currentScene:'alc',
+      currentStep :'alcB',
+      answers,
+      attempts
+    });
   }else{
     setMsg('alcMsgA','<span class="bad">Check the tense names and their order. Use lowercase, no spaces around commas.</span>');
+    updateSession({ currentScene:'alc', currentStep:'alcA', attempts });
   }
 }
+
 function checkAlcB(){
   attempts.alcB++;
   const v = document.getElementById('alcCode').value.trim();
   if(v==='301'){
+    answers.alcCode = v;
     setMsg('alcMsgB','<span class="ok">The number is accepted. Another door in the lab opens…</span>');
+    updateSession({
+      currentScene:'mir',
+      currentStep :'mirA',
+      answers,
+      attempts
+    });
     setTimeout(()=>{ showScene('scene-mir','mir'); showStep('mirA'); }, 800);
   }else{
     setMsg('alcMsgB','<span class="bad">Not this number. Count only Roman numeral letters in the three tense names.</span>');
+    updateSession({ currentScene:'alc', currentStep:'alcB', attempts });
   }
 }
 
 /* ---------- ROOM 3: MIRRORS ---------- */
 function checkMirA(){
   attempts.mirA++;
-  const v = document.getElementById('mirWord').value.trim().toUpperCase();
-  if(v==='REFLECTION'){
+  const v = document.getElementById('mirWord').value.trim();
+  const upper = v.toUpperCase();
+  if(upper==='REFLECTION'){
+    answers.mirWord = v;
     setMsg('mirMsgA','<span class="ok">Correct. The mirrors rearrange and show another word puzzle…</span>');
     hide(document.getElementById('mirA')); showStep('mirB');
+    updateSession({
+      currentScene:'mir',
+      currentStep :'mirB',
+      answers,
+      attempts
+    });
   }else{
     setMsg('mirMsgA','<span class="bad">Try reading the backward word from right to left.</span>');
+    updateSession({ currentScene:'mir', currentStep:'mirA', attempts });
   }
 }
+
 function checkMirB(){
   attempts.mirB++;
-  const v = document.getElementById('mirFinal').value.trim().toUpperCase();
-  if(v==='CANDLELIGHT'){
+  const v = document.getElementById('mirFinal').value.trim();
+  const upper = v.toUpperCase();
+  if(upper==='CANDLELIGHT'){
+    answers.mirFinal = v;
     setMsg('mirMsgB','<span class="ok">Well done. A passage leads you to the final door…</span>');
+    updateSession({
+      currentScene:'door',
+      currentStep :'doorA',
+      answers,
+      attempts
+    });
     setTimeout(()=>{ showScene('scene-door','door'); showStep('doorA'); }, 800);
   }else{
     setMsg('mirMsgB','<span class="bad">The word should be a single, meaningful noun. Interleave the two streams carefully.</span>');
+    updateSession({ currentScene:'mir', currentStep:'mirB', attempts });
   }
 }
 
@@ -349,26 +470,44 @@ function checkDoorA(){
   attempts.doorA++;
   const v = document.getElementById('doorSeason').value.trim().toLowerCase();
   if(v==='autumn'){
+    answers.season = v;
     setMsg('doorMsgA','<span class="ok">Correct. The panel shows one last combination lock…</span>');
     hide(document.getElementById('doorA')); showStep('doorB');
+    updateSession({
+      currentScene:'door',
+      currentStep :'doorB',
+      answers,
+      attempts
+    });
   }else{
     setMsg('doorMsgA','<span class="bad">Look at the first letters of each line in the poem.</span>');
+    updateSession({ currentScene:'door', currentStep:'doorA', attempts });
   }
 }
+
 function checkDoorB(){
   attempts.doorB++;
   const a = document.getElementById('lockLib').value.trim();
   const b = document.getElementById('lockMir').value.trim().toUpperCase();
   const c = document.getElementById('lockSeason').value.trim().toLowerCase();
-  if(a==='7308' && b==='CANDLELIGHT' && c==='autumn'){
+  if(a==='7307' && b==='CANDLELIGHT' && c==='autumn'){
     setMsg('doorMsgB','<span class="ok">All three locks turn in unison…</span>');
+    updateSession({
+      currentScene:'end',
+      currentStep :'end',
+      answers,
+      attempts,
+      finished:true
+    });
     setTimeout(()=>{ showScene('scene-end','door'); }, 900);
   }else{
     setMsg('doorMsgB','<span class="bad">The mechanism refuses. Check the library code, the mirrors word and the season again.</span>');
+    updateSession({ currentScene:'door', currentStep:'doorB', attempts });
   }
 }
 
 /* ---------- INITIAL ---------- */
+initSession();
 showScene('scene-intro','intro'); // boot
 </script>
 </body>
