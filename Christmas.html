@@ -7,16 +7,19 @@
 
 <style>
 :root{
-  --bg:#0b1220;
-  --panel:rgba(12,18,34,.88);
-  --ink:#f4f7fb;
+  /* LIGHT CHRISTMAS PALETTE */
+  --bg:#f6fbff;
+  --panel:rgba(255,255,255,.92);
+  --ink:#122033;
 
-  --acc:#d6b26e;        /* gold */
-  --acc2:#f0d9a3;
-  --ok:#7fe0b8;         /* winter green */
-  --err:#ff7a7a;
+  --acc:#c1121f;        /* festive red */
+  --acc2:#0b6b3a;       /* evergreen */
+  --ok:#0b6b3a;
+  --err:#b00020;
 
-  --ice:#a8c7ff;
+  --ice:#2f6fed;        /* winter blue */
+  --border:rgba(18,32,51,.14);
+  --shadow:0 18px 45px rgba(18,32,51,.18);
 }
 
 html,body{height:100%}
@@ -33,7 +36,7 @@ body{
   width:100vw;
   height:100vh;
   background:
-    linear-gradient(rgba(8,14,30,.55), rgba(8,14,30,.9)),
+    linear-gradient(rgba(255,255,255,.62), rgba(246,251,255,.90)),
     url("A7FCFF67-3A1E-405B-A320-2843613FD998.png") center/cover no-repeat;
   display:flex;
   justify-content:flex-end;
@@ -43,19 +46,22 @@ body{
 
 .panel{
   background:var(--panel);
-  border:1px solid rgba(255,255,255,.12);
+  border:1px solid var(--border);
   border-radius:18px;
   max-width:920px;
   padding:26px 28px;
-  box-shadow:0 0 28px rgba(0,0,0,.65);
+  box-shadow:var(--shadow);
+  backdrop-filter: blur(6px);
 }
 
 h1,h2{
-  margin:.3em 0;
+  margin:.25em 0;
   text-align:center;
   color:var(--acc);
-  font-weight:800;
+  font-weight:900;
+  letter-spacing:.2px;
 }
+h2{color:#0f2a44}
 
 p{margin:.7em 0}
 
@@ -68,36 +74,49 @@ p{margin:.7em 0}
 button{
   background:var(--acc);
   border:0;
-  color:#1a1a1a;
+  color:#fff;
   padding:12px 22px;
   border-radius:12px;
   cursor:pointer;
-  font-weight:700;
+  font-weight:800;
   font-size:1rem;
+  box-shadow:0 10px 22px rgba(193,18,31,.20);
 }
-button:hover{background:var(--acc2)}
+button:hover{filter:brightness(1.05)}
+button.secondary{
+  background:var(--acc2);
+  box-shadow:0 10px 22px rgba(11,107,58,.18);
+}
 
 input{
-  background:#121a30;
-  border:1px solid rgba(255,255,255,.18);
-  color:#fff;
+  background:#ffffff;
+  border:1px solid var(--border);
+  color:var(--ink);
   border-radius:10px;
   padding:10px 14px;
   min-width:260px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
 }
 
 .center{text-align:center}
 .small{font-size:.95em}
-.muted{opacity:.7}
+.muted{opacity:.75}
 .msg{min-height:22px}
 
-.ok{color:var(--ok);font-weight:700}
-.bad{color:var(--err);font-weight:700}
+.ok{color:var(--ok);font-weight:800}
+.bad{color:var(--err);font-weight:800}
 
 .speak{
   border-left:4px solid var(--ice);
-  background:rgba(255,255,255,.04);
+  background:rgba(47,111,237,.06);
   padding:16px 18px;
+  border-radius:14px;
+}
+
+.story{
+  background:rgba(11,107,58,.06);
+  border:1px dashed rgba(11,107,58,.28);
+  padding:14px 16px;
   border-radius:14px;
 }
 
@@ -114,57 +133,59 @@ input{
   <div class="panel fade">
 
     <h1>Christmas Escape — B2 🎄</h1>
+    <p class="center small muted">The courier mixed up three New Year gift boxes. Sort them before midnight.</p>
 
-    <!-- SCENE 0 — READING ALOUD -->
+    <!-- SCENE 0 — STORY / READING ALOUD -->
     <div id="scene-0" class="grid">
-
       <div class="speak">
-        <p class="small muted center"><b>Reading aloud</b></p>
+        <p class="small muted center"><b>Read aloud</b></p>
 
         <p>
-          It is Christmas Eve.
-          The city is quieter than usual, wrapped in lights and soft shadows.
+          It is Christmas Eve, and the city looks like a snow globe: quiet streets, warm lights, and the smell of cinnamon
+          drifting from somewhere nearby.
         </p>
 
         <p>
-          Somewhere nearby, a clock is slowly approaching midnight.
-        </p>
-
-        <p>
-          You are standing in a small delivery room.
-          Three gift boxes are on the table — all wrapped, all identical.
-        </p>
-
-        <p>
-          A message appears on the screen:
+          You are about to go home when your phone buzzes.
+          A courier has just delivered three identical gift boxes — but he accidentally mixed them up.
         </p>
 
         <p class="muted">
-          “One gift is meant to be opened tonight.
-          The others must wait.
-          To choose correctly, you will need language — not luck.”
+          The message says: “Only one box is meant to be opened tonight. If you deliver the wrong one, you’ll ruin the surprise.
+          You have until midnight to figure out which gift belongs to whom.”
         </p>
 
         <p>
-          You take a breath and step forward.
+          On the table, you see three labels:
+          <b>Box A</b>, <b>Box B</b>, and <b>Box C</b>.
+          The only way to sort them is to unlock the “language locks” attached to each label.
+        </p>
+
+        <p>
+          You take a deep breath… and start with Box A.
         </p>
       </div>
 
       <div class="center">
-        <button onclick="show('scene-1')">Continue</button>
+        <button onclick="show('scene-1')">Start (Box A)</button>
       </div>
-
-      <p class="small muted center">
-        Teacher tip: focus on intonation, pauses and sentence stress.
-      </p>
     </div>
 
-    <!-- SCENE 1 -->
+    <!-- SCENE 1 — LOCK 1 -->
     <div id="scene-1" class="grid" style="display:none">
-      <h2>Lock 1 — Collocations</h2>
+      <h2>Box A — Lock 1 (Collocations)</h2>
+      <div class="story">
+        <p class="small muted"><b>Story</b></p>
+        <p>
+          The label on Box A is covered in glitter… and three half-finished phrases.
+          It looks like the courier spilled his hot chocolate right on the important words.
+        </p>
+        <p class="muted">
+          “Complete the collocations to reveal who this box belongs to.”
+        </p>
+      </div>
 
       <p>Complete the collocations (type the <b>missing words</b>):</p>
-
       <ol>
         <li>to wrap a <b>______</b></li>
         <li>to hang <b>______</b> on the tree</li>
@@ -173,25 +194,161 @@ input{
 
       <input id="c1" placeholder="3 words, comma-separated">
       <div class="center">
-        <button onclick="check1()">Unlock</button>
+        <button onclick="check1()">Unlock Box A</button>
       </div>
       <div id="m1" class="msg"></div>
 
       <div class="speak">
         <p class="small muted"><b>Speaking</b></p>
         <p>
-          What gift is difficult to get right?
-          Tell me about a present that didn’t go as planned.
+          What gift is difficult to get right — and why?
+          Tell a short story about a present that went slightly wrong.
+        </p>
+      </div>
+    </div>
+
+    <!-- SCENE 2 — BETWEEN / READING -->
+    <div id="scene-2" class="grid" style="display:none">
+      <h2>Box A is unlocked ✅</h2>
+
+      <div class="speak">
+        <p class="small muted center"><b>Read aloud</b></p>
+        <p>
+          With a soft click, the tag on Box A unlocks.
+          A tiny card slides out:
+        </p>
+        <p class="muted">
+          “This box is for the person who loves traditions — and insists the tree must be decorated ‘properly’.”
+        </p>
+        <p>
+          That narrows it down… but you still have two boxes to sort.
+          You glance at the clock: time is moving faster than you’d like.
+        </p>
+        <p>
+          You pick up <b>Box B</b>. Its lock looks more serious.
+        </p>
+      </div>
+
+      <div class="center">
+        <button class="secondary" onclick="show('scene-3')">Continue (Box B)</button>
+      </div>
+    </div>
+
+    <!-- SCENE 3 — LOCK 2 (B2 GRAMMAR) -->
+    <div id="scene-3" class="grid" style="display:none">
+      <h2>Box B — Lock 2 (Inversion)</h2>
+
+      <div class="story">
+        <p class="small muted"><b>Story</b></p>
+        <p>
+          Box B has a sleek black sticker that reads:
+          <span class="muted">“Emergency protocol. Formal English required.”</span>
+        </p>
+        <p class="muted">
+          A sentence appears, and the beginning is missing.
+          The lock won’t accept anything except the exact inversion starter.
+        </p>
+      </div>
+
+      <p>Rewrite using inversion. Type the <b>missing first word</b> exactly:</p>
+      <p class="muted">
+        “I had just sat down when the doorbell rang.” → ________ had I sat down when the doorbell rang.
+      </p>
+
+      <input id="g2" placeholder="Your answer">
+      <div class="center">
+        <button onclick="check2()">Unlock Box B</button>
+      </div>
+      <div id="m2" class="msg"></div>
+
+      <div class="speak">
+        <p class="small muted"><b>Speaking</b></p>
+        <p>
+          Invent a quick “holiday emergency” story in 4–6 sentences.
+          Try to use inversion once.
+        </p>
+      </div>
+    </div>
+
+    <!-- SCENE 4 — BETWEEN / READING -->
+    <div id="scene-4" class="grid" style="display:none">
+      <h2>Box B is unlocked ✅</h2>
+
+      <div class="speak">
+        <p class="small muted center"><b>Read aloud</b></p>
+        <p>
+          The sticker peels back by itself.
+          Underneath, you find a note:
+        </p>
+        <p class="muted">
+          “This box is for someone who hates rushing — but always ends up saving everyone at the last minute.”
+        </p>
+        <p>
+          Two boxes sorted… one left.
+          You lift <b>Box C</b>, and it feels surprisingly light.
+          The final lock flashes: <b>PHRASAL VERBS</b>.
+        </p>
+      </div>
+
+      <div class="center">
+        <button onclick="show('scene-5')">Continue (Box C)</button>
+      </div>
+    </div>
+
+    <!-- SCENE 5 — FINAL LOCK (PHRASAL VERBS) -->
+    <div id="scene-5" class="grid" style="display:none">
+      <h2>Box C — Final Lock (Phrasal verbs)</h2>
+
+      <div class="story">
+        <p class="small muted"><b>Story</b></p>
+        <p>
+          The lock looks almost playful, like it’s mocking you.
+          It displays three sentences from a “holiday chaos report”.
+        </p>
+      </div>
+
+      <p>Type the <b>three phrasal verbs</b> (comma-separated, no extra spaces):</p>
+      <ol class="muted">
+        <li>“We ran ________ of wrapping paper.”</li>
+        <li>“Can you sort ________ the guest list?”</li>
+        <li>“I’ll drop ________ after dinner.”</li>
+      </ol>
+      <p class="small muted">Particles: <code>in</code>, <code>out</code>, <code>by</code> (use each once).</p>
+
+      <input id="p4" placeholder="e.g. run out,sort out,drop by">
+      <div class="center">
+        <button onclick="check4()">Unlock Box C</button>
+      </div>
+      <div id="m4" class="msg"></div>
+
+      <div class="speak">
+        <p class="small muted"><b>Speaking finale</b></p>
+        <p>
+          Make a short holiday “toast” in English:
+          one funny moment from this year, one lesson learned, one wish for next year.
         </p>
       </div>
     </div>
 
     <!-- END -->
     <div id="scene-end" class="grid center" style="display:none">
-      <h2>Unlocked 🎁</h2>
-      <p>The right box opens.</p>
-      <p class="muted">Inside — a small note:</p>
-      <p class="muted"><i>“Merry Christmas. Take your time.”</i></p>
+      <h2>All boxes sorted! 🎁🎁🎁</h2>
+
+      <div class="speak">
+        <p class="small muted center"><b>Read aloud</b></p>
+        <p>
+          Midnight is close, but you did it.
+          You attach the correct labels, send a quick message to the courier, and feel the tension fade.
+        </p>
+        <p class="muted">
+          The screen shows one last line:
+          “Language saves holidays too.”
+        </p>
+        <p>
+          Somewhere outside, a bell rings.
+          You smile — and finally head home.
+        </p>
+      </div>
     </div>
 
   </div>
@@ -210,12 +367,36 @@ function check1(){
   const m = document.getElementById('m1');
   if(
     v==="present,ornaments,resolution" ||
-    v==="gift,ornaments,resolution"
+    v==="gift,ornaments,resolution" ||
+    v==="present,baubles,resolution" ||
+    v==="gift,baubles,resolution"
   ){
-    m.innerHTML = '<span class="ok">Correct. The lock opens quietly.</span>';
-    setTimeout(()=>show('scene-end'),800);
+    m.innerHTML = '<span class="ok">Correct. Box A unlocks.</span>';
+    setTimeout(()=>show('scene-2'),800);
   } else {
-    m.innerHTML = '<span class="bad">Check collocations and format.</span>';
+    m.innerHTML = '<span class="bad">Check collocations and format: 3 answers, comma-separated.</span>';
+  }
+}
+
+function check2(){
+  const v = norm(document.getElementById('g2').value);
+  const m = document.getElementById('m2');
+  if(v === "hardly"){
+    m.innerHTML = '<span class="ok">Perfect. Box B unlocks.</span>';
+    setTimeout(()=>show('scene-4'),800);
+  } else {
+    m.innerHTML = '<span class="bad">Try again. It’s a common inversion starter for “just…when…”.</span>';
+  }
+}
+
+function check4(){
+  const v = norm(document.getElementById('p4').value);
+  const m = document.getElementById('m4');
+  if(v === "run out,sort out,drop by"){
+    m.innerHTML = '<span class="ok">All correct. Box C unlocks.</span>';
+    setTimeout(()=>show('scene-end'),900);
+  } else {
+    m.innerHTML = '<span class="bad">Check particles and format: run out,sort out,drop by (no spaces).</span>';
   }
 }
 </script>
