@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Christmas Escape — B2</title>
+<style>
+  :root{
+    --bg:#0d0d10; --panel:rgba(10,10,12,.86); --ink:#f3e9d2;
+    --acc:#d4a373; --acc2:#e7b67a; --err:#ff6b6b; --ok:#7df9b7;
+  }
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,Segoe UI,Georgia,serif;overflow:hidden}
+  #stage{
+    position:relative;width:100vw;height:100vh;background:#000 center/cover no-repeat;
+    display:flex;flex-direction:column;justify-content:flex-end;padding:40px;box-sizing:border-box
+  }
+  .panel{background:var(--panel);border:1px solid #2c2c39;border-radius:14px;max-width:900px;padding:22px 24px;box-shadow:0 0 18px rgba(0,0,0,.55)}
+  h1,h2{margin:.2em 0;text-align:center;color:#ff7a00;font-weight:800}
+  p{margin:.6em 0}
+  .row{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  input,select{
+    background:#15151c;border:1px solid #2c2c39;color:#fff;border-radius:8px;
+    padding:10px 12px;min-width:220px
+  }
+  button{
+    background:var(--acc);border:0;color:#1a1a1a;padding:10px 18px;border-radius:10px;cursor:pointer;
+    font-weight:700
+  }
+  button:hover{background:var(--acc2)}
+  .ghost{opacity:.75;font-style:italic;color:#b9b6cc}
+  .msg{margin-top:8px;min-height:22px}
+  .ok{color:var(--ok);font-weight:800}
+  .bad{color:var(--err);font-weight:800}
+  .controls{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;align-items:center}
+  .grid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+  .fade{animation:fade .9s}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .muted{opacity:.65}
+  .small{font-size:.95em}
+  .tag{padding:2px 10px;border:1px dashed #444;border-radius:999px;font-size:.85em;color:#ddd}
+  .center{text-align:center}
+  .hr{height:1px;background:#2c2c39;opacity:.7;margin:8px 0}
+  .speak{border-left:4px solid #2c2c39;padding:10px 12px;background:rgba(255,255,255,.03);border-radius:10px}
+  code{background:rgba(255,255,255,.06);padding:2px 6px;border-radius:6px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="panel fade">
+    <h1>Christmas Escape — B2 🎄</h1>
+    <p class="center small ghost">“The Midnight Delivery”: unlock the correct gift before 00:00.</p>
+
+    <!-- INTRO -->
+    <div id="scene-intro" class="grid">
+      <p>You receive a message: <span class="ghost">“Three boxes got mixed up. The right one opens only if you solve the language locks.”</span></p>
+      <div class="controls">
+        <button id="startBtn">Start the mission</button>
+        <span id="hintCounter" class="tag">Hints left: <b>3</b></span>
+      </div>
+      <div class="speak">
+        <div class="small muted"><b>Speaking warm-up (1 min):</b></div>
+        <div>What’s one Christmas / New Year tradition you genuinely enjoy — and one you could live without?</div>
+      </div>
+    </div>
+
+    <!-- ROOM 1 -->
+    <div id="scene-1" class="grid" style="display:none">
+      <h2>Lock 1 — Collocations</h2>
+      <p>Complete the collocations (type the <b>missing word</b> only):</p>
+      <ol>
+        <li>to <b>wrap</b> a ________</li>
+        <li>to <b>hang</b> ________ on the tree</li>
+        <li>to make a ________ (for the New Year)</li>
+      </ol>
+      <div class="row">
+        <input id="c1" placeholder="3 words, comma-separated">
+        <button onclick="check1()">Unlock</button>
+        <button onclick="hint('1')">Hint</button>
+      </div>
+      <div id="m1" class="msg"></div>
+
+      <div class="speak">
+        <div class="small muted"><b>Speaking (2 min):</b></div>
+        <div>What gift is hard to get right, and why? Tell me about a time a gift went “slightly wrong”.</div>
+      </div>
+    </div>
+
+    <!-- ROOM 2 -->
+    <div id="scene-2" class="grid" style="display:none">
+      <h2>Lock 2 — B2 Grammar (Inversion)</h2>
+      <p>Rewrite using inversion. Type the <b>missing first phrase</b> exactly.</p>
+      <p class="ghost">“I had just sat down when the doorbell rang.” → ________ had I sat down when the doorbell rang.</p>
+      <div class="row">
+        <input id="g2" placeholder="Your answer">
+        <button onclick="check2()">Unlock</button>
+        <button onclick="hint('2')">Hint</button>
+      </div>
+      <div id="m2" class="msg"></div>
+
+      <div class="speak">
+        <div class="small muted"><b>Speaking (1–2 min):</b></div>
+        <div>Tell the story of a “holiday emergency” (real or invented). Try to use inversion once.</div>
+      </div>
+    </div>
+
+    <!-- ROOM 3 -->
+    <div id="scene-3" class="grid" style="display:none">
+      <h2>Lock 3 — Reading between the lines</h2>
+      <p class="ghost small">
+        Read this short note and answer ONE question.
+      </p>
+      <div class="speak">
+        <div class="small">
+          <i>“I didn’t forget your present. I just realised the best part isn’t the object — it’s the moment.  
+          So I’m ‘saving’ it for tomorrow: no screens, no rushing, and one place you’ve wanted to go for ages.”</i>
+        </div>
+      </div>
+      <p>What is strongly implied?</p>
+      <p class="small muted">Type one of these: <code>a surprise outing</code>, <code>a gift card</code>, <code>nothing planned</code></p>
+      <div class="row">
+        <input id="r3" placeholder="Type one option exactly">
+        <button onclick="check3()">Unlock</button>
+        <button onclick="hint('3')">Hint</button>
+      </div>
+      <div id="m3" class="msg"></div>
+
+      <div class="speak">
+        <div class="small muted"><b>Speaking (2 min):</b></div>
+        <div>Are “experience gifts” better than physical gifts? Defend your view with 2 reasons.</div>
+      </div>
+    </div>
+
+    <!-- ROOM 4 -->
+    <div id="scene-4" class="grid" style="display:none">
+      <h2>Final Lock — Phrasal verbs</h2>
+      <p>Complete and type the <b>three phrasal verbs</b> (comma-separated, no extra spaces).</p>
+      <ol class="ghost">
+        <li>“We ran ________ of wrapping paper.”</li>
+        <li>“Can you sort ________ the guest list?”</li>
+        <li>“I’ll drop ________ after dinner.”</li>
+      </ol>
+      <p class="small muted">Particles: <code>in, out, by</code>. Use each once.</p>
+      <div class="row">
+        <input id="p4" placeholder="e.g. run out, ...">
+        <button onclick="check4()">Open the gift 🎁</button>
+        <button onclick="hint('4')">Hint</button>
+      </div>
+      <div id="m4" class="msg"></div>
+
+      <div class="speak">
+        <div class="small muted"><b>Speaking финал (3–5 min):</b></div>
+        <div>
+          Make a short “holiday speech” (like a toast) in English:  
+          1) one funny memory from this year, 2) one lesson learned, 3) one wish for next year.
+        </div>
+      </div>
+    </div>
+
+    <!-- END -->
+    <div id="scene-end" class="grid center" style="display:none">
+      <h2>Unlocked! 🎉</h2>
+      <p>You saved the right box. Inside: a tiny note — <span class="ghost">“Merry Christmas & Happy New Year.”</span></p>
+      <div class="hr"></div>
+      <p class="small muted">Teacher tip: ask the student to retell the whole story in 6 sentences using 1 inversion + 2 phrasal verbs.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Hints
+  let hintsLeft = 3;
+  const hintBadge = document.getElementById('hintCounter');
+  function useHint(){
+    if(hintsLeft<=0) return false;
+    hintsLeft--;
+    hintBadge.innerHTML = `Hints left: <b>${hintsLeft}</b>`;
+    return true;
+  }
+  function hint(where){
+    if(!useHint()) return;
+    const map = {
+      "1": "Common answers: wrap a present; hang baubles/ornaments; make a resolution. (Choose the ones you teach.)",
+      "2": "The missing phrase is “Hardly”.",
+      "3": "The text implies an experience gift / outing. Type: a surprise outing",
+      "4": "run out, sort out, drop by"
+    };
+    alert(map[where]);
+  }
+
+  // Scene switching
+  function show(id){
+    document.querySelectorAll('[id^="scene-"]').forEach(x => x.style.display='none');
+    document.getElementById(id).style.display = 'grid';
+  }
+
+  document.getElementById('startBtn').addEventListener('click', () => show('scene-1'));
+
+  // Helpers
+  function ok(el, txt){ el.innerHTML = `<span class="ok">${txt}</span>`; }
+  function bad(el, txt){ el.innerHTML = `<span class="bad">${txt}</span>`; }
+  function norm(s){ return (s||"").trim().toLowerCase(); }
+
+  // Checks
+  function check1(){
+    const v = norm(document.getElementById('c1').value);
+    // ожидаем: present, ornaments/baubles, resolution (разрешим варианты)
+    const parts = v.split(',').map(x=>x.trim());
+    const a = parts[0], b = parts[1], c = parts[2];
+
+    const aOk = (a==="present" || a==="gift");
+    const bOk = (b==="ornaments" || b==="baubles" || b==="decorations");
+    const cOk = (c==="resolution" || c==="new year's resolution" || c==="new year resolution");
+
+    const m = document.getElementById('m1');
+    if(parts.length===3 && aOk && bOk && cOk){
+      ok(m, "Nice collocations. Lock 1 opens.");
+      setTimeout(()=>show('scene-2'), 700);
+    } else {
+      bad(m, "Close, but check collocations and format: 3 words/phrases, comma-separated.");
+    }
+  }
+
+  function check2(){
+    const v = norm(document.getElementById('g2').value);
+    const m = document.getElementById('m2');
+    if(v === "hardly"){
+      ok(m, "Perfect. That’s a strong B2 structure.");
+      setTimeout(()=>show('scene-3'), 700);
+    } else {
+      bad(m, "Try again. It’s a common inversion starter used for ‘just…when…’");
+    }
+  }
+
+  function check3(){
+    const v = (document.getElementById('r3').value || "").trim();
+    const m = document.getElementById('m3');
+    if(v === "a surprise outing"){
+      ok(m, "Exactly — the present is an experience, saved for a calm moment.");
+      setTimeout(()=>show('scene-4'), 700);
+    } else {
+      bad(m, "Not quite. Choose one of the provided options exactly.");
+    }
+  }
+
+  function check4(){
+    const v = norm(document.getElementById('p4').value);
+    const m = document.getElementById('m4');
+    if(v === "run out,sort out,drop by"){
+      ok(m, "All correct. Final lock opens!");
+      setTimeout(()=>show('scene-end'), 800);
+    } else {
+      bad(m, "Check particles: out / out / by. Format: run out,sort out,drop by (no extra spaces).");
+    }
+  }
+</script>
+</body>
+</html>
