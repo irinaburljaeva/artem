@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Christmas Escape — B2</title>
+<title>Christmas Riddle — B2</title>
 
 <style>
 :root{
@@ -35,9 +35,7 @@ body{
   position:relative;
   width:100vw;
   height:100vh;
-  background:
-    linear-gradient(rgba(255,255,255,.62), rgba(246,251,255,.90)),
-    url("A7FCFF67-3A1E-405B-A320-2843613FD998.png") center/cover no-repeat;
+  background: url("A7FCFF67-3A1E-405B-A320-2843613FD998.png") center/cover no-repeat;
   display:flex;
   justify-content:flex-end;
   padding:40px;
@@ -132,8 +130,8 @@ input{
 <div id="stage">
   <div class="panel fade">
 
-    <h1>Christmas Escape — B2 🎄</h1>
-    <p class="center small muted">The courier mixed up three New Year gift boxes. Sort them before midnight.</p>
+    <h1>Christmas Riddle — B2 🎄</h1>
+    <p class="center small muted">The courier mixed up three New Year gift boxes. Solve the riddles and sort them before midnight.</p>
 
     <!-- SCENE 0 — STORY / READING ALOUD -->
     <div id="scene-0" class="grid">
@@ -158,7 +156,7 @@ input{
         <p>
           On the table, you see three labels:
           <b>Box A</b>, <b>Box B</b>, and <b>Box C</b>.
-          The only way to sort them is to unlock the “language locks” attached to each label.
+          Each label contains a short riddle — and each riddle is in English.
         </p>
 
         <p>
@@ -171,9 +169,10 @@ input{
       </div>
     </div>
 
-    <!-- SCENE 1 — LOCK 1 -->
+    <!-- SCENE 1 — BOX A -->
     <div id="scene-1" class="grid" style="display:none">
-      <h2>Box A — Lock 1 (Collocations)</h2>
+      <h2>Box A — Riddle 1 (Collocations)</h2>
+
       <div class="story">
         <p class="small muted"><b>Story</b></p>
         <p>
@@ -181,23 +180,11 @@ input{
           It looks like the courier spilled his hot chocolate right on the important words.
         </p>
         <p class="muted">
-          “Complete the collocations to reveal who this box belongs to.”
+          “Complete the phrases to reveal who this box belongs to.”
         </p>
       </div>
 
-      <p>Complete the collocations (type the <b>missing words</b>):</p>
-      <ol>
-        <li>to wrap a <b>______</b></li>
-        <li>to hang <b>______</b> on the tree</li>
-        <li>to make a <b>______</b> (for the New Year)</li>
-      </ol>
-
-      <input id="c1" placeholder="3 words, comma-separated">
-      <div class="center">
-        <button onclick="check1()">Unlock Box A</button>
-      </div>
-      <div id="m1" class="msg"></div>
-
+      <!-- speaking FIRST -->
       <div class="speak">
         <p class="small muted"><b>Speaking</b></p>
         <p>
@@ -205,11 +192,25 @@ input{
           Tell a short story about a present that went slightly wrong.
         </p>
       </div>
+
+      <!-- input AFTER speaking -->
+      <p>Complete the collocations (type the <b>missing words</b>):</p>
+      <ol>
+        <li>to wrap a <b>______</b></li>
+        <li>to hang <b>______</b> on the tree</li>
+        <li>to make a <b>______</b> (for the New Year)</li>
+      </ol>
+
+      <input id="c1" placeholder="3 answers, comma-separated">
+      <div class="center">
+        <button onclick="check1()">Confirm</button>
+      </div>
+      <div id="m1" class="msg"></div>
     </div>
 
     <!-- SCENE 2 — BETWEEN / READING -->
     <div id="scene-2" class="grid" style="display:none">
-      <h2>Box A is unlocked ✅</h2>
+      <h2>Box A solved ✅</h2>
 
       <div class="speak">
         <p class="small muted center"><b>Read aloud</b></p>
@@ -225,7 +226,7 @@ input{
           You glance at the clock: time is moving faster than you’d like.
         </p>
         <p>
-          You pick up <b>Box B</b>. Its lock looks more serious.
+          You pick up <b>Box B</b>. The label looks unusually formal.
         </p>
       </div>
 
@@ -234,33 +235,23 @@ input{
       </div>
     </div>
 
-    <!-- SCENE 3 — LOCK 2 (B2 GRAMMAR) -->
+    <!-- SCENE 3 — BOX B -->
     <div id="scene-3" class="grid" style="display:none">
-      <h2>Box B — Lock 2 (Inversion)</h2>
+      <h2>Box B — Riddle 2 (Inversion)</h2>
 
       <div class="story">
         <p class="small muted"><b>Story</b></p>
         <p>
-          Box B has a sleek black sticker that reads:
-          <span class="muted">“Emergency protocol. Formal English required.”</span>
+          Box B has a neat sticker that reads:
+          <span class="muted">“Urgent: formal English only.”</span>
         </p>
         <p class="muted">
           A sentence appears, and the beginning is missing.
-          The lock won’t accept anything except the exact inversion starter.
+          The label won’t accept anything except the exact inversion starter.
         </p>
       </div>
 
-      <p>Rewrite using inversion. Type the <b>missing first word</b> exactly:</p>
-      <p class="muted">
-        “I had just sat down when the doorbell rang.” → ________ had I sat down when the doorbell rang.
-      </p>
-
-      <input id="g2" placeholder="Your answer">
-      <div class="center">
-        <button onclick="check2()">Unlock Box B</button>
-      </div>
-      <div id="m2" class="msg"></div>
-
+      <!-- speaking FIRST -->
       <div class="speak">
         <p class="small muted"><b>Speaking</b></p>
         <p>
@@ -268,11 +259,23 @@ input{
           Try to use inversion once.
         </p>
       </div>
+
+      <!-- input AFTER speaking -->
+      <p>Rewrite using inversion. Type the <b>missing first word</b> exactly:</p>
+      <p class="muted">
+        “I had just sat down when the doorbell rang.” → ________ had I sat down when the doorbell rang.
+      </p>
+
+      <input id="g2" placeholder="Type one word">
+      <div class="center">
+        <button onclick="check2()">Confirm</button>
+      </div>
+      <div id="m2" class="msg"></div>
     </div>
 
     <!-- SCENE 4 — BETWEEN / READING -->
     <div id="scene-4" class="grid" style="display:none">
-      <h2>Box B is unlocked ✅</h2>
+      <h2>Box B solved ✅</h2>
 
       <div class="speak">
         <p class="small muted center"><b>Read aloud</b></p>
@@ -286,7 +289,7 @@ input{
         <p>
           Two boxes sorted… one left.
           You lift <b>Box C</b>, and it feels surprisingly light.
-          The final lock flashes: <b>PHRASAL VERBS</b>.
+          The label flashes three sentences from a “holiday chaos report”.
         </p>
       </div>
 
@@ -295,32 +298,19 @@ input{
       </div>
     </div>
 
-    <!-- SCENE 5 — FINAL LOCK (PHRASAL VERBS) -->
+    <!-- SCENE 5 — BOX C -->
     <div id="scene-5" class="grid" style="display:none">
-      <h2>Box C — Final Lock (Phrasal verbs)</h2>
+      <h2>Box C — Final riddle (Phrasal verbs)</h2>
 
       <div class="story">
         <p class="small muted"><b>Story</b></p>
         <p>
-          The lock looks almost playful, like it’s mocking you.
-          It displays three sentences from a “holiday chaos report”.
+          The final label looks almost playful, like it’s mocking you.
+          It displays three sentences… and waits for the missing particles.
         </p>
       </div>
 
-      <p>Type the <b>three phrasal verbs</b> (comma-separated, no extra spaces):</p>
-      <ol class="muted">
-        <li>“We ran ________ of wrapping paper.”</li>
-        <li>“Can you sort ________ the guest list?”</li>
-        <li>“I’ll drop ________ after dinner.”</li>
-      </ol>
-      <p class="small muted">Particles: <code>in</code>, <code>out</code>, <code>by</code> (use each once).</p>
-
-      <input id="p4" placeholder="e.g. run out,sort out,drop by">
-      <div class="center">
-        <button onclick="check4()">Unlock Box C</button>
-      </div>
-      <div id="m4" class="msg"></div>
-
+      <!-- speaking FIRST -->
       <div class="speak">
         <p class="small muted"><b>Speaking finale</b></p>
         <p>
@@ -328,6 +318,21 @@ input{
           one funny moment from this year, one lesson learned, one wish for next year.
         </p>
       </div>
+
+      <!-- input AFTER speaking -->
+      <p>Complete the <b>three phrasal verbs</b> (comma-separated, no extra spaces):</p>
+      <ol class="muted">
+        <li>“We ran ________ of wrapping paper.”</li>
+        <li>“Can you sort ________ the guest list?”</li>
+        <li>“I’ll drop ________ after dinner.”</li>
+      </ol>
+      <p class="small muted">Particles: <code>in</code>, <code>out</code>, <code>by</code> (use each once).</p>
+
+      <input id="p4" placeholder="Type 3 phrasal verbs, comma-separated">
+      <div class="center">
+        <button onclick="check4()">Confirm</button>
+      </div>
+      <div id="m4" class="msg"></div>
     </div>
 
     <!-- END -->
@@ -362,41 +367,49 @@ function show(id){
 
 function norm(s){return (s||"").trim().toLowerCase()}
 
+/* IMPORTANT:
+   - No correct answers are shown anywhere in the UI (no hints, no examples).
+   - Checks still work in the background. */
 function check1(){
   const v = norm(document.getElementById('c1').value);
   const m = document.getElementById('m1');
-  if(
-    v==="present,ornaments,resolution" ||
-    v==="gift,ornaments,resolution" ||
-    v==="present,baubles,resolution" ||
-    v==="gift,baubles,resolution"
-  ){
-    m.innerHTML = '<span class="ok">Correct. Box A unlocks.</span>';
+
+  const okAnswers = new Set([
+    "present,ornaments,resolution",
+    "gift,ornaments,resolution",
+    "present,baubles,resolution",
+    "gift,baubles,resolution"
+  ]);
+
+  if(okAnswers.has(v)){
+    m.innerHTML = '<span class="ok">Nice! Box A is sorted.</span>';
     setTimeout(()=>show('scene-2'),800);
   } else {
-    m.innerHTML = '<span class="bad">Check collocations and format: 3 answers, comma-separated.</span>';
+    m.innerHTML = '<span class="bad">Not quite. Check collocations and format (3 answers, comma-separated).</span>';
   }
 }
 
 function check2(){
   const v = norm(document.getElementById('g2').value);
   const m = document.getElementById('m2');
+
   if(v === "hardly"){
-    m.innerHTML = '<span class="ok">Perfect. Box B unlocks.</span>';
+    m.innerHTML = '<span class="ok">Great! Box B is sorted.</span>';
     setTimeout(()=>show('scene-4'),800);
   } else {
-    m.innerHTML = '<span class="bad">Try again. It’s a common inversion starter for “just…when…”.</span>';
+    m.innerHTML = '<span class="bad">Try again. Use a one-word inversion starter.</span>';
   }
 }
 
 function check4(){
   const v = norm(document.getElementById('p4').value);
   const m = document.getElementById('m4');
+
   if(v === "run out,sort out,drop by"){
-    m.innerHTML = '<span class="ok">All correct. Box C unlocks.</span>';
+    m.innerHTML = '<span class="ok">Excellent! Box C is sorted.</span>';
     setTimeout(()=>show('scene-end'),900);
   } else {
-    m.innerHTML = '<span class="bad">Check particles and format: run out,sort out,drop by (no spaces).</span>';
+    m.innerHTML = '<span class="bad">Not yet. Use each particle once and keep the comma-separated format.</span>';
   }
 }
 </script>
