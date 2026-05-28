@@ -467,55 +467,55 @@ const ESCENES=[
   {
     id:'airport',
     title:'Scene 1: Heathrow Arrivals 🛬',
-    story:'You land at Heathrow Terminal 2. Your phone is dead, you have £8 in cash, and your bag didn't arrive on the carousel. A screen shows: <em>Lost &amp; Found — Level 2, Mon–Sat 9am–6pm.</em> It's <strong>Sunday, 10am</strong>. What do you do?',
+    story:'You land at Heathrow Terminal 2. Your phone is dead, you have £8 in cash, and your bag did not arrive on the carousel. A screen shows: <em>Lost &amp; Found — Level 2, Mon–Sat 9am–6pm.</em> It is <strong>Sunday, 10am</strong>. What do you do?',
     type:'choice',
     choices:[
-      {t:'Go to the Lost &amp; Found office right now',good:false,fb:'The office is closed on Sundays — you'd be wasting time. "You should have checked the opening hours first."'},
+      {t:'Go to the Lost &amp; Found office right now',good:false,fb:'The office is closed on Sundays — you would be wasting time. "You should have checked the opening hours first."'},
       {t:'File a missing baggage report at the airline desk instead',good:true,fb:'✓ Smart move! Airlines have 24/7 baggage services. You used "should have" correctly in your head!'},
-      {t:'Wait at the carousel hoping it turns up',good:false,fb:'Waiting indefinitely isn't practical. You'd better take action — use your initiative!'}
+      {t:'Wait at the carousel hoping it turns up',good:false,fb:'Waiting indefinitely is not practical. You should better take action — use your initiative!'}
     ]
   },
   {
     id:'taxi',
     title:'Scene 2: Outside the Terminal 🚕',
-    story:'A man approaches: <em>"Cab to central London, mate? Forty quid, cash only."</em> You have £8. A sign nearby reads: <strong>Heathrow Express → Paddington: 15 min, £25 (card)</strong>. The Tube is also an option — <strong>Zone 6→1, ~50 min, £5.50</strong>.',
+    story:'A man approaches: <em>"Cab to central London, mate? Forty quid, cash only."</em> A sign nearby reads: <strong>Heathrow Express → Paddington: 15 min, £25 (card)</strong>. The Tube is also an option — <strong>Zone 6→1, ~50 min, £5.50</strong>.',
     type:'choice',
     choices:[
-      {t:'Negotiate with the cab driver — offer £8',good:false,fb:'"£8 for a London cab ride? You're having a laugh, mate." Not a great use of language or money.'},
-      {t:'Take the Heathrow Express — pay by card',good:false,fb:'Smart thinking BUT: your phone is dead, so you can't access your banking app. This might not work without contactless.'},
-      {t:'Take the Tube — it's within your cash budget',good:true,fb:'✓ Excellent! £5.50 on the Tube leaves you £2.50 spare. Practical and independent. Well done!'}
+      {t:'Negotiate with the cab driver — offer £8',good:false,fb:'"£8 for a London cab ride? You are having a laugh, mate." Not a great use of language or money.'},
+      {t:'Take the Heathrow Express — pay by phone',good:false,fb:'Smart thinking BUT: your phone is dead, so you can not access your banking app.'},
+      {t:'Take the Tube — it is within your cash budget',good:true,fb:'✓ Excellent! £5.50 on the Tube leaves you £2.50 spare. Practical and independent. Well done!'}
     ]
   },
   {
     id:'tube',
     title:'Scene 3: On the Tube 🚇',
-    story:'You're on the Piccadilly line. A stranger notices you looking lost and asks: <em>"You alright there? First time in London?"</em> How do you respond naturally in English?',
+    story:'You are on the Piccadilly line. A stranger notices you looking lost and asks: <em>"You alright there? First time in London?"</em> How do you respond naturally in English?',
     type:'choice',
     choices:[
-      {t:'"Yes. I am going to hotel in Zone 1. I need help."',good:false,fb:'Grammatically shaky and a bit abrupt. Try to sound more natural — use "I'm actually trying to get to…"'},
-      {t:'"Sort of, yeah — I'm trying to get to Bloomsbury but I'm not totally sure where to change."',good:true,fb:'✓ Natural, friendly, B2-level response! "Sort of", "not totally sure" — great hedging language.'},
-      {t:'"I am fine thank you. I do not require assistance."',good:false,fb:'Very formal and robotic for a casual tube chat. Natural English uses contractions: "I'm fine" not "I am fine".'}
+      {t:'"Yes. I am going to hotel in Zone 1. I need help."',good:false,fb:'Grammatically shaky and a bit abrupt. Try to sound more natural — use "I am actually trying to get to…"'},
+      {t:'"Sort of, yeah — I am trying to get to Bloomsbury but I am not totally sure where to change."',good:true,fb:'✓ Natural, friendly, B2-level response! "Sort of", "not totally sure" — great hedging language.'},
+      {t:'"I am fine thank you. I do not require assistance."',good:false,fb:'Very formal and robotic for a casual tube chat. Natural English uses contractions.'}
     ]
   },
   {
     id:'cipher',
     title:'Scene 4: The Hotel Note 🔐',
-    story:'You find a note from the hotel under the door at the hostel where you're waiting: <em>"Your room code: shift each letter back by 2. Code: TQQO 3047."</em>',
+    story:'You find a note from the hotel under the door at the hostel where you are waiting: <em>"Your room code: shift each letter back by 2. Code: TQQO 3047."</em>',
     type:'fill',
     cipher:'TQQO',
     answer:'room',
-    placeholder:'Decode the word (shift each letter back 2)…',
-    hint:'T→R, Q→O, Q→O, O→M — what word is that?',
-    fb:'✓ ROOM! T(−2)=R, Q(−2)=O, Q(−2)=O, O(−2)=M. Room 3047 — you're in!'
+    placeholder:'Find the room code',
+    hint:'Remember the alphabet',
+    fb:'✓ ROOM! T(−2)=R, Q(−2)=O, Q(−2)=O, O(−2)=M. Room 3047 — you are in!'
   },
   {
     id:'hotel',
     title:'Scene 5: Hotel Reception 🏨',
-    story:'You arrive at reception. The receptionist says: <em>"I'm afraid your room won't be ready until 3pm — we do apologise. You're welcome to leave your luggage here and help yourself to complimentary tea and coffee in the lounge."</em><br><br>Which reply is most natural and polite for a B2 speaker?',
+    story:'You arrive at reception. The receptionist says: <em>"I am afraid your room will not be ready until 3pm — we do apologise. You are welcome to leave your luggage here and help yourself to complimentary tea and coffee in the lounge."</em><br><br>Which reply is most natural and polite?',
     type:'choice',
     choices:[
-      {t:'"That is okay. I will wait."',good:false,fb:'Too short and a bit flat. A B2 speaker would acknowledge more warmly and use natural phrasing.'},
-      {t:'"Oh, no worries at all — I appreciate it. I'll drop my bag off and have a wander around until then."',good:true,fb:'✓ Perfect! "No worries", "I appreciate it", "have a wander" — natural, warm, confident B2 English.'},
+      {t:'"That is okay. I will wait."',good:false,fb:'Too short and a bit flat. A native speaker would acknowledge more warmly and use natural phrasing.'},
+      {t:'"Oh, no worries at all — I appreciate it. I will drop my bag off and have a wander around until then."',good:true,fb:'✓ Perfect! "No worries", "I appreciate it", "have a wander" — natural, warm, confident English.'},
       {t:'"This is unacceptable. I have a reservation and I demand my room immediately."',good:false,fb:'Way too aggressive for a standard check-in delay! Save that energy for actual problems.'}
     ]
   }
