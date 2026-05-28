@@ -13,40 +13,17 @@
   .wave{position:fixed;bottom:0;left:0;right:0;height:100px;z-index:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120'%3E%3Cpath fill='%230057FF' fill-opacity='0.06' d='M0,64L48,58.7C96,53,192,43,288,48C384,53,480,75,576,80C672,85,768,75,864,64C960,53,1056,43,1152,42.7C1248,43,1344,53,1392,58.7L1440,64L1440,120L0,120Z'/%3E%3C/svg%3E") no-repeat bottom;background-size:cover;animation:waveMove 6s ease-in-out infinite alternate;}
   @keyframes waveMove{from{transform:translateX(-20px)}to{transform:translateX(20px)}}
   .wrap{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:32px 20px 80px;}
-
-  /* WAITING SCREEN */
-  #waitScreen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;gap:16px;}
-  .wait-emoji{font-size:56px;animation:bounce 1.2s ease infinite alternate;}
-  @keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-14px)}}
-  .wait-title{font-family:'Syne',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;}
-  .wait-title span{color:var(--sun);}
-  .wait-sub{color:#ffffff66;font-size:15px;}
-  .wait-dots{display:flex;gap:8px;margin-top:8px;}
-  .wd{width:8px;height:8px;border-radius:50%;background:#ffffff22;animation:wdPulse 1.4s ease infinite;}
-  .wd:nth-child(2){animation-delay:.2s}.wd:nth-child(3){animation-delay:.4s}
-  @keyframes wdPulse{0%,100%{background:#ffffff22}50%{background:var(--sun)}}
-
-  /* SECTION */
-  #lessonContent{display:none;}
   .section{display:none;animation:fadeUp .45s ease both;}
   .section.active{display:block;}
   @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-
-  /* HEADER */
   .sec-label{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--sun);margin-bottom:6px;}
   .sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.3rem,3vw,1.8rem);font-weight:800;color:white;margin-bottom:10px;line-height:1.2;}
   .sec-desc{color:#ffffffaa;font-size:14px;line-height:1.7;margin-bottom:22px;}
-
-  /* CARD */
   .card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:22px;padding:28px;margin-bottom:16px;backdrop-filter:blur(8px);}
-
-  /* PROGRESS */
-  .progress-bar{display:flex;gap:6px;margin-bottom:32px;flex-wrap:wrap;}
-  .pb-step{flex:1;min-width:28px;height:4px;border-radius:2px;background:rgba(255,255,255,0.1);transition:background .4s;}
+  .progress-bar{display:flex;gap:6px;margin-bottom:32px;}
+  .pb-step{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,0.1);transition:background .4s;}
   .pb-step.done{background:var(--mint);}
   .pb-step.active{background:var(--sun);}
-
-  /* BINGO */
   .bingo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:16px;}
   .bc{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:9px;padding:7px 3px;text-align:center;font-size:10.5px;color:#ffffffbb;cursor:pointer;transition:all .2s;user-select:none;min-height:54px;display:flex;align-items:center;justify-content:center;line-height:1.3;}
   .bc:hover{background:rgba(255,184,0,0.15);border-color:var(--sun);}
@@ -55,20 +32,13 @@
   .bc.free{background:rgba(0,200,150,0.15);border-color:var(--mint);color:var(--mint);font-weight:700;}
   .bingo-status{text-align:center;color:#ffffffaa;font-size:13px;min-height:22px;margin-bottom:8px;}
   .bingo-status.win{color:var(--mint);font-weight:600;}
-
-  /* VOCAB */
   .vocab-intro{background:rgba(0,87,255,0.08);border:1px solid rgba(0,87,255,0.2);border-radius:12px;padding:16px;margin-bottom:18px;color:#aabfff;font-size:14px;line-height:1.6;}
-  .vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
-  @media(max-width:520px){.vocab-grid{grid-template-columns:1fr}}
-  .vocab-item{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px;}
+  .vocab-item{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px;cursor:pointer;transition:all .2s;}
   .vocab-item.selected{border-color:var(--sun);background:rgba(255,184,0,0.07);}
-  .vocab-phrase{color:white;font-weight:500;font-size:14px;margin-bottom:3px;}
-  .vocab-meaning{color:#ffffff55;font-size:12px;font-style:italic;}
+  .vocab-phrase{color:white;font-weight:500;font-size:14px;}
   .vocab-q{color:#ffffffaa;font-size:14px;margin-bottom:10px;}
   .vocab-input{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px 14px;color:white;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border .2s;margin-bottom:8px;}
   .vocab-input:focus{border-color:var(--ocean);}
-
-  /* GRAMMAR */
   .grammar-item{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px;margin-bottom:12px;}
   .grammar-item.answered-correct{border-color:var(--mint);background:rgba(0,200,150,0.06);}
   .grammar-item.answered-wrong{border-color:var(--coral);background:rgba(255,77,77,0.06);}
@@ -82,37 +52,12 @@
   .go.reveal-correct{background:rgba(0,200,150,0.08);border-color:rgba(0,200,150,0.4);color:var(--mint);}
   .grammar-feedback{font-size:12px;margin-top:10px;min-height:16px;font-style:italic;}
   .grammar-score{text-align:center;color:var(--sun);font-family:'Syne',sans-serif;font-weight:700;font-size:16px;margin-top:12px;}
-
-  /* READING */
   .reading-text{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-left:3px solid var(--ocean);border-radius:0 12px 12px 0;padding:20px;margin-bottom:20px;color:#ffffffdd;font-size:14px;line-height:1.8;}
   .reading-text h4{font-family:'Syne',sans-serif;color:white;font-size:15px;margin-bottom:10px;}
   .read-q{margin-bottom:14px;}
   .read-q-text{color:#ffffffcc;font-size:14px;margin-bottom:8px;}
   .read-input{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:11px 14px;color:white;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;resize:none;line-height:1.6;transition:border .2s;}
   .read-input:focus{border-color:var(--mint);}
-
-  /* ESCAPE */
-  .puzzle{display:none;}
-  .puzzle.active{display:block;}
-  .p-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
-  .p-num{width:42px;height:42px;background:var(--coral);border-radius:11px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;color:white;font-size:17px;flex-shrink:0;}
-  .p-title{font-family:'Syne',sans-serif;font-weight:700;color:white;font-size:17px;}
-  .p-sub{color:#ffffff55;font-size:12px;}
-  .clue{background:rgba(255,77,77,0.08);border:1px solid rgba(255,77,77,0.25);border-radius:12px;padding:18px;margin-bottom:14px;color:#ffbbbb;font-size:14px;line-height:1.75;}
-  .clue strong{color:white;}
-  .ans-input{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.13);border-radius:11px;padding:13px 16px;color:white;font-family:'DM Sans',sans-serif;font-size:15px;outline:none;transition:border .2s;margin-bottom:10px;}
-  .ans-input:focus{border-color:var(--ocean);}
-  .ans-input.correct{border-color:var(--mint)!important;}
-  .ans-input.wrong{border-color:var(--coral)!important;animation:shake .3s ease;}
-  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-  .hint-txt{font-size:12px;color:#ffffff44;margin-bottom:14px;min-height:18px;font-style:italic;}
-  .hint-txt.show{color:var(--sun);}
-  .ep-bar{display:flex;gap:7px;margin-bottom:20px;}
-  .ep{height:4px;flex:1;border-radius:2px;background:rgba(255,255,255,0.08);transition:background .4s;}
-  .ep.done{background:var(--mint);}
-  .ep.cur{background:var(--coral);}
-
-  /* SURVIVAL KIT */
   .sk-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;}
   .sk-tab{padding:7px 16px;border-radius:20px;border:1px solid rgba(255,255,255,0.13);background:transparent;color:#ffffffaa;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s;}
   .sk-tab:hover{border-color:var(--ocean);color:white;}
@@ -125,8 +70,10 @@
   .ph-en{color:white;font-size:13px;font-weight:500;margin-bottom:3px;}
   .ph-ru{color:#ffffff44;font-size:11px;font-style:italic;}
   .ph-ctx{color:var(--sun);font-size:10px;margin-top:5px;}
-
-  /* ESCAPE STORY */
+  .ep-bar{display:flex;gap:7px;margin-bottom:20px;}
+  .ep{height:4px;flex:1;border-radius:2px;background:rgba(255,255,255,0.08);transition:background .4s;}
+  .ep.done{background:var(--mint);}
+  .ep.cur{background:var(--coral);}
   .story-box{background:rgba(255,184,0,0.06);border:1px solid rgba(255,184,0,0.18);border-radius:13px;padding:16px 18px;margin-bottom:16px;color:#ffe4a0;font-size:14px;line-height:1.75;}
   .story-box strong{color:white;}
   .story-box em{color:var(--sun);font-style:normal;}
@@ -136,7 +83,7 @@
   .choice-btn.chosen-good{background:rgba(0,200,150,0.12);border-color:var(--mint);color:var(--mint);}
   .choice-btn.chosen-bad{background:rgba(255,77,77,0.1);border-color:var(--coral);color:var(--coral);}
   .choice-btn.reveal-good{background:rgba(0,200,150,0.06);border-color:rgba(0,200,150,0.3);color:var(--mint);}
-  .scene-feedback{font-size:13px;min-height:18px;margin-top:4px;padding:10px 14px;border-radius:9px;font-style:italic;display:none;}
+  .scene-feedback{font-size:13px;margin-top:4px;padding:10px 14px;border-radius:9px;font-style:italic;display:none;}
   .scene-feedback.show{display:block;}
   .scene-feedback.good{background:rgba(0,200,150,0.08);color:var(--mint);}
   .scene-feedback.bad{background:rgba(255,77,77,0.08);color:#ffaaaa;}
@@ -145,10 +92,11 @@
   .fill-input:focus{border-color:var(--ocean);}
   .fill-input.correct{border-color:var(--mint)!important;}
   .fill-input.wrong{border-color:var(--coral)!important;animation:shake .3s ease;}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
   .cipher-box{font-family:monospace;font-size:20px;letter-spacing:4px;color:var(--sun);background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.2);border-radius:10px;padding:14px;text-align:center;margin-bottom:14px;}
   .scene-nav{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;}
-
-  /* WYR */
+  .hint-txt{font-size:12px;color:#ffffff44;margin-bottom:14px;min-height:18px;font-style:italic;}
+  .hint-txt.show{color:var(--sun);}
   .wyr-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
   @media(max-width:500px){.wyr-grid{grid-template-columns:1fr}}
   .wyr-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px 16px;cursor:pointer;transition:all .25s;text-align:center;}
@@ -168,8 +116,6 @@
   .wyr-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.15);transition:background .3s;}
   .wyr-dot.done{background:var(--mint);}
   .wyr-dot.active{background:var(--sun);}
-
-  /* SUMMER ASSIGNMENT */
   .assign-section{margin-bottom:20px;}
   .assign-header{font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:white;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
   .assign-required-badge{background:var(--coral);color:white;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:8px;}
@@ -190,8 +136,6 @@
   .assign-card.optional.chosen .assign-chk{background:var(--ocean);border-color:var(--ocean);color:white;}
   .assign-pick-status{text-align:center;color:#ffffffaa;font-size:13px;margin:8px 0;min-height:20px;}
   .assign-pick-status.ready{color:var(--ocean);font-weight:600;}
-
-  /* BUTTONS */
   .btn{display:inline-flex;align-items:center;gap:7px;padding:12px 26px;border-radius:50px;border:none;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:.5px;cursor:pointer;transition:all .2s;}
   .btn-sun{background:var(--sun);color:#0A0A14;}
   .btn-sun:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,184,0,.3);}
@@ -201,18 +145,15 @@
   .btn-ocean:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,87,255,.3);}
   .btn-mint{background:var(--mint);color:#0A0A14;}
   .btn-mint:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,200,150,.3);}
-  .btn-row{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap;}
-
-  /* FINAL */
+  .btn-row{display:flex;gap:9px;margin-top:20px;flex-wrap:wrap;}
+  .tip-box{background:rgba(0,200,150,0.07);border:1px solid rgba(0,200,150,0.18);border-radius:10px;padding:12px 15px;color:#00C896bb;font-size:13px;font-style:italic;margin-bottom:14px;}
   .final-wrap{text-align:center;padding:50px 30px;}
-  .final-emoji{font-size:60px;margin-bottom:18px;display:block;animation:bounce 1s ease infinite alternate;}
+  .final-emoji{font-size:60px;margin-bottom:18px;display:block;animation:bnc 1s ease infinite alternate;}
+  @keyframes bnc{from{transform:translateY(0)}to{transform:translateY(-12px)}}
   .final-title{font-family:'Syne',sans-serif;font-size:clamp(1.7rem,4vw,2.4rem);font-weight:800;color:white;margin-bottom:10px;}
   .final-sub{color:#ffffffaa;font-size:15px;line-height:1.7;margin-bottom:28px;}
   .confetti-p{position:fixed;width:9px;height:9px;border-radius:2px;pointer-events:none;animation:cfFall linear forwards;z-index:999;}
   @keyframes cfFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
-
-  .tip-box{background:rgba(0,200,150,0.07);border:1px solid rgba(0,200,150,0.18);border-radius:10px;padding:12px 15px;color:#00C896bb;font-size:13px;font-style:italic;margin-bottom:14px;}
-
   .sync-dot{position:fixed;bottom:14px;right:14px;width:9px;height:9px;border-radius:50%;background:#444;z-index:100;transition:background .3s;}
   .sync-dot.on{background:var(--mint);}
   .sync-dot.ing{background:var(--sun);}
@@ -220,873 +161,254 @@
 </head>
 <body>
 <div class="sync-dot" id="syncDot"></div>
-<div class="bg"></div>
-<div class="wave"></div>
+<div class="bg"></div><div class="wave"></div>
 <div class="wrap">
+  <div class="progress-bar" id="progressBar"></div>
 
-  <!-- WAITING -->
-  <div id="waitScreen">
-    <div class="wait-emoji">☀️</div>
-    <div class="wait-title">Last Lesson<br><span>Before Summer</span></div>
-    <div class="wait-sub">Waiting for your teacher to start…</div>
-    <div class="wait-dots"><div class="wd"></div><div class="wd"></div><div class="wd"></div></div>
+  <div class="section active" id="sec0">
+    <div class="card">
+      <div class="sec-label">Warm-up · Activity 1</div>
+      <div class="sec-title">Summer Plans Bingo 🎰</div>
+      <div class="sec-desc">Click every square that applies to your summer. For each one you mark — say <strong>one sentence</strong> using a future form or conditional.</div>
+      <div class="bingo-grid" id="bingoGrid"></div>
+      <div class="bingo-status" id="bingoStatus">Click the squares that apply to you!</div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="resetBingo()">&#8635; Reset</button>
+        <button class="btn btn-sun" onclick="nextSec()">Next Activity →</button>
+      </div>
+    </div>
   </div>
 
-  <!-- LESSON -->
-  <div id="lessonContent">
-    <div class="progress-bar" id="progressBar"></div>
-
-    <!-- SEC 0: BINGO -->
-    <div class="section" id="sec0">
-      <div class="card">
-        <div class="sec-label">Warm-up · Activity 1</div>
-        <div class="sec-title">Summer Plans Bingo 🎰</div>
-        <div class="sec-desc">Click every square that applies to your summer. For each one you mark — say <strong>one sentence</strong> using a future form or conditional.</div>
-        <div class="bingo-grid" id="bingoGrid"></div>
-        <div class="bingo-status" id="bingoStatus">Click the squares that apply to you!</div>
-        <div class="btn-row"><button class="btn btn-ghost" onclick="resetBingo()">↺ Reset</button></div>
+  <div class="section" id="sec1">
+    <div class="card">
+      <div class="sec-label">Vocabulary · Activity 2</div>
+      <div class="sec-title">Idioms &amp; Collocations 🔤</div>
+      <div class="sec-desc">Eight B2 expressions. Match each to its meaning, then use two in sentences about your own life.</div>
+      <div class="vocab-intro">Click an expression to select it, then click its meaning. When all 8 are matched, you get a writing task!</div>
+      <div id="vocabMatchArea"></div>
+      <div id="vocabWriteArea" style="display:none">
+        <div class="tip-box">✅ All matched! Now pick <strong>2 expressions</strong> and write a sentence with each about your real life.</div>
+        <div class="vocab-q">Sentence 1:</div>
+        <input class="vocab-input" id="vocab_s1" placeholder="Use one of the expressions..." oninput="syncV()">
+        <div class="vocab-q">Sentence 2:</div>
+        <input class="vocab-input" id="vocab_s2" placeholder="Use another expression..." oninput="syncV()">
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="prevSec()">← Back</button>
+        <button class="btn btn-sun" onclick="nextSec()">Next Activity →</button>
       </div>
     </div>
+  </div>
 
-    <!-- SEC 1: VOCABULARY -->
-    <div class="section" id="sec1">
-      <div class="card">
-        <div class="sec-label">Vocabulary · Activity 2</div>
-        <div class="sec-title">Idioms & Collocations 🔤</div>
-        <div class="sec-desc">Eight B2 expressions. First — match each to its meaning. Then use two of them in sentences about your own life.</div>
-        <div class="vocab-intro">Click an expression to select it, then click its meaning. When all 8 are matched, you'll get a writing task!</div>
-        <div id="vocabMatchArea"></div>
-        <div id="vocabWriteArea" style="display:none">
-          <div class="tip-box">✅ All matched! Now pick <strong>2 expressions</strong> from above and write a sentence with each one about your real life.</div>
-          <div class="vocab-q">Sentence 1:</div>
-          <input class="vocab-input" id="vocab_s1" placeholder="Use one of the expressions..." oninput="syncV()">
-          <div class="vocab-q">Sentence 2:</div>
-          <input class="vocab-input" id="vocab_s2" placeholder="Use another expression..." oninput="syncV()">
+  <div class="section" id="sec2">
+    <div class="card">
+      <div class="sec-label">Grammar · Activity 3</div>
+      <div class="sec-title">Grammar Challenge 🧩</div>
+      <div class="sec-desc">Eight B2 grammar questions — conditionals, passive voice, reported speech, modal verbs. Choose the best option for each.</div>
+      <div id="grammarItems"></div>
+      <div class="grammar-score" id="grammarScore" style="display:none"></div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="prevSec()">← Back</button>
+        <button class="btn btn-sun" onclick="nextSec()">Next Activity →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="sec3">
+    <div class="card">
+      <div class="sec-label">Reading · Activity 4</div>
+      <div class="sec-title">Reading &amp; Inference 📖</div>
+      <div class="sec-desc">Read the article. Answer the questions — some require inference.</div>
+      <div class="reading-text">
+        <h4>The Rise of "Micro-Credentials"</h4>
+        <p>Employers across the world are quietly rewriting the rules of hiring. Where a university degree once served as the primary signal of a candidate's abilities, many companies — particularly in tech, design, and creative industries — have begun placing greater emphasis on short, focused qualifications known as micro-credentials.</p>
+        <p style="margin-top:10px">These courses, which typically take weeks rather than years to complete, cover specific skills such as data analysis, UX design, or digital marketing. Proponents argue that they allow learners to adapt quickly to a fast-changing job market and that their practical focus makes graduates immediately productive. Critics, however, warn that without proper regulation, the market risks becoming flooded with low-quality certificates that offer little real value.</p>
+        <p style="margin-top:10px">The debate is particularly relevant for Generation Z, many of whom are questioning whether spending three or four years — and a significant amount of money — on a traditional degree is still the most sensible path. For now, most experts agree on one thing: the answer is unlikely to be the same for everyone.</p>
+      </div>
+      <div id="readingQs"></div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="prevSec()">← Back</button>
+        <button class="btn btn-sun" onclick="nextSec()">Next Activity →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="sec4">
+    <div class="card">
+      <div class="sec-label">Speaking · Activity 5</div>
+      <div class="sec-title">English Survival Kit 🧳</div>
+      <div class="sec-desc">Real phrases for real summer situations. Pick a tab, click the phrases you'd use.</div>
+      <div class="sk-tabs">
+        <button class="sk-tab active" onclick="showSK('travel',this)">✈️ Travel</button>
+        <button class="sk-tab" onclick="showSK('gaming',this)">🎮 Gaming</button>
+        <button class="sk-tab" onclick="showSK('media',this)">🎬 Films</button>
+        <button class="sk-tab" onclick="showSK('social',this)">💬 Online</button>
+      </div>
+      <div class="phrases-grid" id="skGrid"></div>
+      <div class="tip-box">💡 Pick 2 phrases → make a sentence about YOUR summer!</div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="prevSec()">← Back</button>
+        <button class="btn btn-sun" onclick="nextSec()">Next Activity →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="sec5">
+    <div class="card">
+      <div class="sec-label">Adventure · Activity 6</div>
+      <div class="sec-title">Lost in London 🇬🇧</div>
+      <div class="sec-desc">You've just landed at Heathrow. No data, nearly no cash, hotel in Zone 1. Make the right calls.</div>
+      <div class="ep-bar" id="epBar"></div>
+      <div id="esceneWrap"></div>
+      <div id="escDone" style="display:none;text-align:center;padding:20px 0">
+        <div style="font-size:44px;margin-bottom:10px">🏨</div>
+        <div style="font-family:'Syne',sans-serif;color:white;font-size:18px;font-weight:700;margin-bottom:6px">You made it to the hotel!</div>
+        <div style="color:#ffffffaa;font-size:13px;margin-bottom:6px">Mission complete. You'd 100% survive London 🇬🇧</div>
+        <div class="scene-score" id="escScore"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="prevSec()">← Back</button>
+        <button class="btn btn-sun" onclick="nextSec()">Next Activity →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="sec6">
+    <div class="card">
+      <div class="sec-label">Speaking · Activity 7</div>
+      <div class="sec-title">Would You Rather? 🤔</div>
+      <div class="sec-desc">Six dilemmas. Pick your answer — then <strong>explain your reasoning</strong> in at least 2 sentences.</div>
+      <div class="wyr-progress" id="wyrProgress"></div>
+      <div style="height:12px"></div>
+      <div id="wyrWrap"></div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="prevSec()">← Back</button>
+        <button class="btn btn-sun" onclick="nextSec()">Next Activity →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="sec7">
+    <div class="card">
+      <div class="sec-label">Homework · Activity 8</div>
+      <div class="sec-title">Your Summer English Assignment 📋</div>
+      <div class="sec-desc">Three tasks are <strong>required</strong>. Then pick <strong>2 optional</strong> ones. We'll discuss in September!</div>
+      <div id="assignWrap"></div>
+      <div class="assign-pick-status" id="assignStatus">Pick 2 optional tasks</div>
+      <div id="assignFinal" style="display:none">
+        <div class="tip-box" style="text-align:center;margin-top:16px;color:var(--mint)">✅ Perfect plan! Screenshot this and keep it visible this summer.</div>
+        <div class="btn-row" style="justify-content:center;margin-top:12px">
+          <button class="btn btn-mint" onclick="goFinal()">🎉 Finish the Lesson!</button>
         </div>
       </div>
+      <div class="btn-row"><button class="btn btn-ghost" onclick="prevSec()">← Back</button></div>
     </div>
+  </div>
 
-    <!-- SEC 2: GRAMMAR -->
-    <div class="section" id="sec2">
-      <div class="card">
-        <div class="sec-label">Grammar · Activity 3</div>
-        <div class="sec-title">Grammar Challenge 🧩</div>
-        <div class="sec-desc">Eight B2 grammar questions — conditionals, passive voice, reported speech, modal verbs. Choose the best option for each.</div>
-        <div id="grammarItems"></div>
-        <div class="grammar-score" id="grammarScore" style="display:none"></div>
-      </div>
+  <div class="section" id="secFinal">
+    <div class="card final-wrap">
+      <span class="final-emoji">🏖️</span>
+      <div class="final-title">Have an amazing summer!</div>
+      <div class="final-sub">You absolutely smashed B2 this year.<br>Keep English alive — even 10 minutes a day matters.<br><br>See you in September! 🚀</div>
+      <button class="btn btn-sun" onclick="doConfetti()" style="margin:0 auto">🎊 Celebrate!</button>
     </div>
+  </div>
 
-    <!-- SEC 3: READING -->
-    <div class="section" id="sec3">
-      <div class="card">
-        <div class="sec-label">Reading · Activity 4</div>
-        <div class="sec-title">Reading & Inference 📖</div>
-        <div class="sec-desc">Read the short article. Answer the questions — and pay attention: some answers aren't stated directly, you have to infer them.</div>
-        <div class="reading-text">
-          <h4>The Rise of "Micro-Credentials"</h4>
-          <p>Employers across the world are quietly rewriting the rules of hiring. Where a university degree once served as the primary signal of a candidate's abilities, many companies — particularly in tech, design, and creative industries — have begun placing greater emphasis on short, focused qualifications known as micro-credentials.</p>
-          <p style="margin-top:10px">These courses, which typically take weeks rather than years to complete, cover specific skills such as data analysis, UX design, or digital marketing. Proponents argue that they allow learners to adapt quickly to a fast-changing job market and that their practical focus makes graduates immediately productive. Critics, however, warn that without proper regulation, the market risks becoming flooded with low-quality certificates that offer little real value.</p>
-          <p style="margin-top:10px">The debate is particularly relevant for Generation Z, many of whom are questioning whether spending three or four years — and a significant amount of money — on a traditional degree is still the most sensible path. For now, most experts agree on one thing: the answer is unlikely to be the same for everyone.</p>
-        </div>
-        <div id="readingQs"></div>
-      </div>
-    </div>
-
-    <!-- SEC 4: SURVIVAL KIT -->
-    <div class="section" id="sec4">
-      <div class="card">
-        <div class="sec-label">Speaking · Activity 5</div>
-        <div class="sec-title">English Survival Kit 🧳</div>
-        <div class="sec-desc">Real phrases for real summer situations. Pick a tab, click the phrases you'd actually use, then your teacher will respond in character.</div>
-        <div class="sk-tabs" id="skTabs">
-          <button class="sk-tab active" onclick="showSK('travel',this)">✈️ Travel</button>
-          <button class="sk-tab" onclick="showSK('gaming',this)">🎮 Gaming</button>
-          <button class="sk-tab" onclick="showSK('media',this)">🎬 Films</button>
-          <button class="sk-tab" onclick="showSK('social',this)">💬 Online</button>
-        </div>
-        <div class="phrases-grid" id="skGrid"></div>
-        <div class="tip-box">💡 Pick 2 phrases → make a sentence about YOUR summer → teacher responds in character!</div>
-      </div>
-    </div>
-
-    <!-- SEC 5: ESCAPE ROOM -->
-    <div class="section" id="sec5">
-      <div class="card">
-        <div class="sec-label">Adventure · Activity 6</div>
-        <div class="sec-title">Lost in London 🇬🇧</div>
-        <div class="sec-desc">You've just landed at Heathrow. No data, nearly no cash, and your hotel is somewhere in Zone 1. Make the right calls — every choice matters.</div>
-        <div class="ep-bar" id="epBar"></div>
-        <div id="esceneWrap"></div>
-        <div id="escDone" style="display:none;text-align:center;padding:20px 0">
-          <div style="font-size:44px;margin-bottom:10px">🏨</div>
-          <div style="font-family:'Syne',sans-serif;color:white;font-size:18px;font-weight:700;margin-bottom:6px">You made it to the hotel!</div>
-          <div style="color:#ffffffaa;font-size:13px;margin-bottom:6px">Mission complete. You'd 100% survive London 🇬🇧</div>
-          <div class="scene-score" id="escScore"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SEC 6: WOULD YOU RATHER -->
-    <div class="section" id="sec6">
-      <div class="card">
-        <div class="sec-label">Speaking · Activity 7</div>
-        <div class="sec-title">Would You Rather? 🤔</div>
-        <div class="sec-desc">Six dilemmas. Pick your answer — then <strong>explain your reasoning</strong> in at least 2 sentences. No right or wrong answers, just good English!</div>
-        <div class="wyr-progress" id="wyrProgress"></div>
-        <div style="height:12px"></div>
-        <div id="wyrWrap"></div>
-      </div>
-    </div>
-
-    <!-- SEC 7: SUMMER ASSIGNMENT -->
-    <div class="section" id="sec7">
-      <div class="card">
-        <div class="sec-label">Homework · Activity 8</div>
-        <div class="sec-title">Your Summer English Assignment 📋</div>
-        <div class="sec-desc">Three tasks are <strong>required</strong> — they take 10–15 min each. Then pick <strong>2 optional</strong> ones that suit your summer. We'll discuss everything in September!</div>
-        <div id="assignWrap"></div>
-        <div class="assign-pick-status" id="assignStatus">Pick 2 optional tasks</div>
-        <div id="assignFinal" style="display:none">
-          <div class="tip-box" style="text-align:center;margin-top:16px;color:var(--mint)">✅ Perfect plan! Screenshot this page and keep it somewhere visible this summer.</div>
-          <div class="btn-row" style="justify-content:center;margin-top:12px"><button class="btn btn-mint" onclick="goFinal()">🎉 Finish the Lesson!</button></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- FINAL -->
-    <div class="section" id="secFinal">
-      <div class="card final-wrap">
-        <span class="final-emoji">🏖️</span>
-        <div class="final-title">Have an amazing summer!</div>
-        <div class="final-sub">You absolutely smashed B2 this year.<br>Keep English alive — even 10 minutes a day matters.<br><br>See you in September! 🚀</div>
-        <button class="btn btn-sun" onclick="confetti()" style="margin:0 auto">🎊 Celebrate!</button>
-      </div>
-    </div>
-
-  </div><!-- /lessonContent -->
 </div>
-
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import{getFirestore,doc,setDoc,onSnapshot}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-
+import{getFirestore,doc,setDoc}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 const FB={apiKey:"AIzaSyCe3jIpFH630mfdkdxdTjCmquEGdPMvFHA",authDomain:"polytalky-2228d.firebaseapp.com",projectId:"polytalky-2228d",storageBucket:"polytalky-2228d.firebasestorage.app",messagingSenderId:"498740130503",appId:"1:498740130503:web:5e2061ec4011ec983144e2",measurementId:"G-3HCWZX1R92"};
-const app=initializeApp(FB);
-const db=getFirestore(app);
-
-// One shared doc — teacher writes section, student reads it and writes its data
+const app=initializeApp(FB);const db=getFirestore(app);
 const SHARED=doc(db,'lessonSessions','shared_lesson');
-
 const dot=document.getElementById('syncDot');
 let syncT=null;
+async function push(data){dot.className='sync-dot ing';try{await setDoc(SHARED,{student:{...data,updatedAt:Date.now()}},{merge:true});dot.className='sync-dot on';}catch(e){dot.className='sync-dot';}}
+function sync(){clearTimeout(syncT);syncT=setTimeout(()=>push(getState()),600);}
 
-async function push(data){
-  dot.className='sync-dot ing';
-  try{await setDoc(SHARED,{student:{...data,updatedAt:Date.now()}},{merge:true});dot.className='sync-dot on';}
-  catch(e){dot.className='sync-dot';console.error(e);}
-}
-function sync(){clearTimeout(syncT);syncT=setTimeout(()=>push(getState()),500);}
-
-// ---- DATA ----
-const BINGO=[
-  "I'll travel abroad","I'm staying home","I'll binge a series","I'll learn something new","I'll work or intern",
-  "I'll spend time with family","I'll go to the beach","I'll read a book","I'll stay up past 3am","I'll take up a hobby",
-  "FREE","I'll meet new people","I'll watch sport","I'll cook something new","I'll visit a city",
-  "I might get a tan","I'll listen to podcasts","I'll go to concerts","I'll use social media less","I'll exercise more",
-  "I'll sleep in every day","I'll earn money","I'll travel by train","I'll miss studying","I'll lose track of dates"
-];
-
-const VOCAB_PAIRS=[
-  {phrase:"bite off more than you can chew",meaning:"take on too much"},
-  {phrase:"hit the nail on the head",meaning:"say exactly the right thing"},
-  {phrase:"burn bridges",meaning:"permanently damage a relationship"},
-  {phrase:"sit on the fence",meaning:"avoid making a decision"},
-  {phrase:"go the extra mile",meaning:"make more effort than expected"},
-  {phrase:"cut corners",meaning:"do something badly to save time"},
-  {phrase:"get the ball rolling",meaning:"start something / take initiative"},
-  {phrase:"have a lot on your plate",meaning:"be very busy"}
-];
-
-const GRAMMAR=[
-  {q:"If I <em>had studied</em> harder last year, I ___ the exam first time.",opts:["would pass","would have passed","will pass","had passed"],ans:1,exp:"3rd conditional — past unreal situation requires 'would have + past participle'."},
-  {q:"The new library ___ by the mayor next Saturday.",opts:["will open","is being opened","will be opened","opens"],ans:2,exp:"Future passive — planned future event in passive voice uses 'will be + past participle'."},
-  {q:"She told me she ___ the report the following morning.",opts:["will finish","would finish","finishes","is finishing"],ans:1,exp:"Reported speech — 'will' shifts to 'would' in reported speech."},
-  {q:"I'd rather you ___ me before making that decision.",opts:["asked","ask","will ask","had asked"],ans:0,exp:"'Would rather + subject' takes the past subjunctive (asked)."},
-  {q:"By the time you read this, I ___ for London.",opts:["will leave","will have left","am leaving","left"],ans:1,exp:"Future perfect — action completed before a future point uses 'will have + past participle'."},
-  {q:"It's high time we ___ something about climate change.",opts:["do","did","have done","will do"],ans:1,exp:"'It's high time + subject' takes the past subjunctive (did)."},
-  {q:"The film was so boring that I ___ have fallen asleep if the ending hadn't been so dramatic.",opts:["might","must","would","should"],ans:2,exp:"'Would have' = imagined past result of a condition."},
-  {q:"Not only ___ the best player, but she also captained the team.",opts:["she was","was she","she had been","had she been"],ans:1,exp:"Inversion after 'not only' — auxiliary verb moves before subject."}
-];
-
-const READING_QS=[
-  {q:"What is the main change described in the article?",ph:"The article is mainly about…"},
-  {q:"What are TWO advantages of micro-credentials mentioned?",ph:"First… Second…"},
-  {q:"What concern do critics raise? Use your own words.",ph:"Critics worry that…"},
-  {q:"The article doesn't state this directly — why might Generation Z question traditional degrees? Infer from the text.",ph:"Based on the text, I think…"},
-  {q:"What is the article's conclusion? Do you agree? Why / why not?",ph:"The conclusion is… I think…"}
-];
-
-const SK={
-  travel:[
-    {en:"Could you point me in the right direction?",ru:"Не подскажете, куда идти?",ctx:"Asking directions politely"},
-    {en:"Is this included in the price?",ru:"Это входит в стоимость?",ctx:"At hotel / on a tour"},
-    {en:"I seem to have lost my way.",ru:"Кажется, я заблудился.",ctx:"Natural, not robotic"},
-    {en:"I'm afraid there's been a mix-up.",ru:"Похоже, произошла путаница.",ctx:"Dealing with a problem"},
-    {en:"Would it be possible to...?",ru:"Было бы возможно...?",ctx:"Polite request"},
-    {en:"Do you happen to know if...?",ru:"Не знаете ли вы случайно...?",ctx:"Soft opener"}
-  ],
-  gaming:[
-    {en:"I got absolutely destroyed.",ru:"Меня разнесли в пух и прах.",ctx:"Gaming slang"},
-    {en:"Can we run it back?",ru:"Сыграем ещё раз?",ctx:"After a match"},
-    {en:"That was absolutely clutch.",ru:"Это был невероятный момент.",ctx:"Praise / reaction"},
-    {en:"I'm on a losing streak.",ru:"У меня серия поражений.",ctx:"Common phrase"},
-    {en:"GG, no cap.",ru:"Честно, хорошая игра.",ctx:"Modern slang"},
-    {en:"Don't flame me, I'm trying.",ru:"Не ругайтесь, я стараюсь.",ctx:"Team chat"}
-  ],
-  media:[
-    {en:"It really grew on me.",ru:"Постепенно это меня захватило.",ctx:"Changed opinion"},
-    {en:"The writing is tight.",ru:"Сценарий очень крепкий.",ctx:"Reviewing a show"},
-    {en:"I didn't see that plot twist coming.",ru:"Не ожидал такого поворота.",ctx:"Discussing spoilers"},
-    {en:"They really dropped the ball in season 2.",ru:"Во 2 сезоне всё пошло не так.",ctx:"Casual critique"},
-    {en:"It's binge-worthy, honestly.",ru:"Честно, засмотришься.",ctx:"Recommendation"},
-    {en:"I'm saving that one for a rainy day.",ru:"Оставлю на потом.",ctx:"About your watchlist"}
-  ],
-  social:[
-    {en:"Just to clarify what I meant…",ru:"Чтобы прояснить, что я имел в виду…",ctx:"Online misunderstanding"},
-    {en:"That's a fair point, actually.",ru:"Это, пожалуй, справедливо.",ctx:"Acknowledging an argument"},
-    {en:"I'm not gonna lie…",ru:"Честно говоря…",ctx:"Informal opener"},
-    {en:"No worries at all!",ru:"Всё нормально, без обид.",ctx:"Being reassuring"},
-    {en:"Hit me up if you're in town.",ru:"Напиши, если будешь в городе.",ctx:"Keeping in touch"},
-    {en:"Catch you later!",ru:"Увидимся позже!",ctx:"Casual goodbye"}
-  ]
-};
-
-// ── ESCAPE SCENES ────────────────────────────────────────────────────────────
+const BINGO=["I'll travel abroad","I'm staying home","I'll binge a series","I'll learn something new","I'll work or intern","I'll spend time with family","I'll go to the beach","I'll read a book","I'll stay up past 3am","I'll take up a hobby","FREE","I'll meet new people","I'll watch sport","I'll cook something new","I'll visit a city","I might get a tan","I'll listen to podcasts","I'll go to concerts","I'll use social media less","I'll exercise more","I'll sleep in every day","I'll earn money","I'll travel by train","I'll miss studying","I'll lose track of dates"];
+const VOCAB_PAIRS=[{phrase:"bite off more than you can chew",meaning:"take on too much"},{phrase:"hit the nail on the head",meaning:"say exactly the right thing"},{phrase:"burn bridges",meaning:"permanently damage a relationship"},{phrase:"sit on the fence",meaning:"avoid making a decision"},{phrase:"go the extra mile",meaning:"make more effort than expected"},{phrase:"cut corners",meaning:"do something badly to save time"},{phrase:"get the ball rolling",meaning:"start something / take initiative"},{phrase:"have a lot on your plate",meaning:"be very busy"}];
+const GRAMMAR=[{q:"If I <em>had studied</em> harder last year, I ___ the exam first time.",opts:["would pass","would have passed","will pass","had passed"],ans:1,exp:"3rd conditional — 'would have + past participle'."},{q:"The new library ___ by the mayor next Saturday.",opts:["will open","is being opened","will be opened","opens"],ans:2,exp:"Future passive — 'will be + past participle'."},{q:"She told me she ___ the report the following morning.",opts:["will finish","would finish","finishes","is finishing"],ans:1,exp:"Reported speech — 'will' shifts to 'would'."},{q:"I'd rather you ___ me before making that decision.",opts:["asked","ask","will ask","had asked"],ans:0,exp:"'Would rather + subject' takes past subjunctive."},{q:"By the time you read this, I ___ for London.",opts:["will leave","will have left","am leaving","left"],ans:1,exp:"Future perfect — 'will have + past participle'."},{q:"It's high time we ___ something about climate change.",opts:["do","did","have done","will do"],ans:1,exp:"'It's high time + subject' takes past subjunctive."},{q:"The film was so boring that I ___ have fallen asleep if the ending hadn't been so dramatic.",opts:["might","must","would","should"],ans:2,exp:"'Would have' = imagined past result."},{q:"Not only ___ the best player, but she also captained the team.",opts:["she was","was she","she had been","had she been"],ans:1,exp:"Inversion after 'not only'."}];
+const READING_QS=[{q:"What is the main change described in the article?",ph:"The article is mainly about…"},{q:"What are TWO advantages of micro-credentials mentioned?",ph:"First… Second…"},{q:"What concern do critics raise? Use your own words.",ph:"Critics worry that…"},{q:"Why might Generation Z question traditional degrees? Infer from the text.",ph:"Based on the text, I think…"},{q:"What is the article's conclusion? Do you agree?",ph:"The conclusion is… I think…"}];
+const SK={travel:[{en:"Could you point me in the right direction?",ru:"Не подскажете, куда идти?",ctx:"Asking directions politely"},{en:"Is this included in the price?",ru:"Это входит в стоимость?",ctx:"At hotel / on a tour"},{en:"I seem to have lost my way.",ru:"Кажется, я заблудился.",ctx:"Natural, not robotic"},{en:"I'm afraid there's been a mix-up.",ru:"Похоже, произошла путаница.",ctx:"Dealing with a problem"},{en:"Would it be possible to...?",ru:"Было бы возможно...?",ctx:"Polite request"},{en:"Do you happen to know if...?",ru:"Не знаете ли вы случайно...?",ctx:"Soft opener"}],gaming:[{en:"I got absolutely destroyed.",ru:"Меня разнесли в пух и прах.",ctx:"Gaming slang"},{en:"Can we run it back?",ru:"Сыграем ещё раз?",ctx:"After a match"},{en:"That was absolutely clutch.",ru:"Это был невероятный момент.",ctx:"Praise / reaction"},{en:"I'm on a losing streak.",ru:"У меня серия поражений.",ctx:"Common phrase"},{en:"GG, no cap.",ru:"Честно, хорошая игра.",ctx:"Modern slang"},{en:"Don't flame me, I'm trying.",ru:"Не ругайтесь, я стараюсь.",ctx:"Team chat"}],media:[{en:"It really grew on me.",ru:"Постепенно это меня захватило.",ctx:"Changed opinion"},{en:"The writing is tight.",ru:"Сценарий очень крепкий.",ctx:"Reviewing a show"},{en:"I didn't see that plot twist coming.",ru:"Не ожидал такого поворота.",ctx:"Discussing spoilers"},{en:"They really dropped the ball in season 2.",ru:"Во 2 сезоне всё пошло не так.",ctx:"Casual critique"},{en:"It's binge-worthy, honestly.",ru:"Честно, засмотришься.",ctx:"Recommendation"},{en:"I'm saving that one for a rainy day.",ru:"Оставлю на потом.",ctx:"About your watchlist"}],social:[{en:"Just to clarify what I meant…",ru:"Чтобы прояснить, что я имел в виду…",ctx:"Online misunderstanding"},{en:"That's a fair point, actually.",ru:"Это, пожалуй, справедливо.",ctx:"Acknowledging an argument"},{en:"I'm not gonna lie…",ru:"Честно говоря…",ctx:"Informal opener"},{en:"No worries at all!",ru:"Всё нормально, без обид.",ctx:"Being reassuring"},{en:"Hit me up if you're in town.",ru:"Напиши, если будешь в городе.",ctx:"Keeping in touch"},{en:"Catch you later!",ru:"Увидимся позже!",ctx:"Casual goodbye"}]};
 const ESCENES=[
-  {
-    id:'airport',
-    title:'Scene 1: Heathrow Arrivals 🛬',
-    story:`You land at Heathrow Terminal 2. Your phone is dead, you have £8 in cash, and your bag did not arrive on the carousel. A screen shows: <em>Lost &amp; Found — Level 2, Mon–Sat 9am–6pm.</em> It is <strong>Sunday, 10am</strong>. What do you do?`,
-    type:'choice',
-    choices:[
-      {t:'Go to the Lost &amp; Found office right now',good:false,fb:'The office is closed on Sundays — you would be wasting time. "You should have checked the opening hours first."'},
-      {t:'File a missing baggage report at the airline desk instead',good:true,fb:'✓ Smart move! Airlines have 24/7 baggage services. You used "should have" correctly in your head!'},
-      {t:'Wait at the carousel hoping it turns up',good:false,fb:'Waiting indefinitely is not practical. You should better take action — use your initiative!'}
-    ]
-  },
-  {
-    id:'taxi',
-    title:'Scene 2: Outside the Terminal 🚕',
-    story:'A man approaches: <em>"Cab to central London, mate? Forty quid, cash only."</em> A sign nearby reads: <strong>Heathrow Express → Paddington: 15 min, £25 (card)</strong>. The Tube is also an option — <strong>Zone 6→1, ~50 min, £5.50</strong>.',
-    type:'choice',
-    choices:[
-      {t:'Negotiate with the cab driver — offer £8',good:false,fb:'"£8 for a London cab ride? You are having a laugh, mate." Not a great use of language or money.'},
-      {t:'Take the Heathrow Express — pay by phone',good:false,fb:'Smart thinking BUT: your phone is dead, so you can not access your banking app.'},
-      {t:'Take the Tube — it is within your cash budget',good:true,fb:'✓ Excellent! £5.50 on the Tube leaves you £2.50 spare. Practical and independent. Well done!'}
-    ]
-  },
-   {
-    id:'entrance',
-    title:'Scene 3: Which way?',
-    story:'You look at the London Undeground map. <a
-    href="https://www.visitlondon.com/-/media/files/london/visit/maps-and-guides/tube-maps/tube-map-2025.pdf?rev=8e7da6b3c8954f3dab53b7600bd438cd"
-    target="_blank"
-    style="
-      color:#FFB800;
-      font-weight:600;
-      text-decoration:none;
-    "
-  >
-    🗺️ Open Tube Map
-  </a> Your route includes these stations: <br> Green Park, Covent Garden,South Kensington</br>. Which Tube line do you need to take?>',
-    type:'metro',
-    answer:'Piccadilly',
-     fb:'✓ Correct! The Piccadilly line connects Heathrow with central London.'
-  },
-  {
-    id:'tube',
-    title:'Scene 4: On the Tube 🚇',
-    story:'You are on the Piccadilly line. A stranger notices you looking lost and asks: <em>"You alright there? First time in London?"</em> How do you respond naturally in English?',
-    type:'choice',
-    choices:[
-      {t:'"Yes. I am going to hotel in Zone 1. I need help."',good:false,fb:'Grammatically shaky and a bit abrupt. Try to sound more natural — use "I am actually trying to get to…"'},
-      {t:'"Sort of, yeah — I am trying to get to Bloomsbury but I am not totally sure where to change."',good:true,fb:'✓ Natural, friendly, B2-level response! "Sort of", "not totally sure" — great hedging language.'},
-      {t:'"I am fine thank you. I do not require assistance."',good:false,fb:'Very formal and robotic for a casual tube chat. Natural English uses contractions.'}
-    ]
-  },
- 
-  {
-    id:'hotel',
-    title:'Scene 5: Hotel Reception 🏨',
-    story:'You arrive at reception. The receptionist says: <em>"I am afraid your room will not be ready until 3pm — we do apologise. You are welcome to leave your luggage here and help yourself to complimentary tea and coffee in the lounge."</em><br><br>Which reply is most natural and polite?',
-    type:'choice',
-    choices:[
-      {t:'"That is okay. I will wait."',good:false,fb:'Too short and a bit flat. A native speaker would acknowledge more warmly and use natural phrasing.'},
-      {t:'"Oh, no worries at all — I appreciate it. I will drop my bag off and have a wander around until then."',good:true,fb:'✓ Perfect! "No worries", "I appreciate it", "have a wander" — natural, warm, confident English.'},
-      {t:'"This is unacceptable. I have a reservation and I demand my room immediately."',good:false,fb:'Way too aggressive for a standard check-in delay! Save that energy for actual problems.'}
-    ]
-  },
-   {
-    id:'cipher',
-    title:'Scene 6: The Hotel Note 🔐',
-    story:'You find a note from the hotel under the door at the hostel where you are waiting: <em>"Your room code: shift each letter back by 2. Code: TQQO 3047."</em>',
-    type:'fill',
-    cipher:'TQQO',
-    answer:'room',
-    placeholder:'Find the room code',
-    hint:'Remember the alphabet',
-    fb:'✓ ROOM! T(−2)=R, Q(−2)=O, Q(−2)=O, O(−2)=M. Room 3047 — you are in!'
-  }
+  {id:'airport',title:'Scene 1: Heathrow Arrivals 🛬',story:"You land at Heathrow Terminal 2. Phone dead, £8 cash, bag missing. Screen: <em>Lost &amp; Found — Level 2, Mon–Sat 9am–6pm.</em> It's <strong>Sunday, 10am</strong>. What do you do?",type:'choice',choices:[{t:'Go to the Lost &amp; Found office right now',good:false,fb:'Closed on Sundays — wasted trip. Should have checked the hours first.'},{t:'File a missing baggage report at the airline desk instead',good:true,fb:'✓ Smart! Airlines have 24/7 baggage services. Great initiative!'},{t:'Wait at the carousel hoping it turns up',good:false,fb:"Waiting indefinitely isn't practical. Take action!"}]},
+  {id:'taxi',title:'Scene 2: Outside the Terminal 🚕',story:'A man: <em>"Cab to central London, mate? Forty quid, cash only."</em> You have £8. Signs: <strong>Heathrow Express → Paddington: £25 card</strong>. Tube: <strong>Zone 6→1, ~50 min, £5.50 cash</strong>.',type:'choice',choices:[{t:'Negotiate with the cab — offer £8',good:false,fb:'"£8 for a London cab? You\'re having a laugh, mate."'},{t:'Take the Heathrow Express — pay by phone',good:false,fb:"Phone is dead — no banking app. Won't work."},{t:'Take the Tube — within your cash budget',good:true,fb:'✓ £5.50 on the Tube, £2.50 to spare. Practical and independent!'}]},
+  {id:'map',title:'Scene 3: Which line? 🗺️',story:'Your hotel is near <strong>Russell Square</strong>. <a href="https://www.visitlondon.com/-/media/files/london/visit/maps-and-guides/tube-maps/tube-map-2025.pdf" target="_blank" style="color:var(--sun);font-weight:600;text-decoration:none">🗺️ Open Tube Map</a><br><br>You\'re at Heathrow. Which Tube line goes directly to Russell Square?',type:'metro',answer:'piccadilly',hint:"Look for the dark blue line that serves Heathrow — it goes all the way to central London.",fb:'✓ The Piccadilly line! It runs directly from Heathrow to Russell Square.'},
+  {id:'tube',title:'Scene 4: On the Tube 🚇',story:'A stranger asks: <em>"You alright? First time in London?"</em> How do you respond naturally?',type:'choice',choices:[{t:'"Yes. I am going to hotel in Zone 1. I need help."',good:false,fb:'A bit abrupt. Try "I\'m actually trying to get to…"'},{t:'"Sort of, yeah — I\'m trying to get to Russell Square but not totally sure where to change."',good:true,fb:'✓ Natural B2! "Sort of", "not totally sure" — great hedging language.'},{t:'"I am fine thank you. I do not require assistance."',good:false,fb:'Robotic for casual chat. Use contractions!'}]},
+  {id:'hotel',title:'Scene 5: Hotel Reception 🏨',story:'Receptionist: <em>"I\'m afraid your room won\'t be ready until 3pm. You\'re welcome to leave your luggage here and help yourself to tea in the lounge."</em><br><br>Most natural B2 reply?',type:'choice',choices:[{t:'"That is okay. I will wait."',good:false,fb:'Too flat. Acknowledge more warmly.'},{t:'"Oh, no worries at all — I appreciate it. I\'ll drop my bag off and have a wander around until then."',good:true,fb:'✓ Perfect! "No worries", "I appreciate it", "have a wander" — natural, warm B2.'},{t:'"This is unacceptable. I have a reservation and I demand my room immediately."',good:false,fb:'Way too aggressive for a standard check-in delay!'}]},
+  {id:'cipher',title:'Scene 6: The Hotel Note 🔐',story:"A note under the door: <em>\"Room code: shift each letter back by 2. Code: TQQO 3047.\"</em>",type:'fill',cipher:'TQQO',answer:'room',placeholder:'Decode the word…',hint:'T→R, Q→O, Q→O, O→M',fb:"✓ ROOM! Room 3047 — you're in!"}
 ];
+const WYR=[{emoji1:'🌍',opt1:'Travel to 5 countries, only speak English',emoji2:'🗣️',opt2:'Stay home, become fluent in a new language',q:'Think about long-term vs short-term gains.'},{emoji1:'📺',opt1:'Binge a series entirely in English, no subtitles',emoji2:'📖',opt2:'Read an entire English novel — 600 pages',q:'Which suits your learning style better?'},{emoji1:'🎤',opt1:'Give a 5-minute speech in English to 100 strangers',emoji2:'✍️',opt2:'Write a 1000-word essay, no spell-check',q:'Which would you find harder?'},{emoji1:'🤖',opt1:'AI corrects every sentence you write for a month',emoji2:'👨‍🏫',opt2:'Strict teacher corrects every spoken mistake',q:'Which feedback helps you improve more?'},{emoji1:'🏙️',opt1:'Live in London for one year, no Russian',emoji2:'🎓',opt2:'Study English with a daily tutor for one year',q:'Immersion or structured study — which is better?'},{emoji1:'💼',opt1:'Summer job speaking English 8 hours a day',emoji2:'🎮',opt2:'Play online games with native speakers every evening',q:'Which improves conversational English faster?'}];
+const ASSIGN_REQUIRED=[{icon:'📓',title:'Weekly Vocabulary Log',desc:'Every week, find 10 new English words or phrases you encounter naturally.',how:"<strong>How:</strong> Use Notes on your phone. By September you'll have 100+ real-context words. Bring your list."},{icon:'🎬',title:'Watch 3 Films in English',desc:'At least 3 films or 6 series episodes without Russian subtitles.',how:'<strong>How:</strong> Write 3 sentences about each: what happened, language you noticed, one new phrase.'},{icon:'✍️',title:'Write a Short Story or Blog Post',desc:'One piece of creative writing in English — minimum 200 words.',how:"<strong>How:</strong> No translator. Write freely. We'll work on it in September."}];
+const ASSIGN_OPTIONAL=[{icon:'🎙️',title:'Record a Voice Diary',desc:'Once a week, record yourself speaking for 2–3 minutes.',how:'<strong>Goal:</strong> 8–10 recordings by September.'},{icon:'💬',title:'One Real Conversation in English',desc:'One genuine conversation — tourist, native speaker, exchange partner.',how:'<strong>Goal:</strong> 10+ minutes. Write a short summary.'},{icon:'📚',title:'Read an English Book',desc:'At least 100 pages of any book originally in English.',how:'<strong>Goal:</strong> Note 10 interesting expressions. Bring notes in September.'},{icon:'🃏',title:'Vocabulary Flashcards',desc:'Create 60 flashcards on a topic that interests you.',how:'<strong>Goal:</strong> Use Anki or Quizlet. Test yourself at end of summer.'},{icon:'🌐',title:'Follow the News in English for 1 Month',desc:'Every day for 30 days, read one short English news story.',how:'<strong>Goal:</strong> Write 5 sentences per week summarising what you read.'}];
 
-// ── WOULD YOU RATHER ─────────────────────────────────────────────────────────
-const WYR=[
-  {emoji1:'🌍',opt1:'Travel to 5 countries but only speak English the whole time',emoji2:'🗣️',opt2:'Stay home all summer but become fluent in a new language',q:'Which would you rather do — and why? Think about long-term vs short-term gains.'},
-  {emoji1:'📺',opt1:'Binge a brilliant TV series entirely in English, no subtitles',emoji2:'📖',opt2:'Read an entire novel in English — but it is 600 pages',q:'Both are tough but rewarding. Which suits your learning style better?'},
-  {emoji1:'🎤',opt1:'Give a 5-minute speech in English in front of 100 strangers',emoji2:'✍️',opt2:'Write a 1000-word essay in English with no spell-check',q:'Which would you find harder — and what does that say about your English skills?'},
-  {emoji1:'🤖',opt1:'Have an AI correct every sentence you write for a month',emoji2:'👨‍🏫',opt2:'Have a strict teacher point out every mistake you speak aloud',q:'Which feedback method would actually help you improve more?'},
-  {emoji1:'🏙️',opt1:'Live in London for one year with no Russian at all',emoji2:'🎓',opt2:'Study English intensively at home for one year with a tutor every day',q:'Which path do you think leads to better English — immersion or structured study?'},
-  {emoji1:'💼',opt1:'Get a summer job where you must speak English 8 hours a day',emoji2:'🎮',opt2:'Play online games with native English speakers every evening',q:'Which do you think would improve your conversational English faster?'}
-];
+const S={section:0,bingo:new Set(),vocabMatched:{},vocab_s1:'',vocab_s2:'',grammarAnswers:{},readingAnswers:{},skTab:'travel',skPicked:{},escapeCur:0,escapeChoices:{},escapeFill:'',wyrCur:0,wyrChoices:{},wyrExplain:{},assignOptional:new Set()};
+function getState(){return{section:S.section,bingo:[...S.bingo].map(i=>BINGO[i]).filter(x=>x!=='FREE'),vocabMatched:S.vocabMatched,vocab_s1:S.vocab_s1,vocab_s2:S.vocab_s2,grammarAnswers:S.grammarAnswers,readingAnswers:S.readingAnswers,skTab:S.skTab,skPicked:S.skPicked,escapeCur:S.escapeCur,escapeChoices:S.escapeChoices,wyrCur:S.wyrCur,wyrChoices:S.wyrChoices,wyrExplain:S.wyrExplain,assignOptional:[...S.assignOptional].map(i=>ASSIGN_OPTIONAL[i].title)};}
 
-// ── SUMMER ASSIGNMENT ────────────────────────────────────────────────────────
-const ASSIGN_REQUIRED=[
-  {icon:'📓',title:'Weekly Vocabulary Log',desc:'Every week, find 10 new English words or phrases you encounter naturally — in songs, shows, games, conversations. Write them down with an example sentence each.',how:'<strong>How:</strong> Use the Notes app on your phone. By September you will have 100+ real-context words. Bring your list to our first lesson.'},
-  {icon:'🎬',title:'Watch 3 Films or Series in English',desc:'Watch at least 3 films or 6 episodes of a series <em>without Russian subtitles</em>. English subtitles are fine at first, then try without.',how:'<strong>How:</strong> Pick something you already know or love. Write 3 sentences about each one: what happened, what you noticed about the language, one new phrase you learned.'},
-  {icon:'✍️',title:'Write a Short Story or Blog Posts',desc:'Write one piece of creative writing in English — minimum 200 words. It can be anything: a story about your summer, a review of something you watched, an opinion piece.',how:'<strong>How:</strong> Do not use a translator. Write freely, then review. No grades — just expression.'}
-];
-
-const ASSIGN_OPTIONAL=[
-  {icon:'🎙️',title:'Record a Voice Diary',desc:'Once a week, record yourself speaking in English for 2–3 minutes about your week. Do not script it — just talk.',how:'<strong>Goal:</strong> 8–10 recordings by September. Listen back to the first and last — you will hear the difference.'},
-  {icon:'💬',title:'One Real Conversation in English',desc:'Have at least one genuine conversation in English with a real person — a tourist, a native speaker online, a language exchange partner.',how:'<strong>Goal:</strong> Minimum 10 minutes of actual conversation. Write a short summary of what you talked about.'},
-  {icon:'📚',title:'Read an English Book',desc:'Read at least 100 pages of any book originally written in English. Fiction, non-fiction, graphic novel — your choice.',how:'<strong>Goal:</strong> Note 10 expressions or phrases you found interesting. Bring the book (or your notes) in September.'},
-  {icon:'🃏',title:'Vocabulary Flashcards — Themed Set',desc:'Create a set of 60 flashcards on a specific topic that interests you: technology, music, sports, psychology, whatever.',how:'<strong>Goal:</strong> Learn them properly (not just recognition). Use Anki or Quizlet. Test yourself at the end of summer.'},
-  {icon:'🌐',title:'Follow the News in English for 1 Month',desc:'Every day for 30 days, read or listen to one short news story in English (BBC, The Guardian, NPR — pick one).',how:'<strong>Goal:</strong> Write 5 sentences per week summarising what you read. Builds reading speed and current vocabulary fast.'}
-];
-
-// ---- STATE ----
-const S={
-  section:0,started:false,
-  bingo:new Set(),
-  vocabMatched:{},vocabSelected:null,vocab_s1:'',vocab_s2:'',
-  grammarAnswers:{},grammarDone:false,
-  readingAnswers:{},
-  skTab:'travel',skPicked:{},
-  escapeCur:0,escapeChoices:{},escapeScore:0,escapeFill:'',
-  wyrCur:0,wyrChoices:{},wyrExplain:{},
-  assignOptional:new Set()
-};
-
-    const SESSION_ID = 'shared_lesson';
-    
-function getState(){
-  return{
-    sessionId:SESSION_ID,
-    section:S.section,
-    bingo:[...S.bingo].map(i=>BINGO[i]).filter(x=>x!=='FREE'),
-    vocabMatched:S.vocabMatched,vocab_s1:S.vocab_s1,vocab_s2:S.vocab_s2,
-    grammarAnswers:S.grammarAnswers,
-    readingAnswers:S.readingAnswers,
-    skTab:S.skTab,skPicked:S.skPicked,
-    escapeCur:S.escapeCur,escapeChoices:S.escapeChoices,escapeScore:S.escapeScore,
-    wyrCur:S.wyrCur,wyrChoices:S.wyrChoices,wyrExplain:S.wyrExplain,
-    assignOptional:[...S.assignOptional].map(i=>ASSIGN_OPTIONAL[i].title),
-    finished:S.section===8
-  };
-}
-
-// ---- CONTROL LISTENER — teacher drives navigation ----
-function startLesson(section){
-  if(!S.started){
-    S.started=true;
-    document.getElementById('waitScreen').style.display='none';
-    document.getElementById('lessonContent').style.display='block';
-    buildAll();
-  }
-  const n=section??0;
-  if(n!==S.section) goTo(n);
-}
-
-// Listen to shared doc — teacher writes section here
-onSnapshot(SHARED,(snap)=>{
-  const d=snap.data();
-  if(!d) return;
-  const sec=d.teacher?.section;
-  if(sec===undefined) return;
-  if(!S.started) startLesson(sec);
-  else if(sec!==S.section) goTo(sec);
-});
-
-// ---- NAV ----
 const TOTAL=9;
-function goTo(n){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  const id=n===8?'secFinal':'sec'+n;
-  const el=document.getElementById(id);
-  if(el){el.classList.add('active');S.section=n;updatePB();window.scrollTo({top:0,behavior:'smooth'});}
-  sync();
-}
-window.goFinal=()=>{goTo(8);confetti();};
+function goTo(n){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));const el=document.getElementById(n===8?'secFinal':'sec'+n);if(el){el.classList.add('active');S.section=n;updatePB();window.scrollTo({top:0,behavior:'smooth'});}sync();}
+window.nextSec=()=>goTo(Math.min(S.section+1,8));
+window.prevSec=()=>goTo(Math.max(S.section-1,0));
+window.goFinal=()=>{goTo(8);doConfetti();};
+function updatePB(){const bar=document.getElementById('progressBar');bar.innerHTML='';for(let i=0;i<TOTAL-1;i++){const d=document.createElement('div');d.className='pb-step'+(i<S.section?' done':i===S.section?' active':'');bar.appendChild(d);}}
 
-function updatePB(){
-  const bar=document.getElementById('progressBar');
-  bar.innerHTML='';
-  for(let i=0;i<TOTAL-1;i++){
-    const d=document.createElement('div');
-    d.className='pb-step'+(i<S.section?' done':i===S.section?' active':'');
-    bar.appendChild(d);
-  }
-}
-
-// ---- BUILD ALL ----
-function buildAll(){
-  buildBingo();buildVocab();buildGrammar();buildReading();
-  showSK('travel',document.querySelector('.sk-tab.active'));
-  buildEP();renderEscene(0);buildWYR();buildAssignment();updatePB();
-}
-
-// ---- BINGO ----
-function buildBingo(){
-  const g=document.getElementById('bingoGrid');g.innerHTML='';
-  BINGO.forEach((item,i)=>{
-    const c=document.createElement('div');
-    c.className='bc'+(item==='FREE'?' free marked':'');
-    c.textContent=item;
-    if(item==='FREE')S.bingo.add(i);
-    c.onclick=()=>{if(item==='FREE')return;S.bingo.has(i)?(S.bingo.delete(i),c.classList.remove('marked')):(S.bingo.add(i),c.classList.add('marked'));checkBingo();sync();};
-    g.appendChild(c);
-  });
-}
-function checkBingo(){
-  const lines=[[0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24],[0,5,10,15,20],[1,6,11,16,21],[2,7,12,17,22],[3,8,13,18,23],[4,9,14,19,24],[0,6,12,18,24],[4,8,12,16,20]];
-  const st=document.getElementById('bingoStatus');let won=false;
-  lines.forEach(l=>{if(l.every(i=>S.bingo.has(i))){won=true;l.forEach(i=>document.querySelectorAll('.bc')[i].classList.add('bingo-win'));}});
-  st.textContent=won?'🎉 BINGO! Tell your teacher about each marked square!':`${S.bingo.size-1} marked — keep going!`;
-  st.className='bingo-status'+(won?' win':'');
-}
+function buildBingo(){const g=document.getElementById('bingoGrid');g.innerHTML='';BINGO.forEach((item,i)=>{const c=document.createElement('div');c.className='bc'+(item==='FREE'?' free marked':'');c.textContent=item;if(item==='FREE')S.bingo.add(i);c.onclick=()=>{if(item==='FREE')return;S.bingo.has(i)?(S.bingo.delete(i),c.classList.remove('marked')):(S.bingo.add(i),c.classList.add('marked'));checkBingo();sync();};g.appendChild(c);});}
+function checkBingo(){const lines=[[0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24],[0,5,10,15,20],[1,6,11,16,21],[2,7,12,17,22],[3,8,13,18,23],[4,9,14,19,24],[0,6,12,18,24],[4,8,12,16,20]];const st=document.getElementById('bingoStatus');let won=false;lines.forEach(l=>{if(l.every(i=>S.bingo.has(i))){won=true;l.forEach(i=>document.querySelectorAll('.bc')[i].classList.add('bingo-win'));}});st.textContent=won?'🎉 BINGO! Tell your teacher about each square!':`${S.bingo.size-1} marked — keep going!`;st.className='bingo-status'+(won?' win':'');}
 window.resetBingo=()=>{S.bingo.clear();buildBingo();sync();};
 
-// ---- VOCAB MATCH ----
-function buildVocab(){
-  const area=document.getElementById('vocabMatchArea');
-  const shuffledMeanings=[...VOCAB_PAIRS].sort(()=>Math.random()-.5).map(p=>p.meaning);
-  area.innerHTML='';
-  // Two columns: phrases left, meanings right
-  const wrap=document.createElement('div');
-  wrap.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;';
-
-  const leftCol=document.createElement('div');leftCol.style.cssText='display:flex;flex-direction:column;gap:7px;';
-  const rightCol=document.createElement('div');rightCol.style.cssText='display:flex;flex-direction:column;gap:7px;';
-
-  VOCAB_PAIRS.forEach((p,i)=>{
-    const el=document.createElement('div');
-    el.className='vocab-item';el.id='vp'+i;el.dataset.type='phrase';el.dataset.idx=i;
-    el.innerHTML=`<div class="vocab-phrase">${p.phrase}</div>`;
-    el.onclick=()=>vocabClick('phrase',i,el);
-    leftCol.appendChild(el);
-  });
-
-  shuffledMeanings.forEach((m,i)=>{
-    const el=document.createElement('div');
-    el.className='vocab-item';el.id='vm'+i;el.dataset.type='meaning';el.dataset.meaning=m;
-    el.innerHTML=`<div class="vocab-phrase" style="font-size:12px;color:#ffffffcc">${m}</div>`;
-    el.onclick=()=>vocabClick('meaning',i,el);
-    rightCol.appendChild(el);
-  });
-
-  wrap.appendChild(leftCol);wrap.appendChild(rightCol);area.appendChild(wrap);
-}
-
-let vSelPhrase=null,vSelMeaning=null;
-window.vocabClick=function(type,idx,el){
-  if(type==='phrase'){
-    if(el.classList.contains('matched')) return;
-    document.querySelectorAll('.vocab-item[data-type="phrase"]').forEach(e=>e.classList.remove('selected'));
-    el.classList.add('selected');vSelPhrase={idx,el};
-  } else {
-    if(el.classList.contains('matched')) return;
-    document.querySelectorAll('.vocab-item[data-type="meaning"]').forEach(e=>e.classList.remove('selected'));
-    el.classList.add('selected');vSelMeaning={meaning:el.dataset.meaning,el};
-  }
-  if(vSelPhrase&&vSelMeaning){
-    const correct=VOCAB_PAIRS[vSelPhrase.idx].meaning===vSelMeaning.meaning;
-    if(correct){
-      vSelPhrase.el.classList.remove('selected');vSelPhrase.el.classList.add('matched');
-      vSelPhrase.el.style.borderColor='var(--mint)';vSelPhrase.el.style.background='rgba(0,200,150,0.08)';
-      vSelPhrase.el.innerHTML+=`<div style="color:var(--mint);font-size:11px;margin-top:4px">✓ ${vSelMeaning.meaning}</div>`;
-      vSelMeaning.el.classList.remove('selected');vSelMeaning.el.classList.add('matched');
-      vSelMeaning.el.style.opacity='.35';
-      S.vocabMatched[vSelPhrase.idx]=vSelMeaning.meaning;
-      if(Object.keys(S.vocabMatched).length===VOCAB_PAIRS.length) document.getElementById('vocabWriteArea').style.display='block';
-    } else {
-      vSelPhrase.el.style.borderColor='var(--coral)';vSelMeaning.el.style.borderColor='var(--coral)';
-      setTimeout(()=>{vSelPhrase.el.style.borderColor='';vSelMeaning.el.style.borderColor='';},600);
-    }
-    vSelPhrase=null;vSelMeaning=null;
-    sync();
-  }
-};
+function buildVocab(){const area=document.getElementById('vocabMatchArea');const sm=[...VOCAB_PAIRS].sort(()=>Math.random()-.5).map(p=>p.meaning);area.innerHTML='';const wrap=document.createElement('div');wrap.style.cssText='display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;';const lc=document.createElement('div');lc.style.cssText='display:flex;flex-direction:column;gap:7px;';const rc=document.createElement('div');rc.style.cssText='display:flex;flex-direction:column;gap:7px;';VOCAB_PAIRS.forEach((p,i)=>{const el=document.createElement('div');el.className='vocab-item';el.id='vp'+i;el.dataset.type='phrase';el.innerHTML=`<div class="vocab-phrase">${p.phrase}</div>`;el.onclick=()=>vocabClick('phrase',i,el);lc.appendChild(el);});sm.forEach((m,i)=>{const el=document.createElement('div');el.className='vocab-item';el.id='vm'+i;el.dataset.type='meaning';el.dataset.meaning=m;el.innerHTML=`<div class="vocab-phrase" style="font-size:12px;color:#ffffffcc">${m}</div>`;el.onclick=()=>vocabClick('meaning',i,el);rc.appendChild(el);});wrap.appendChild(lc);wrap.appendChild(rc);area.appendChild(wrap);}
+let vSP=null,vSM=null;
+window.vocabClick=function(type,idx,el){if(type==='phrase'){if(el.classList.contains('matched'))return;document.querySelectorAll('.vocab-item[data-type="phrase"]').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');vSP={idx,el};}else{if(el.classList.contains('matched'))return;document.querySelectorAll('.vocab-item[data-type="meaning"]').forEach(e=>e.classList.remove('selected'));el.classList.add('selected');vSM={meaning:el.dataset.meaning,el};}if(vSP&&vSM){const ok=VOCAB_PAIRS[vSP.idx].meaning===vSM.meaning;if(ok){vSP.el.classList.remove('selected');vSP.el.classList.add('matched');vSP.el.style.borderColor='var(--mint)';vSP.el.style.background='rgba(0,200,150,0.08)';vSP.el.innerHTML+=`<div style="color:var(--mint);font-size:11px;margin-top:4px">✓ ${vSM.meaning}</div>`;vSM.el.classList.remove('selected');vSM.el.classList.add('matched');vSM.el.style.opacity='.35';S.vocabMatched[vSP.idx]=vSM.meaning;if(Object.keys(S.vocabMatched).length===VOCAB_PAIRS.length)document.getElementById('vocabWriteArea').style.display='block';}else{vSP.el.style.borderColor='var(--coral)';vSM.el.style.borderColor='var(--coral)';setTimeout(()=>{vSP.el.style.borderColor='';vSM.el.style.borderColor='';},600);}vSP=null;vSM=null;sync();}};
 window.syncV=()=>{S.vocab_s1=document.getElementById('vocab_s1').value;S.vocab_s2=document.getElementById('vocab_s2').value;sync();};
 
-// ---- GRAMMAR ----
-function buildGrammar(){
-  const cont=document.getElementById('grammarItems');cont.innerHTML='';
-  GRAMMAR.forEach((q,i)=>{
-    const div=document.createElement('div');div.className='grammar-item';div.id='gi'+i;
-    let optsHTML='<div class="grammar-options">';
-    q.opts.forEach((o,j)=>{ optsHTML+=`<button class="go" id="go${i}_${j}" onclick="pickGrammar(${i},${j})">${String.fromCharCode(65+j)}. ${o}</button>`; });
-    optsHTML+='</div><div class="grammar-feedback" id="gf'+i+'"></div>';
-    div.innerHTML=`<div class="grammar-q">${i+1}. ${q.q}</div>${optsHTML}`;
-    cont.appendChild(div);
-  });
-}
-window.pickGrammar=function(qi,oi){
-  if(S.grammarAnswers[qi]!==undefined) return;
-  S.grammarAnswers[qi]=oi;
-  const correct=oi===GRAMMAR[qi].ans;
-  const item=document.getElementById('gi'+qi);
-  item.classList.add(correct?'answered-correct':'answered-wrong');
-  document.getElementById('go'+qi+'_'+oi).classList.add(correct?'selected-correct':'selected-wrong');
-  if(!correct) document.getElementById('go'+qi+'_'+GRAMMAR[qi].ans).classList.add('reveal-correct');
-  document.getElementById('gf'+qi).textContent=(correct?'✓ Correct! ':'✗ Not quite — ')+(GRAMMAR[qi].exp||'');
-  document.getElementById('gf'+qi).style.color=correct?'var(--mint)':'#ffaaaa';
-  const done=Object.keys(S.grammarAnswers).length;
-  if(done===GRAMMAR.length){
-    const score=Object.entries(S.grammarAnswers).filter(([i,v])=>parseInt(v)===GRAMMAR[i].ans).length;
-    const sc=document.getElementById('grammarScore');
-    sc.style.display='block';
-    sc.textContent=`Score: ${score}/${GRAMMAR.length} ${'⭐'.repeat(Math.round(score/GRAMMAR.length*5))}`;
-    S.grammarDone=true;
-  }
-  sync();
-};
+function buildGrammar(){const cont=document.getElementById('grammarItems');cont.innerHTML='';GRAMMAR.forEach((q,i)=>{const div=document.createElement('div');div.className='grammar-item';div.id='gi'+i;let o='<div class="grammar-options">';q.opts.forEach((op,j)=>{o+=`<button class="go" id="go${i}_${j}" onclick="pickGrammar(${i},${j})">${String.fromCharCode(65+j)}. ${op}</button>`;});o+=`</div><div class="grammar-feedback" id="gf${i}"></div>`;div.innerHTML=`<div class="grammar-q">${i+1}. ${q.q}</div>${o}`;cont.appendChild(div);});}
+window.pickGrammar=function(qi,oi){if(S.grammarAnswers[qi]!==undefined)return;S.grammarAnswers[qi]=oi;const ok=oi===GRAMMAR[qi].ans;document.getElementById('gi'+qi).classList.add(ok?'answered-correct':'answered-wrong');document.getElementById(`go${qi}_${oi}`).classList.add(ok?'selected-correct':'selected-wrong');if(!ok)document.getElementById(`go${qi}_${GRAMMAR[qi].ans}`).classList.add('reveal-correct');document.getElementById('gf'+qi).textContent=(ok?'✓ Correct! ':'✗ Not quite — ')+GRAMMAR[qi].exp;document.getElementById('gf'+qi).style.color=ok?'var(--mint)':'#ffaaaa';const done=Object.keys(S.grammarAnswers).length;if(done===GRAMMAR.length){const sc=Object.entries(S.grammarAnswers).filter(([i,v])=>parseInt(v)===GRAMMAR[i].ans).length;const el=document.getElementById('grammarScore');el.style.display='block';el.textContent=`Score: ${sc}/${GRAMMAR.length} ${'⭐'.repeat(Math.round(sc/GRAMMAR.length*5))}`;}sync();};
 
-// ---- READING ----
-function buildReading(){
-  const cont=document.getElementById('readingQs');cont.innerHTML='';
-  READING_QS.forEach((q,i)=>{
-    cont.innerHTML+=`<div class="read-q"><div class="read-q-text">${i+1}. ${q.q}</div><textarea class="read-input" id="rq${i}" rows="2" placeholder="${q.ph}" oninput="S.readingAnswers[${i}]=this.value;sync()"></textarea></div>`;
-  });
-}
+function buildReading(){const c=document.getElementById('readingQs');c.innerHTML='';READING_QS.forEach((q,i)=>{c.innerHTML+=`<div class="read-q"><div class="read-q-text">${i+1}. ${q.q}</div><textarea class="read-input" id="rq${i}" rows="2" placeholder="${q.ph}" oninput="S.readingAnswers[${i}]=this.value;sync()"></textarea></div>`;});}
 
-// ---- SURVIVAL KIT ----
-window.showSK=function(key,btn){
-  if(btn){document.querySelectorAll('.sk-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
-  S.skTab=key;
-  const g=document.getElementById('skGrid');g.innerHTML='';
-  SK[key].forEach((p,i)=>{
-    const k=key+'_'+i;
-    const d=document.createElement('div');
-    d.className='ph-card'+(S.skPicked[k]?' picked':'');
-    d.innerHTML=`<div class="ph-en">${p.en}</div><div class="ph-ru">${p.ru}</div><div class="ph-ctx">💡 ${p.ctx}</div>`;
-    d.onclick=()=>{S.skPicked[k]=!S.skPicked[k];d.classList.toggle('picked');sync();};
-    g.appendChild(d);
-  });
-  sync();
-};
+window.showSK=function(key,btn){if(btn){document.querySelectorAll('.sk-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}S.skTab=key;const g=document.getElementById('skGrid');g.innerHTML='';SK[key].forEach((p,i)=>{const k=key+'_'+i;const d=document.createElement('div');d.className='ph-card'+(S.skPicked[k]?' picked':'');d.innerHTML=`<div class="ph-en">${p.en}</div><div class="ph-ru">${p.ru}</div><div class="ph-ctx">💡 ${p.ctx}</div>`;d.onclick=()=>{S.skPicked[k]=!S.skPicked[k];d.classList.toggle('picked');sync();};g.appendChild(d);});sync();};
 
-// ---- ESCAPE ----
-function buildEP(){
-  const b=document.getElementById('epBar');b.innerHTML='';
-  for(let i=0;i<ESCENES.length;i++){const d=document.createElement('div');d.className='ep'+(i===0?' cur':'');d.id='ep'+i;b.appendChild(d);}
-}
-
+function buildEP(){const b=document.getElementById('epBar');b.innerHTML='';for(let i=0;i<ESCENES.length;i++){const d=document.createElement('div');d.className='ep'+(i===0?' cur':'');d.id='ep'+i;b.appendChild(d);}}
 function renderEscene(idx){
   const wrap=document.getElementById('esceneWrap');
-  if(idx>=ESCENES.length){wrap.innerHTML='';document.getElementById('escDone').style.display='block';const good=Object.values(S.escapeChoices).filter(v=>v).length;document.getElementById('escScore').textContent=`You made ${good} out of ${ESCENES.filter(s=>s.type==='choice').length} good decisions 🎯`;sync();return;}
+  if(idx>=ESCENES.length){wrap.innerHTML='';document.getElementById('escDone').style.display='block';const good=Object.values(S.escapeChoices).filter(v=>v).length;const tot=ESCENES.filter(s=>s.type==='choice').length;document.getElementById('escScore').textContent=`You made ${good} out of ${tot} good decisions 🎯`;sync();return;}
   const sc=ESCENES[idx];S.escapeCur=idx;
-  for(let i=0;i<ESCENES.length;i++){const d=document.getElementById('ep'+i);if(d)d.className='ep'+(i<idx?'done':i===idx?' cur':'');}
-
+  for(let i=0;i<ESCENES.length;i++){const d=document.getElementById('ep'+i);if(d)d.className='ep'+(i<idx?' done':i===idx?' cur':'');}
   let html=`<div class="story-box"><strong>${sc.title}</strong><br><br>${sc.story}</div>`;
-
   if(sc.type==='choice'){
     html+='<div class="choice-grid">';
     sc.choices.forEach((c,ci)=>{html+=`<button class="choice-btn" id="ec${idx}_${ci}" onclick="pickEscape(${idx},${ci})">${c.t}</button>`;});
-    html+='</div>';
-    html+=`<div class="scene-feedback" id="efb${idx}"></div>`;
-    html+=`<div class="scene-nav" id="enav${idx}" style="display:none"><button class="btn btn-ocean" onclick="renderEscene(${idx+1})">Next Scene →</button></div>`;
- if(sc.type==='choice'){
-
-  // existing choice code
-
-}
-else if(sc.type==='metro'){
-
-  html+=`
-    <input
-      class="fill-input"
-      id="metroInput"
-      placeholder="${sc.placeholder}"
-      onkeydown="if(event.key==='Enter')checkMetro(${idx})"
-    >
-
-    <div class="hint-txt" id="metroHint"></div>
-
-    <div class="scene-nav">
-
-      <button
-        class="btn btn-ghost"
-        onclick="
-          window.open(
-            'https://www.visitlondon.com/-/media/files/london/visit/maps-and-guides/tube-maps/tube-map-2025.pdf?rev=8e7da6b3c8954f3dab53b7600bd438cd',
-            '_blank'
-          )
-        "
-      >
-        🗺️ Open Tube Map
-      </button>
-
-      <button
-        class="btn btn-ghost"
-        onclick="
-          document.getElementById('metroHint').textContent='💡 ${sc.hint}';
-          document.getElementById('metroHint').className='hint-txt show';
-        "
-      >
-        💡 Hint
-      </button>
-
-      <button
-        class="btn btn-ocean"
-        onclick="checkMetro(${idx})"
-      >
-        Check →
-      </button>
-
-    </div>
-  `;
-
-}
+    html+=`</div><div class="scene-feedback" id="efb${idx}"></div><div class="scene-nav" id="enav${idx}" style="display:none"><button class="btn btn-ocean" onclick="renderEscene(${idx+1})">Next Scene →</button></div>`;
+  } else if(sc.type==='metro'){
+    html+=`<input class="fill-input" id="metroInput" placeholder="Type the line name…" oninput="S.escapeFill=this.value;sync()" onkeydown="if(event.key==='Enter')checkMetro(${idx})">`;
+    html+=`<div class="hint-txt" id="metroHint"></div>`;
+    html+=`<div class="scene-nav"><button class="btn btn-ghost" onclick="document.getElementById('metroHint').textContent='💡 ${sc.hint}';document.getElementById('metroHint').className='hint-txt show'">💡 Hint</button><button class="btn btn-ocean" onclick="checkMetro(${idx})">Check →</button></div>`;
   } else if(sc.type==='fill'){
-    html+=`<div class="cipher-box" id="cipherBox">${sc.cipher.split('').join(' &nbsp; ')}</div>`;
+    html+=`<div class="cipher-box">${sc.cipher.split('').join(' &nbsp; ')}</div>`;
     html+=`<input class="fill-input" id="efill" placeholder="${sc.placeholder}" oninput="S.escapeFill=this.value;sync()" onkeydown="if(event.key==='Enter')chkFill(${idx})">`;
     html+=`<div class="hint-txt" id="efhint"></div>`;
     html+=`<div class="scene-nav"><button class="btn btn-ghost" onclick="document.getElementById('efhint').textContent='💡 ${sc.hint}';document.getElementById('efhint').className='hint-txt show'">💡 Hint</button><button class="btn btn-ocean" onclick="chkFill(${idx})">Decode →</button></div>`;
   }
-
   wrap.innerHTML=html;
 }
+window.pickEscape=function(idx,ci){if(S.escapeChoices[idx]!==undefined)return;const sc=ESCENES[idx];const ch=sc.choices[ci];S.escapeChoices[idx]=ch.good;document.querySelectorAll(`[id^="ec${idx}_"]`).forEach((b,i)=>{if(i===ci)b.className='choice-btn '+(ch.good?'chosen-good':'chosen-bad');else if(sc.choices[i].good)b.className='choice-btn reveal-good';b.disabled=true;});const fb=document.getElementById('efb'+idx);fb.textContent=ch.fb;fb.className='scene-feedback show '+(ch.good?'good':'bad');document.getElementById('enav'+idx).style.display='flex';sync();};
+window.checkMetro=function(idx){const sc=ESCENES[idx];const inp=document.getElementById('metroInput');const val=inp.value.toLowerCase().trim();if(val.includes(sc.answer)){inp.className='fill-input correct';S.escapeChoices[idx]=true;const fb=document.createElement('div');fb.className='scene-feedback show good';fb.textContent=sc.fb;inp.after(fb);sync();setTimeout(()=>renderEscene(idx+1),1200);}else{inp.className='fill-input wrong';setTimeout(()=>inp.className='fill-input',400);}};
+window.chkFill=function(idx){const inp=document.getElementById('efill');const val=inp.value.toLowerCase().trim();const sc=ESCENES[idx];if(val.includes(sc.answer)){inp.className='fill-input correct';S.escapeChoices[idx]=true;const fb=document.createElement('div');fb.className='scene-feedback show good';fb.textContent=sc.fb;inp.after(fb);sync();setTimeout(()=>renderEscene(idx+1),1200);}else{inp.className='fill-input wrong';setTimeout(()=>inp.className='fill-input',400);}sync();};
 
-window.pickEscape=function(idx,ci){
-  if(S.escapeChoices[idx]!==undefined)return;
-  const sc=ESCENES[idx];const ch=sc.choices[ci];
-  S.escapeChoices[idx]=ch.good;
-  document.querySelectorAll(`[id^="ec${idx}_"]`).forEach((b,i)=>{
-    if(i===ci)b.className='choice-btn '+(ch.good?'chosen-good':'chosen-bad');
-    else if(sc.choices[i].good)b.className='choice-btn reveal-good';
-    else b.classList.add(ch.good?'':'');
-    b.disabled=true;
-  });
-  const fb=document.getElementById('efb'+idx);
-  fb.textContent=ch.fb;fb.className='scene-feedback show '+(ch.good?'good':'bad');
-  document.getElementById('enav'+idx).style.display='flex';
-  sync();
-};
+function buildWYR(){const prog=document.getElementById('wyrProgress');WYR.forEach((_,i)=>{const d=document.createElement('div');d.className='wyr-dot'+(i===0?' active':'');d.id='wdot'+i;prog.appendChild(d);});renderWYR(0);}
+function renderWYR(idx){S.wyrCur=idx;for(let i=0;i<WYR.length;i++){const d=document.getElementById('wdot'+i);if(d)d.className='wyr-dot'+(i<idx?' done':i===idx?' active':'');}const wrap=document.getElementById('wyrWrap');if(idx>=WYR.length){wrap.innerHTML='<div style="text-align:center;padding:20px 0"><div style="font-size:40px;margin-bottom:10px">🎉</div><div style="font-family:\'Syne\',sans-serif;color:white;font-size:17px;font-weight:700">All 6 dilemmas done!</div></div>';sync();return;}const w=WYR[idx];const saved=S.wyrChoices[idx];const exp=S.wyrExplain[idx]||'';wrap.innerHTML=`<div class="wyr-q-label">Question ${idx+1} of ${WYR.length}</div><div class="wyr-grid"><div class="wyr-card ${saved===0?'picked':saved!==undefined?'not-picked':''}" id="wc${idx}_0" onclick="pickWYR(${idx},0)"><div class="wyr-emoji">${w.emoji1}</div><div class="wyr-text">${w.opt1}</div></div><div class="wyr-card ${saved===1?'picked':saved!==undefined?'not-picked':''}" id="wc${idx}_1" onclick="pickWYR(${idx},1)"><div class="wyr-emoji">${w.emoji2}</div><div class="wyr-text">${w.opt2}</div></div></div><div class="wyr-explain ${saved!==undefined?'show':''}" id="wyrex${idx}"><div class="tip-box">💬 <strong>Explain your choice!</strong> ${w.q}</div><textarea class="wyr-ta" rows="3" placeholder="I'd rather… because… / I think…" oninput="S.wyrExplain[${idx}]=this.value;sync()">${exp}</textarea></div><div class="wyr-nav"><span class="wyr-counter">${idx+1} / ${WYR.length}</span>${saved!==undefined?`<button class="btn btn-sun" onclick="renderWYR(${idx+1})">${idx+1<WYR.length?'Next Dilemma →':'Done! 🎉'}</button>`:'<span style="color:#ffffff44;font-size:13px">Pick an option first</span>'}</div>`;}
+window.pickWYR=function(idx,ci){S.wyrChoices[idx]=ci;document.getElementById('wc'+idx+'_0').className='wyr-card '+(ci===0?'picked':'not-picked');document.getElementById('wc'+idx+'_1').className='wyr-card '+(ci===1?'picked':'not-picked');document.getElementById('wyrex'+idx).className='wyr-explain show';renderWYR(idx);sync();};
 
-window.chkFill=function(idx){
-  const inp=document.getElementById('efill');
-  const val=inp.value.toLowerCase().trim();
-  const sc=ESCENES[idx];
-  if(val.includes(sc.answer)){
-    inp.className='fill-input correct';
-    S.escapeChoices[idx]=true;
-    const fb=document.createElement('div');fb.className='scene-feedback show good';fb.textContent=sc.fb;inp.after(fb);
-    setTimeout(()=>renderEscene(idx+1),1200);
-  } else {
-    inp.className='fill-input wrong';setTimeout(()=>inp.className='fill-input',400);
-  }
-  sync();
-};
-window.checkMetro=function(idx){
-  const sc=ESCENES[idx];
-  const inp=document.getElementById('metroInput');
+function buildAssignment(){const wrap=document.getElementById('assignWrap');let html='<div class="assign-section"><div class="assign-header"><span class="assign-required-badge">Required</span> Do all 3</div><div class="assign-sub">~10–15 min/week each. Bring evidence in September!</div>';ASSIGN_REQUIRED.forEach(a=>{html+=`<div class="assign-card"><div class="assign-top"><span class="assign-icon">${a.icon}</span><div class="assign-body"><div class="assign-title">${a.title}</div><div class="assign-desc">${a.desc}</div><div class="assign-how">${a.how}</div></div></div></div>`;});html+='</div><div class="assign-section"><div class="assign-header"><span class="assign-optional-badge">Optional</span> Pick any 2</div><div class="assign-sub">Click to select.</div>';ASSIGN_OPTIONAL.forEach((a,i)=>{html+=`<div class="assign-card optional" id="aopt${i}" onclick="toggleAssign(${i})"><div class="assign-top"><span class="assign-icon">${a.icon}</span><div class="assign-body"><div class="assign-title">${a.title}</div><div class="assign-desc">${a.desc}</div><div class="assign-how">${a.how}</div></div><div class="assign-chk" id="achk${i}"></div></div></div>`;});html+='</div>';wrap.innerHTML=html;}
+window.toggleAssign=function(i){S.assignOptional.has(i)?(S.assignOptional.delete(i),document.getElementById('aopt'+i).classList.remove('chosen'),document.getElementById('achk'+i).textContent=''):(S.assignOptional.add(i),document.getElementById('aopt'+i).classList.add('chosen'),document.getElementById('achk'+i).textContent='✓');const cnt=S.assignOptional.size;const st=document.getElementById('assignStatus');if(cnt>=2){st.textContent=`✅ ${cnt} optional tasks selected!`;st.className='assign-pick-status ready';document.getElementById('assignFinal').style.display='block';}else{st.textContent=`Pick ${2-cnt} more`;st.className='assign-pick-status';document.getElementById('assignFinal').style.display='none';}sync();};
 
-  const val=inp.value.toLowerCase().trim();
+window.doConfetti=function(){const cols=['#FFB800','#0057FF','#FF4D4D','#00C896','#fff'];for(let i=0;i<80;i++)setTimeout(()=>{const p=document.createElement('div');p.className='confetti-p';p.style.cssText=`left:${Math.random()*100}vw;top:-20px;background:${cols[Math.floor(Math.random()*cols.length)]};animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*.5}s;transform:rotate(${Math.random()*360}deg);width:${6+Math.random()*10}px;height:${6+Math.random()*10}px;border-radius:${Math.random()>.5?'50%':'2px'};`;document.body.appendChild(p);setTimeout(()=>p.remove(),4000);},i*30);};
 
-  if(
-    val.includes('piccadilly')
-  ){
-    inp.className='fill-input correct';
-
-    S.escapeChoices[idx]=true;
-
-    const fb=document.createElement('div');
-    fb.className='scene-feedback show good';
-    fb.textContent=sc.fb;
-
-    inp.after(fb);
-
-    sync();
-
-    setTimeout(()=>{
-      renderEscene(idx+1);
-    },1200);
-
-  } else {
-
-    inp.className='fill-input wrong';
-
-    setTimeout(()=>{
-      inp.className='fill-input';
-    },400);
-
-  }
-}
-// ---- WYR ----
-function buildWYR(){
-  const prog=document.getElementById('wyrProgress');
-  WYR.forEach((_,i)=>{
-    const d=document.createElement('div');d.className='wyr-dot'+(i===0?' active':'');d.id='wdot'+i;prog.appendChild(d);
-  });
-  renderWYR(0);
-}
-
-function renderWYR(idx){
-  S.wyrCur = idx;
-
-  for(let i = 0; i < WYR.length; i++){
-    const d = document.getElementById('wdot' + i);
-
-    if(d){
-      d.className =
-        'wyr-dot' +
-        (i < idx ? ' done' : i === idx ? ' active' : '');
-    }
-  }
-
-  const wrap = document.getElementById('wyrWrap');
-
-  if(idx >= WYR.length){
-    wrap.innerHTML = `
-      <div style="text-align:center;padding:20px 0">
-        <div style="font-size:40px;margin-bottom:10px">🎉</div>
-
-        <div style="font-family:Syne,sans-serif;color:white;font-size:17px;font-weight:700">
-          All 6 dilemmas done!
-        </div>
-
-        <div style="color:#ffffffaa;font-size:13px;margin-top:6px">
-          Great speaking practice — now your teacher has some follow-up questions!
-        </div>
-      </div>
-    `;
-
-    sync();
-    return;
-  }
-
-  const w = WYR[idx];
-  const saved = S.wyrChoices[idx];
-  const exp = S.wyrExplain[idx] || '';
-
-  wrap.innerHTML = `
-    <div class="wyr-q-label">
-      Question ${idx + 1} of ${WYR.length}
-    </div>
-
-    <div class="wyr-grid">
-
-      <div class="wyr-card ${saved === 0 ? 'picked' : saved !== undefined ? 'not-picked' : ''}"
-           id="wc${idx}_0"
-           onclick="pickWYR(${idx},0)">
-
-        <div class="wyr-emoji">${w.emoji1}</div>
-        <div class="wyr-text">${w.opt1}</div>
-
-      </div>
-
-      <div class="wyr-card ${saved === 1 ? 'picked' : saved !== undefined ? 'not-picked' : ''}"
-           id="wc${idx}_1"
-           onclick="pickWYR(${idx},1)">
-
-        <div class="wyr-emoji">${w.emoji2}</div>
-        <div class="wyr-text">${w.opt2}</div>
-
-      </div>
-
-    </div>
-
-    <div class="wyr-explain ${saved !== undefined ? 'show' : ''}"
-         id="wyrex${idx}">
-
-      <div class="tip-box">
-        💬 <strong>Now explain your choice!</strong> ${w.q}
-      </div>
-
-      <textarea
-        class="wyr-ta"
-        rows="3"
-        placeholder="I'd rather… because… / I think… / To be honest…"
-        oninput="S.wyrExplain[${idx}] = this.value; sync()"
-      >${exp}</textarea>
-
-    </div>
-
-    <div class="wyr-nav">
-
-      <span class="wyr-counter">
-        ${idx + 1} / ${WYR.length}
-      </span>
-
-      ${
-        saved !== undefined
-          ? `<button class="btn btn-sun"
-                     onclick="renderWYR(${idx + 1})">
-                ${idx + 1 < WYR.length ? 'Next Dilemma →' : 'Done! 🎉'}
-             </button>`
-          : `<span style="color:#ffffff44;font-size:13px">
-                Pick an option first
-             </span>`
-      }
-
-    </div>
-  `;
-}
-
-window.pickWYR=function(idx,ci){
-  S.wyrChoices[idx]=ci;
-  document.getElementById('wc'+idx+'_0').className='wyr-card '+(ci===0?'picked':'not-picked');
-  document.getElementById('wc'+idx+'_1').className='wyr-card '+(ci===1?'picked':'not-picked');
-  document.getElementById('wyrex'+idx).className='wyr-explain show';
-  renderWYR(idx);// re-render to show Next btn
-  sync();
-};
-
-// ---- SUMMER ASSIGNMENT ----
-function buildAssignment(){
-  const wrap=document.getElementById('assignWrap');
-  let html='<div class="assign-section"><div class="assign-header"><span class="assign-required-badge">Required</span> Do all 3 of these</div><div class="assign-sub">Each takes about 10–15 min per week. Bring evidence in September!</div>';
-  ASSIGN_REQUIRED.forEach(a=>{
-    html+=`<div class="assign-card"><div class="assign-top"><span class="assign-icon">${a.icon}</span><div class="assign-body"><div class="assign-title">${a.title}</div><div class="assign-desc">${a.desc}</div><div class="assign-how">${a.how}</div></div></div></div>`;
-  });
-  html+='</div>';
-  html+='<div class="assign-section"><div class="assign-header"><span class="assign-optional-badge">Optional</span> Pick any 2</div><div class="assign-sub">Choose the ones that fit your summer best. Click to select.</div>';
-  ASSIGN_OPTIONAL.forEach((a,i)=>{
-    html+=`<div class="assign-card optional" id="aopt${i}" onclick="toggleAssign(${i})"><div class="assign-top"><span class="assign-icon">${a.icon}</span><div class="assign-body"><div class="assign-title">${a.title}</div><div class="assign-desc">${a.desc}</div><div class="assign-how">${a.how}</div></div><div class="assign-chk" id="achk${i}"></div></div></div>`;
-  });
-  html+='</div>';
-  wrap.innerHTML=html;
-}
-
-window.toggleAssign=function(i){
-  S.assignOptional.has(i)?(S.assignOptional.delete(i),document.getElementById('aopt'+i).classList.remove('chosen'),document.getElementById('achk'+i).textContent='')
-  :(S.assignOptional.add(i),document.getElementById('aopt'+i).classList.add('chosen'),document.getElementById('achk'+i).textContent='✓');
-  const cnt=S.assignOptional.size;
-  const st=document.getElementById('assignStatus');
-  if(cnt>=2){st.textContent=`✅ ${cnt} optional tasks selected!`;st.className='assign-pick-status ready';document.getElementById('assignFinal').style.display='block';}
-  else{st.textContent=`Pick ${2-cnt} more optional task${2-cnt!==1?'s':''}`;st.className='assign-pick-status';document.getElementById('assignFinal').style.display='none';}
-  sync();
-};
-
-// ---- CONFETTI ----
-window.confetti=function(){
-  const cols=['#FFB800','#0057FF','#FF4D4D','#00C896','#fff'];
-  for(let i=0;i<80;i++)setTimeout(()=>{const p=document.createElement('div');p.className='confetti-p';p.style.cssText=`left:${Math.random()*100}vw;top:-20px;background:${cols[Math.floor(Math.random()*cols.length)]};animation-duration:${1.5+Math.random()*2}s;animation-delay:${Math.random()*.5}s;transform:rotate(${Math.random()*360}deg);width:${6+Math.random()*10}px;height:${6+Math.random()*10}px;border-radius:${Math.random()>.5?'50%':'2px'};`;document.body.appendChild(p);setTimeout(()=>p.remove(),4000);},i*30);
-};
-
-// expose S globally for inline oninput handlers
 window.S=S;window.sync=sync;
+buildBingo();buildVocab();buildGrammar();buildReading();
+showSK('travel',document.querySelector('.sk-tab.active'));
+buildEP();renderEscene(0);buildWYR();buildAssignment();updatePB();
 </script>
 </body>
 </html>
