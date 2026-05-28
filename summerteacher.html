@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Dashboard — Last Lesson</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--sun:#FFB800;--ocean:#0057FF;--coral:#FF4D4D;--mint:#00C896;--bg:#07070f;--panel:#10111e;--card:#13142200;--border:rgba(255,255,255,0.07);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:white;min-height:100vh;}
+
+  /* TOP */
+  .top{background:rgba(10,10,20,0.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:100;flex-wrap:wrap;}
+  .top-title{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;flex:1;}
+  .top-title span{color:var(--sun);}
+  .live-pill{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;color:#ffffffaa;}
+  .ldot{width:8px;height:8px;border-radius:50%;background:#444;transition:background .3s;}
+  .ldot.live{background:var(--mint);box-shadow:0 0 6px var(--mint);animation:lpulse 2s infinite;}
+  @keyframes lpulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+  /* NAV CONTROLS */
+  .nav-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .nav-label{font-size:12px;color:#ffffff66;margin-right:4px;}
+  .nav-btn{padding:8px 16px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,0.06);color:white;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+  .nav-btn:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,.2);}
+  .nav-btn.active-sec{background:var(--sun);border-color:var(--sun);color:#0A0A14;font-weight:600;}
+  .nav-arrow{padding:8px 14px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,0.06);color:white;font-size:16px;cursor:pointer;transition:all .2s;}
+  .nav-arrow:hover{background:var(--ocean);border-color:var(--ocean);}
+
+  /* MAIN */
+  .main{max-width:1060px;margin:0 auto;padding:22px 18px 60px;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:700px){.two-col{grid-template-columns:1fr}}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+  @media(max-width:800px){.three-col{grid-template-columns:1fr 1fr}}
+  @media(max-width:500px){.three-col{grid-template-columns:1fr}}
+
+  /* NO SESSION */
+  .empty{text-align:center;padding:70px 20px;color:#ffffff33;font-size:15px;}
+  .empty big{display:block;font-size:52px;margin-bottom:14px;}
+
+  /* SECTION PANEL */
+  .sec-panel{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:18px;padding:22px;margin-bottom:16px;}
+  .sec-panel-title{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:white;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+  .sec-badge{background:var(--ocean);color:white;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:12px;}
+  .sec-sub{color:#ffffff44;font-size:12px;margin-bottom:16px;}
+
+  /* TAGS */
+  .tags{display:flex;flex-wrap:wrap;gap:5px;}
+  .tag-sun{background:rgba(255,184,0,0.12);border:1px solid rgba(255,184,0,.25);color:var(--sun);border-radius:6px;padding:3px 9px;font-size:11px;}
+  .tag-blue{background:rgba(0,87,255,0.12);border:1px solid rgba(0,87,255,.25);color:#88aaff;border-radius:6px;padding:3px 9px;font-size:11px;}
+  .tag-mint{background:rgba(0,200,150,0.1);border:1px solid rgba(0,200,150,.2);color:var(--mint);border-radius:6px;padding:3px 9px;font-size:11px;}
+  .none{color:#ffffff22;font-size:12px;font-style:italic;}
+
+  /* ESCAPE CELLS */
+  .esc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .esc-cell{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:11px 13px;}
+  .esc-cell.solved{border-color:var(--mint);background:rgba(0,200,150,0.05);}
+  .esc-cell.typing{border-color:var(--sun);}
+  .esc-n{font-size:10px;color:#ffffff44;margin-bottom:3px;}
+  .esc-a{font-size:13px;min-height:18px;color:white;word-break:break-word;}
+  .esc-a.live{color:var(--sun);}
+  .esc-ok{color:var(--mint);font-size:11px;margin-top:3px;}
+
+  /* GRAMMAR */
+  .gram-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+  @media(max-width:600px){.gram-grid{grid-template-columns:repeat(2,1fr)}}
+  .gram-cell{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:9px;padding:10px 11px;font-size:12px;}
+  .gram-cell.correct{border-color:var(--mint);background:rgba(0,200,150,0.05);color:var(--mint);}
+  .gram-cell.wrong{border-color:var(--coral);background:rgba(255,77,77,0.05);color:var(--coral);}
+  .gram-cell.empty-ans{color:#ffffff33;}
+  .gram-q-short{color:#ffffff55;font-size:10px;margin-bottom:4px;}
+
+  /* REFLECT */
+  .ref-items{display:flex;flex-direction:column;gap:8px;}
+  .ref-item{background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:9px;padding:10px 12px;}
+  .ref-q{font-size:10px;color:#ffffff44;margin-bottom:3px;}
+  .ref-a{font-size:13px;color:white;min-height:15px;}
+  .stars-show{color:var(--sun);font-size:15px;}
+
+  /* FINISHED */
+  .fin-banner{background:linear-gradient(90deg,rgba(0,200,150,.12),rgba(0,87,255,.12));border:1px solid rgba(0,200,150,.25);border-radius:10px;padding:10px 16px;color:var(--mint);font-family:'Syne',sans-serif;font-weight:700;text-align:center;font-size:14px;margin-bottom:16px;}
+
+  /* CURRENT SECTION INDICATOR */
+  .cur-sec-bar{background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.2);border-radius:12px;padding:10px 16px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+  .cur-sec-label{font-size:12px;color:#ffffffaa;}
+  .cur-sec-name{font-family:'Syne',sans-serif;font-weight:700;color:var(--sun);font-size:14px;}
+
+  .divider{height:1px;background:var(--border);margin:8px 0 16px;}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="top-title">👩‍🏫 Teacher — <span>Last Lesson Before Summer</span></div>
+  <div class="live-pill"><div class="ldot" id="ldot"></div><span id="ltext">Connecting…</span></div>
+  <div class="nav-controls">
+    <span class="nav-label">Go to:</span>
+    <button class="nav-arrow" onclick="prevSec()">←</button>
+    <button class="nav-btn" id="nb0" onclick="sendSec(0)">1·Bingo</button>
+    <button class="nav-btn" id="nb1" onclick="sendSec(1)">2·Vocab</button>
+    <button class="nav-btn" id="nb2" onclick="sendSec(2)">3·Grammar</button>
+    <button class="nav-btn" id="nb3" onclick="sendSec(3)">4·Reading</button>
+    <button class="nav-btn" id="nb4" onclick="sendSec(4)">5·Phrases</button>
+    <button class="nav-btn" id="nb5" onclick="sendSec(5)">6·Escape</button>
+    <button class="nav-btn" id="nb6" onclick="sendSec(6)">7·Reflect</button>
+    <button class="nav-btn" id="nb7" onclick="sendSec(7)">8·Challenges</button>
+    <button class="nav-arrow" onclick="nextSec()">→</button>
+  </div>
+</div>
+
+<div class="main">
+  <div id="emptyState" class="empty"><big>👀</big>Waiting for student to open the lesson page…<br><span style="color:#ffffff22;font-size:12px;display:block;margin-top:8px">Session appears here automatically</span></div>
+  <div id="dashboard" style="display:none">
+
+    <div class="cur-sec-bar">
+      <span class="cur-sec-label">Student is on:</span>
+      <span class="cur-sec-name" id="curSecName">—</span>
+      <span style="flex:1"></span>
+      <span style="font-size:12px;color:#ffffff44" id="lastUpdate"></span>
+    </div>
+
+    <!-- ROW 1: Bingo + Vocab -->
+    <div class="two-col">
+      <div class="sec-panel">
+        <div class="sec-panel-title"><span class="sec-badge">1</span>🎰 Bingo</div>
+        <div class="sec-sub">Marked squares — each should produce a sentence</div>
+        <div class="tags" id="d-bingo"><span class="none">Nothing marked yet</span></div>
+      </div>
+      <div class="sec-panel">
+        <div class="sec-panel-title"><span class="sec-badge">2</span>🔤 Vocabulary</div>
+        <div class="sec-sub">Matching progress + own sentences</div>
+        <div style="font-size:12px;color:#ffffffaa;margin-bottom:8px">Matched: <span id="d-vmatch" style="color:var(--sun);font-weight:700">0/8</span></div>
+        <div class="divider"></div>
+        <div style="font-size:11px;color:#ffffff44;margin-bottom:4px">Sentence 1:</div>
+        <div style="font-size:13px;color:white;min-height:16px" id="d-vs1"><span class="none">not written yet</span></div>
+        <div style="font-size:11px;color:#ffffff44;margin:8px 0 4px">Sentence 2:</div>
+        <div style="font-size:13px;color:white;min-height:16px" id="d-vs2"><span class="none">not written yet</span></div>
+      </div>
+    </div>
+
+    <!-- ROW 2: Grammar + Reading -->
+    <div class="two-col">
+      <div class="sec-panel">
+        <div class="sec-panel-title"><span class="sec-badge">3</span>🧩 Grammar</div>
+        <div class="sec-sub">8 questions — correct / wrong / not answered</div>
+        <div class="gram-grid" id="d-gram"></div>
+      </div>
+      <div class="sec-panel">
+        <div class="sec-panel-title"><span class="sec-badge">4</span>📖 Reading</div>
+        <div class="sec-sub">Comprehension + inference answers</div>
+        <div class="ref-items" id="d-read"></div>
+      </div>
+    </div>
+
+    <!-- ROW 3: Phrases + Escape -->
+    <div class="two-col">
+      <div class="sec-panel">
+        <div class="sec-panel-title"><span class="sec-badge">5</span>🧳 Phrases</div>
+        <div class="sec-sub">Tab: <span id="d-sktab" style="color:var(--sun)">—</span> · Picked phrases:</div>
+        <div class="tags" id="d-phrases"><span class="none">None picked yet</span></div>
+      </div>
+      <div class="sec-panel">
+        <div class="sec-panel-title"><span class="sec-badge">6</span>🔐 Escape Room</div>
+        <div class="sec-sub">Typing live · green = solved</div>
+        <div class="esc-grid" id="d-escape"></div>
+      </div>
+    </div>
+
+    <!-- ROW 4: Reflect + Challenges -->
+    <div class="two-col">
+      <div class="sec-panel">
+        <div class="sec-panel-title"><span class="sec-badge">7</span>📊 Reflection</div>
+        <div class="sec-sub">Answers as student types</div>
+        <div class="ref-items" id="d-reflect"></div>
+      </div>
+      <div class="sec-panel">
+        <div class="sec-panel-title"><span class="sec-badge">8</span>🌊 Summer Challenges</div>
+        <div class="sec-sub">Chosen challenges (<span id="d-chcount">0</span>/3)</div>
+        <div class="tags" id="d-challenges"><span class="none">None chosen yet</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import{getFirestore,doc,setDoc,collection,query,orderBy,onSnapshot}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+const FB={apiKey:"AIzaSyCe3jIpFH630mfdkdxdTjCmquEGdPMvFHA",authDomain:"polytalky-2228d.firebaseapp.com",projectId:"polytalky-2228d",storageBucket:"polytalky-2228d.firebasestorage.app",messagingSenderId:"498740130503",appId:"1:498740130503:web:5e2061ec4011ec983144e2",measurementId:"G-3HCWZX1R92"};
+const app=initializeApp(FB);
+const db=getFirestore(app);
+const controlRef=doc(db,'lessonControl','current');
+
+let currentSec=0;
+
+// GRAMMAR questions short labels
+const GRAM_SHORT=["3rd cond.","Future pass.","Rep.speech","Rather+subj","Fut.perf.","High time","Would have","Inversion"];
+const SEC_NAMES=["🎰 Bingo","🔤 Vocabulary","🧩 Grammar","📖 Reading","🧳 Phrases","🔐 Escape Room","📊 Reflection","🌊 Challenges","🏖️ Finished"];
+const ESCAPE_NAMES=["Notice Board","Tube Riddle","Conversation","Voicemail"];
+const REFLECT_SHORT=["Confidence","Most proud of","Should have done","Biggest challenge","Next year goal"];
+
+const SK_PHRASES={
+  travel:["Could you point me…","Is this included in the price?","I seem to have lost my way.","I'm afraid there's been a mix-up.","Would it be possible to…?","Do you happen to know if…?"],
+  gaming:["I got absolutely destroyed.","Can we run it back?","That was absolutely clutch.","I'm on a losing streak.","GG, no cap.","Don't flame me, I'm trying."],
+  media:["It really grew on me.","The writing is tight.","I didn't see that plot twist coming.","They dropped the ball in season 2.","It's binge-worthy.","I'm saving that for a rainy day."],
+  social:["Just to clarify what I meant…","That's a fair point, actually.","I'm not gonna lie…","No worries at all!","Hit me up if you're in town.","Catch you later!"]
+};
+
+function fmt(ms){if(!ms)return'—';return new Date(ms).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit',second:'2-digit'});}
+function stars(n){if(!n)return'<span style="color:#ffffff33">not rated</span>';return'⭐'.repeat(n)+'<span style="opacity:.2">☆</span>'.repeat(5-n);}
+
+function updateNavButtons(sec){
+  for(let i=0;i<8;i++){
+    const b=document.getElementById('nb'+i);
+    if(b)b.className='nav-btn'+(i===sec?' active-sec':'');
+  }
+  currentSec=sec;
+  document.getElementById('curSecName').textContent=SEC_NAMES[sec]||'—';
+}
+
+async function sendSec(n){
+  await setDoc(controlRef,{section:n,updatedAt:Date.now()},{merge:true});
+  updateNavButtons(n);
+}
+window.sendSec=sendSec;
+
+window.nextSec=()=>sendSec(Math.min(currentSec+1,8));
+window.prevSec=()=>sendSec(Math.max(currentSec-1,0));
+
+function renderDash(data){
+  document.getElementById('emptyState').style.display='none';
+  document.getElementById('dashboard').style.display='block';
+  document.getElementById('lastUpdate').textContent='Updated: '+fmt(data.updatedAt);
+
+  const sec=data.section??0;
+  updateNavButtons(sec);
+
+  // BINGO
+  const bingo=data.bingo||[];
+  const bEl=document.getElementById('d-bingo');
+  bEl.innerHTML=bingo.length?bingo.map(b=>`<span class="tag-sun">${b}</span>`).join(''):'<span class="none">Nothing marked yet</span>';
+
+  // VOCAB
+  const vm=data.vocabMatched||{};
+  document.getElementById('d-vmatch').textContent=Object.keys(vm).length+'/8';
+  const vs1=data.vocab_s1;const vs2=data.vocab_s2;
+  document.getElementById('d-vs1').innerHTML=vs1?`<span style="color:var(--sun)">${vs1}</span>`:'<span class="none">not written yet</span>';
+  document.getElementById('d-vs2').innerHTML=vs2?`<span style="color:var(--sun)">${vs2}</span>`:'<span class="none">not written yet</span>';
+
+  // GRAMMAR
+  const ga=data.grammarAnswers||{};
+  const GRAM_ANS=[1,2,1,0,1,1,2,1];
+  const gc=document.getElementById('d-gram');gc.innerHTML='';
+  for(let i=0;i<8;i++){
+    const ans=ga[i];const correct=ans!==undefined&&parseInt(ans)===GRAM_ANS[i];
+    const cls=ans===undefined?'gram-cell empty-ans':correct?'gram-cell correct':'gram-cell wrong';
+    gc.innerHTML+=`<div class="${cls}"><div class="gram-q-short">${GRAM_SHORT[i]}</div>${ans===undefined?'—':correct?'✓ Correct':'✗ Wrong'}</div>`;
+  }
+
+  // READING
+  const ra=data.readingAnswers||{};
+  const RSHORT=["Main change","Two advantages","Critics' concern","Gen Z inference","Conclusion + opinion"];
+  const rd=document.getElementById('d-read');rd.innerHTML='';
+  for(let i=0;i<5;i++){
+    rd.innerHTML+=`<div class="ref-item"><div class="ref-q">${RSHORT[i]}</div><div class="ref-a">${ra[i]||'<span class="none">not answered</span>'}</div></div>`;
+  }
+
+  // PHRASES
+  const sp=data.skPicked||{};
+  const tab=data.skTab||'travel';
+  document.getElementById('d-sktab').textContent=tab;
+  const picked=Object.entries(sp).filter(([,v])=>v).map(([k])=>{const[cat,idx]=k.split('_');return SK_PHRASES[cat]?.[parseInt(idx)]||k;});
+  const phEl=document.getElementById('d-phrases');
+  phEl.innerHTML=picked.length?picked.map(p=>`<span class="tag-blue">${p}</span>`).join(''):'<span class="none">None picked yet</span>';
+
+  // ESCAPE
+  const esTyp=data.escapeTyping||{};const esSol=data.escapeSolved||[];
+  const eg=document.getElementById('d-escape');eg.innerHTML='';
+  for(let i=0;i<4;i++){
+    const sol=esSol[i];const typing=esTyp[i]&&!sol;
+    eg.innerHTML+=`<div class="esc-cell ${sol?'solved':''}${typing?' typing':''}"><div class="esc-n">Puzzle ${i+1}: ${ESCAPE_NAMES[i]}</div><div class="esc-a ${typing?'live':''}">${sol?'✓ Solved':(esTyp[i]||'…')}</div>${sol?'<div class="esc-ok">✓ correct</div>':''}</div>`;
+  }
+
+  // REFLECT
+  const re=data.reflectAnswers||{};const rating=data.reflectRating;
+  const refEl=document.getElementById('d-reflect');refEl.innerHTML='';
+  refEl.innerHTML+=`<div class="ref-item"><div class="ref-q">${REFLECT_SHORT[0]}</div><div class="ref-a stars-show">${stars(rating)}</div></div>`;
+  for(let i=1;i<5;i++){
+    refEl.innerHTML+=`<div class="ref-item"><div class="ref-q">${REFLECT_SHORT[i]}</div><div class="ref-a">${re[i]||'<span class="none">not answered</span>'}</div></div>`;
+  }
+
+  // CHALLENGES
+  const ch=data.challenges||[];
+  document.getElementById('d-chcount').textContent=ch.length;
+  const chEl=document.getElementById('d-challenges');
+  chEl.innerHTML=ch.length?ch.map(c=>`<span class="tag-mint">${c}</span>`).join(''):'<span class="none">None chosen yet</span>';
+}
+
+// Listen to student sessions
+const q=query(collection(db,'lessonSessions'),orderBy('updatedAt','desc'));
+onSnapshot(q,(snap)=>{
+  const ldot=document.getElementById('ldot');const ltext=document.getElementById('ltext');
+  if(snap.empty){ldot.className='ldot';ltext.textContent='No student yet';return;}
+  ldot.className='ldot live';ltext.textContent='Live · connected';
+  // Use most recently updated session
+  const latest=snap.docs[0].data();
+  renderDash(latest);
+},{error:(e)=>{document.getElementById('ldot').className='ldot';document.getElementById('ltext').textContent='Connection error';console.error(e);}});
+</script>
+</body>
+</html>
