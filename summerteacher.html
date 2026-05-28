@@ -231,6 +231,19 @@ window.sendSec=sendSec;
 window.nextSec=()=>sendSec(Math.min(currentSec+1,8));
 window.prevSec=()=>sendSec(Math.max(currentSec-1,0));
 
+// ── Init: create lessonControl/current immediately so student page unblocks ──
+(async()=>{
+  try{
+    await setDoc(controlRef,{section:0,updatedAt:Date.now(),teacherReady:true},{merge:true});
+    document.getElementById('ldot').className='ldot live';
+    document.getElementById('ltext').textContent='Ready · waiting for student';
+    updateNavButtons(0);
+  }catch(e){
+    console.error('Could not init control doc:',e);
+    document.getElementById('ltext').textContent='Firebase error — check rules';
+  }
+})();
+
 function renderDash(data){
   document.getElementById('emptyState').style.display='none';
   document.getElementById('dashboard').style.display='block';
