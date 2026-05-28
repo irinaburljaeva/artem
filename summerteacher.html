@@ -216,7 +216,7 @@ onSnapshot(SHARED,(snap)=>{
   render(data&&data.student?data.student:null);
 },(err)=>{
   live.className='live';liveTxt.textContent='ошибка связи';
-  content.innerHTML=`<div class="empty-state"><div class="em">⚠️</div><div class="t">Не удалось подключиться</div><div>${esc(err.message||'Проверьте интернет и настройки Firebase.')}</div></div>`;
+  console.error("Firestore read failed:",err.code,err.message);const reason=err.code==='permission-denied'?'Нет доступа: правила Firestore блокируют чтение lessonSessions. Проверьте, что правила обновлены в проекте polytalky-2228d.':(err.message||'Проверьте интернет.');content.innerHTML=`<div class="empty-state"><div class="em">⚠️</div><div class="t">Не удалось подключиться</div><div>${esc(reason)}</div><div style="margin-top:14px;font-size:11px;color:#ffffff44">проект: polytalky-2228d · путь: lessonSessions/shared_lesson</div></div>`;
 });
 </script>
 </body>
