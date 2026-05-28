@@ -838,33 +838,105 @@ function buildWYR(){
 }
 
 function renderWYR(idx){
-  S.wyrCur=idx;
-  for(let i=0;i<WYR.length;i++){const d=document.getElementById('wdot'+i);if(d)d.className='wyr-dot'+(i<idx?' done':i===idx?' active':'');}
-  const wrap=document.getElementById('wyrWrap');
-  if(idx>=WYR.length){wrap.innerHTML='<div style="text-align:center;padding:20px 0"><div style="font-size:40px;margin-bottom:10px">🎉</div><div style="font-family:'Syne',sans-serif;color:white;font-size:17px;font-weight:700">All 6 dilemmas done!</div><div style="color:#ffffffaa;font-size:13px;margin-top:6px">Great speaking practice — now your teacher has some follow-up questions!</div></div>';sync();return;}
-  const w=WYR[idx];
-  const saved=S.wyrChoices[idx];
-  const exp=S.wyrExplain[idx]||'';
-  wrap.innerHTML=`
-    <div class="wyr-q-label">Question ${idx+1} of ${WYR.length}</div>
+  S.wyrCur = idx;
+
+  for(let i = 0; i < WYR.length; i++){
+    const d = document.getElementById('wdot' + i);
+
+    if(d){
+      d.className =
+        'wyr-dot' +
+        (i < idx ? ' done' : i === idx ? ' active' : '');
+    }
+  }
+
+  const wrap = document.getElementById('wyrWrap');
+
+  if(idx >= WYR.length){
+    wrap.innerHTML = `
+      <div style="text-align:center;padding:20px 0">
+        <div style="font-size:40px;margin-bottom:10px">🎉</div>
+
+        <div style="font-family:Syne,sans-serif;color:white;font-size:17px;font-weight:700">
+          All 6 dilemmas done!
+        </div>
+
+        <div style="color:#ffffffaa;font-size:13px;margin-top:6px">
+          Great speaking practice — now your teacher has some follow-up questions!
+        </div>
+      </div>
+    `;
+
+    sync();
+    return;
+  }
+
+  const w = WYR[idx];
+  const saved = S.wyrChoices[idx];
+  const exp = S.wyrExplain[idx] || '';
+
+  wrap.innerHTML = `
+    <div class="wyr-q-label">
+      Question ${idx + 1} of ${WYR.length}
+    </div>
+
     <div class="wyr-grid">
-      <div class="wyr-card ${saved===0?'picked':saved!==undefined?'not-picked':''}" id="wc${idx}_0" onclick="pickWYR(${idx},0)">
+
+      <div class="wyr-card ${saved === 0 ? 'picked' : saved !== undefined ? 'not-picked' : ''}"
+           id="wc${idx}_0"
+           onclick="pickWYR(${idx},0)">
+
         <div class="wyr-emoji">${w.emoji1}</div>
         <div class="wyr-text">${w.opt1}</div>
+
       </div>
-      <div class="wyr-card ${saved===1?'picked':saved!==undefined?'not-picked':''}" id="wc${idx}_1" onclick="pickWYR(${idx},1)">
+
+      <div class="wyr-card ${saved === 1 ? 'picked' : saved !== undefined ? 'not-picked' : ''}"
+           id="wc${idx}_1"
+           onclick="pickWYR(${idx},1)">
+
         <div class="wyr-emoji">${w.emoji2}</div>
         <div class="wyr-text">${w.opt2}</div>
+
       </div>
+
     </div>
-    <div class="wyr-explain ${saved!==undefined?'show':''}" id="wyrex${idx}">
-      <div class="tip-box">💬 <strong>Now explain your choice!</strong> ${w.q}</div>
-      <textarea class="wyr-ta" rows="3" placeholder="I'd rather… because… / I think… / To be honest…" oninput="S.wyrExplain[${idx}]=this.value;sync()">${exp}</textarea>
+
+    <div class="wyr-explain ${saved !== undefined ? 'show' : ''}"
+         id="wyrex${idx}">
+
+      <div class="tip-box">
+        💬 <strong>Now explain your choice!</strong> ${w.q}
+      </div>
+
+      <textarea
+        class="wyr-ta"
+        rows="3"
+        placeholder="I'd rather… because… / I think… / To be honest…"
+        oninput="S.wyrExplain[${idx}] = this.value; sync()"
+      >${exp}</textarea>
+
     </div>
+
     <div class="wyr-nav">
-      <span class="wyr-counter">${idx+1} / ${WYR.length}</span>
-      ${saved!==undefined?`<button class="btn btn-sun" onclick="renderWYR(${idx+1})">${idx+1<WYR.length?'Next Dilemma →':'Done! 🎉'}</button>`:'<span style="color:#ffffff44;font-size:13px">Pick an option first</span>'}
-    </div>`;
+
+      <span class="wyr-counter">
+        ${idx + 1} / ${WYR.length}
+      </span>
+
+      ${
+        saved !== undefined
+          ? `<button class="btn btn-sun"
+                     onclick="renderWYR(${idx + 1})">
+                ${idx + 1 < WYR.length ? 'Next Dilemma →' : 'Done! 🎉'}
+             </button>`
+          : `<span style="color:#ffffff44;font-size:13px">
+                Pick an option first
+             </span>`
+      }
+
+    </div>
+  `;
 }
 
 window.pickWYR=function(idx,ci){
