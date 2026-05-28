@@ -589,19 +589,18 @@ function startLesson(section){
   if(n!==S.section) goTo(n);
 }
 
-// Step 1: immediately fetch current state (handles case where doc existed before student opened page)
+// Step 1: immediately fetch current state
 getDoc(controlRef).then(snap=>{
   const d=snap.data();
   if(d && d.section!==undefined) startLesson(d.section);
 }).catch(e=>console.error('getDoc error:',e));
 
-// Step 2: listen for future changes (teacher pressing nav buttons)
+// Step 2: listen for future nav changes from teacher
 onSnapshot(controlRef,(snap)=>{
   const d=snap.data();
   if(d && d.section!==undefined) startLesson(d.section);
 },(error)=>{
   console.error('onSnapshot error:',error);
-  // Fallback: try getDoc every 3 seconds if realtime fails
   const poll=setInterval(async()=>{
     try{
       const snap=await getDoc(controlRef);
