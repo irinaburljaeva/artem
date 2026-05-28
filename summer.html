@@ -486,9 +486,27 @@ const ESCENES=[
       {t:'Take the Tube — it is within your cash budget',good:true,fb:'✓ Excellent! £5.50 on the Tube leaves you £2.50 spare. Practical and independent. Well done!'}
     ]
   },
+   {
+    id:'entrance',
+    title:'Scene 3: Which way?',
+    story:'You look at the London Undeground map. <a
+    href="https://www.visitlondon.com/-/media/files/london/visit/maps-and-guides/tube-maps/tube-map-2025.pdf?rev=8e7da6b3c8954f3dab53b7600bd438cd"
+    target="_blank"
+    style="
+      color:#FFB800;
+      font-weight:600;
+      text-decoration:none;
+    "
+  >
+    🗺️ Open Tube Map
+  </a> Your route includes these stations: <br> Green Park, Covent Garden,South Kensington</br>. Which Tube line do you need to take?>',
+    type:'metro',
+    answer:'Piccadilly',
+     fb:'✓ Correct! The Piccadilly line connects Heathrow with central London.'
+  },
   {
     id:'tube',
-    title:'Scene 3: On the Tube 🚇',
+    title:'Scene 4: On the Tube 🚇',
     story:'You are on the Piccadilly line. A stranger notices you looking lost and asks: <em>"You alright there? First time in London?"</em> How do you respond naturally in English?',
     type:'choice',
     choices:[
@@ -497,17 +515,7 @@ const ESCENES=[
       {t:'"I am fine thank you. I do not require assistance."',good:false,fb:'Very formal and robotic for a casual tube chat. Natural English uses contractions.'}
     ]
   },
-  {
-    id:'cipher',
-    title:'Scene 4: The Hotel Note 🔐',
-    story:'You find a note from the hotel under the door at the hostel where you are waiting: <em>"Your room code: shift each letter back by 2. Code: TQQO 3047."</em>',
-    type:'fill',
-    cipher:'TQQO',
-    answer:'room',
-    placeholder:'Find the room code',
-    hint:'Remember the alphabet',
-    fb:'✓ ROOM! T(−2)=R, Q(−2)=O, Q(−2)=O, O(−2)=M. Room 3047 — you are in!'
-  },
+ 
   {
     id:'hotel',
     title:'Scene 5: Hotel Reception 🏨',
@@ -518,6 +526,17 @@ const ESCENES=[
       {t:'"Oh, no worries at all — I appreciate it. I will drop my bag off and have a wander around until then."',good:true,fb:'✓ Perfect! "No worries", "I appreciate it", "have a wander" — natural, warm, confident English.'},
       {t:'"This is unacceptable. I have a reservation and I demand my room immediately."',good:false,fb:'Way too aggressive for a standard check-in delay! Save that energy for actual problems.'}
     ]
+  },
+   {
+    id:'cipher',
+    title:'Scene 6: The Hotel Note 🔐',
+    story:'You find a note from the hotel under the door at the hostel where you are waiting: <em>"Your room code: shift each letter back by 2. Code: TQQO 3047."</em>',
+    type:'fill',
+    cipher:'TQQO',
+    answer:'room',
+    placeholder:'Find the room code',
+    hint:'Remember the alphabet',
+    fb:'✓ ROOM! T(−2)=R, Q(−2)=O, Q(−2)=O, O(−2)=M. Room 3047 — you are in!'
   }
 ];
 
