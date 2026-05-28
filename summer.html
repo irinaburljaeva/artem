@@ -369,7 +369,7 @@
 
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import{getFirestore,doc,setDoc,onSnapshot}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import{getFirestore,doc,setDoc,getDoc,onSnapshot}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 const FB={apiKey:"AIzaSyCe3jIpFH630mfdkdxdTjCmquEGdPMvFHA",authDomain:"polytalky-2228d.firebaseapp.com",projectId:"polytalky-2228d",storageBucket:"polytalky-2228d.firebasestorage.app",messagingSenderId:"498740130503",appId:"1:498740130503:web:5e2061ec4011ec983144e2",measurementId:"G-3HCWZX1R92"};
 const app=initializeApp(FB);
@@ -577,18 +577,38 @@ function getState(){
 }
 
 // ---- CONTROL LISTENER — teacher drives navigation ----
-onSnapshot(controlRef,(snap)=>{
-  const d=snap.data();
-  if(!d) return;
+function startLesson(section){
   if(!S.started){
     S.started=true;
     document.getElementById('waitScreen').style.display='none';
     document.getElementById('lessonContent').style.display='block';
     buildAll();
-    push({sessionId:SESSION_ID,section:0,startedAt:Date.now()});
+    push({sessionId:SESSION_ID,section:section||0,startedAt:Date.now()});
   }
-  const n=d.section??0;
+  const n=section??0;
   if(n!==S.section) goTo(n);
+}
+
+// Step 1: immediately fetch current state (handles case where doc existed before student opened page)
+getDoc(controlRef).then(snap=>{
+  const d=snap.data();
+  if(d && d.section!==undefined) startLesson(d.section);
+}).catch(e=>console.error('getDoc error:',e));
+
+// Step 2: listen for future changes (teacher pressing nav buttons)
+onSnapshot(controlRef,(snap)=>{
+  const d=snap.data();
+  if(d && d.section!==undefined) startLesson(d.section);
+},(error)=>{
+  console.error('onSnapshot error:',error);
+  // Fallback: try getDoc every 3 seconds if realtime fails
+  const poll=setInterval(async()=>{
+    try{
+      const snap=await getDoc(controlRef);
+      const d=snap.data();
+      if(d && d.section!==undefined){startLesson(d.section);clearInterval(poll);}
+    }catch(e){}
+  },3000);
 });
 
 // ---- NAV ----
