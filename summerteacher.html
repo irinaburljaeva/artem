@@ -168,17 +168,18 @@
       </div>
     </div>
 
-    <!-- ROW 4: Reflect + Challenges -->
+    <!-- ROW 4: WYR + Assignment -->
     <div class="two-col">
       <div class="sec-panel">
-        <div class="sec-panel-title"><span class="sec-badge">7</span>📊 Reflection</div>
-        <div class="sec-sub">Answers as student types</div>
-        <div class="ref-items" id="d-reflect"></div>
+        <div class="sec-panel-title"><span class="sec-badge">7</span>🤔 Would You Rather</div>
+        <div class="sec-sub">Question <span id="d-wyrcur">—</span>/6 · choices &amp; explanations</div>
+        <div class="ref-items" id="d-wyr"></div>
       </div>
       <div class="sec-panel">
-        <div class="sec-panel-title"><span class="sec-badge">8</span>🌊 Summer Challenges</div>
-        <div class="sec-sub">Chosen challenges (<span id="d-chcount">0</span>/3)</div>
-        <div class="tags" id="d-challenges"><span class="none">None chosen yet</span></div>
+        <div class="sec-panel-title"><span class="sec-badge">8</span>📋 Summer Assignment</div>
+        <div class="sec-sub">Optional tasks chosen: <span id="d-assigncount">0</span>/2</div>
+        <div class="tags" id="d-assign"><span class="none">None chosen yet</span></div>
+        <div style="margin-top:10px;font-size:11px;color:#ffffff33">Required tasks are always all 3.</div>
       </div>
     </div>
 
@@ -198,8 +199,8 @@ let currentSec=0;
 
 // GRAMMAR questions short labels
 const GRAM_SHORT=["3rd cond.","Future pass.","Rep.speech","Rather+subj","Fut.perf.","High time","Would have","Inversion"];
-const SEC_NAMES=["🎰 Bingo","🔤 Vocabulary","🧩 Grammar","📖 Reading","🧳 Phrases","🔐 Escape Room","📊 Reflection","🌊 Challenges","🏖️ Finished"];
-const ESCAPE_NAMES=["Notice Board","Tube Riddle","Conversation","Voicemail"];
+const SEC_NAMES=["🎰 Bingo","🔤 Vocabulary","🧩 Grammar","📖 Reading","🧳 Phrases","🔐 Escape Room","🤔 Would You Rather","📋 Summer Assignment","🏖️ Finished"];
+
 const REFLECT_SHORT=["Confidence","Most proud of","Should have done","Biggest challenge","Next year goal"];
 
 const SK_PHRASES={
@@ -276,27 +277,41 @@ function renderDash(data){
   const phEl=document.getElementById('d-phrases');
   phEl.innerHTML=picked.length?picked.map(p=>`<span class="tag-blue">${p}</span>`).join(''):'<span class="none">None picked yet</span>';
 
-  // ESCAPE
-  const esTyp=data.escapeTyping||{};const esSol=data.escapeSolved||[];
+  // ESCAPE (story choices)
+  const esChoices=data.escapeChoices||{};const esCur=data.escapeCur||0;const esScore=data.escapeScore||0;
+  const ESC_SCENES=['Heathrow Arrivals','Outside Terminal','On the Tube','Hotel Note (cipher)','Hotel Reception'];
   const eg=document.getElementById('d-escape');eg.innerHTML='';
-  for(let i=0;i<4;i++){
-    const sol=esSol[i];const typing=esTyp[i]&&!sol;
-    eg.innerHTML+=`<div class="esc-cell ${sol?'solved':''}${typing?' typing':''}"><div class="esc-n">Puzzle ${i+1}: ${ESCAPE_NAMES[i]}</div><div class="esc-a ${typing?'live':''}">${sol?'✓ Solved':(esTyp[i]||'…')}</div>${sol?'<div class="esc-ok">✓ correct</div>':''}</div>`;
+  for(let i=0;i<5;i++){
+    const ch=esChoices[i];
+    const done=ch!==undefined;const good=ch===true;
+    eg.innerHTML+=`<div class="esc-cell ${done?(good?'solved':''):''}${i===esCur&&!done?' typing':''}"><div class="esc-n">Scene ${i+1}: ${ESC_SCENES[i]}</div><div class="esc-a ${i===esCur&&!done?'live':''}">${done?(good?'✓ Good choice':'✗ Wrong choice'):'…'}</div>${done?`<div class="esc-ok">${good?'✓':'✗'}</div>`:''}</div>`;
   }
 
-  // REFLECT
-  const re=data.reflectAnswers||{};const rating=data.reflectRating;
-  const refEl=document.getElementById('d-reflect');refEl.innerHTML='';
-  refEl.innerHTML+=`<div class="ref-item"><div class="ref-q">${REFLECT_SHORT[0]}</div><div class="ref-a stars-show">${stars(rating)}</div></div>`;
-  for(let i=1;i<5;i++){
-    refEl.innerHTML+=`<div class="ref-item"><div class="ref-q">${REFLECT_SHORT[i]}</div><div class="ref-a">${re[i]||'<span class="none">not answered</span>'}</div></div>`;
+  // WOULD YOU RATHER
+  const wyrChoices=data.wyrChoices||{};const wyrExplain=data.wyrExplain||{};const wyrCur=data.wyrCur||0;
+  document.getElementById('d-wyrcur').textContent=wyrCur+1;
+  const WYR_OPTS=[
+    ['Travel 5 countries English-only','Stay home, learn new language'],
+    ['Binge series no subtitles','Read 600-page novel'],
+    ['5-min speech to 100 strangers','1000-word essay no spellcheck'],
+    ['AI corrects all writing','Teacher corrects all speaking'],
+    ['Live in London 1 year','Daily tutor 1 year at home'],
+    ['English job 8h/day','Gaming with native speakers']
+  ];
+  const wyrEl=document.getElementById('d-wyr');wyrEl.innerHTML='';
+  for(let i=0;i<=Math.min(wyrCur,WYR_OPTS.length-1);i++){
+    const ch=wyrChoices[i];const ex=wyrExplain[i];
+    if(ch===undefined)continue;
+    const chosen=WYR_OPTS[i][ch]||'—';
+    wyrEl.innerHTML+=`<div class="ref-item"><div class="ref-q">Q${i+1}: chose "${chosen}"</div><div class="ref-a">${ex||'<span class="none">explanation not written yet</span>'}</div></div>`;
   }
+  if(!wyrEl.innerHTML) wyrEl.innerHTML='<span class="none">No answers yet</span>';
 
-  // CHALLENGES
-  const ch=data.challenges||[];
-  document.getElementById('d-chcount').textContent=ch.length;
-  const chEl=document.getElementById('d-challenges');
-  chEl.innerHTML=ch.length?ch.map(c=>`<span class="tag-mint">${c}</span>`).join(''):'<span class="none">None chosen yet</span>';
+  // SUMMER ASSIGNMENT
+  const assignOpt=data.assignOptional||[];
+  document.getElementById('d-assigncount').textContent=assignOpt.length;
+  const aEl=document.getElementById('d-assign');
+  aEl.innerHTML=assignOpt.length?assignOpt.map(t=>`<span class="tag-mint">${t}</span>`).join(''):'<span class="none">None chosen yet</span>';
 }
 
 // Listen to student sessions
