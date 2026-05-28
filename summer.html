@@ -343,14 +343,28 @@
 </div>
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import{getFirestore,doc,setDoc}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import{getFirestore,doc,setDoc,updateDoc,deleteField}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 const FB={apiKey:"AIzaSyCe3jIpFH630mfdkdxdTjCmquEGdPMvFHA",authDomain:"polytalky-2228d.firebaseapp.com",projectId:"polytalky-2228d",storageBucket:"polytalky-2228d.firebasestorage.app",messagingSenderId:"498740130503",appId:"1:498740130503:web:5e2061ec4011ec983144e2",measurementId:"G-3HCWZX1R92"};
 const app=initializeApp(FB);const db=getFirestore(app);
 const SHARED=doc(db,'lessonSessions','shared_lesson');
 const dot=document.getElementById('syncDot');
 const syncLabel=document.getElementById('syncLabel');
 let syncT=null;
-async function push(data){dot.className='sync-dot ing';syncLabel.textContent='saving…';try{await setDoc(SHARED,{student:{...data,updatedAt:Date.now()}},{merge:true});dot.className='sync-dot on';syncLabel.textContent='saved ✓';}catch(e){dot.className='sync-dot';syncLabel.textContent='offline';}}
+// Make a Firestore-safe key from the student's name. No dots/slashes/spaces.
+function slug(name){const s=(name||'').trim().toLowerCase().replace(/[^a-zа-яё0-9]+/gi,'_').replace(/^_+|_+$/g,'');return s||'_unnamed';}
+let lastSlug='_unnamed';
+async function push(data){
+  dot.className='sync-dot ing';syncLabel.textContent='saving…';
+  const key=slug(data.name);
+  const movingFromUnnamed=(key!=='_unnamed'&&lastSlug==='_unnamed');
+  try{
+    await setDoc(SHARED,{students:{[key]:{...data,updatedAt:Date.now()}}},{merge:true});
+    // Once the student types a name, remove the temporary "_unnamed" draft so the panel isn't cluttered.
+    if(movingFromUnnamed){try{await updateDoc(SHARED,{'students._unnamed':deleteField()});}catch(e){}}
+    lastSlug=key;
+    dot.className='sync-dot on';syncLabel.textContent='saved ✓';
+  }catch(e){dot.className='sync-dot';syncLabel.textContent='⚠ not saved';console.error('Firestore save failed:',e.code,e.message);}
+}
 function sync(){clearTimeout(syncT);syncT=setTimeout(()=>push(getState()),600);}
 
 const BINGO=["I'll travel abroad","I'm staying home","I'll binge a series","I'll learn something new","I'll work or intern","I'll spend time with family","I'll go to the beach","I'll read a book","I'll stay up past 3am","I'll take up a hobby","FREE","I'll meet new people","I'll watch sport","I'll cook something new","I'll visit a city","I might get a tan","I'll listen to podcasts","I'll go to concerts","I'll use social media less","I'll exercise more","I'll sleep in every day","I'll earn money","I'll travel by train","I'll miss studying","I'll lose track of dates"];
