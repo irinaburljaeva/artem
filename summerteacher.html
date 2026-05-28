@@ -188,12 +188,14 @@
 
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-import{getFirestore,doc,setDoc,collection,query,orderBy,onSnapshot}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import{getFirestore,doc,setDoc,onSnapshot}from"https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 const FB={apiKey:"AIzaSyCe3jIpFH630mfdkdxdTjCmquEGdPMvFHA",authDomain:"polytalky-2228d.firebaseapp.com",projectId:"polytalky-2228d",storageBucket:"polytalky-2228d.firebasestorage.app",messagingSenderId:"498740130503",appId:"1:498740130503:web:5e2061ec4011ec983144e2",measurementId:"G-3HCWZX1R92"};
 const app=initializeApp(FB);
 const db=getFirestore(app);
-const controlRef=doc(db,'lessonControl','current');
+
+// One shared doc for everything
+const SHARED=doc(db,'lessonSessions','shared_lesson');
 
 let currentSec=0;
 
@@ -223,26 +225,21 @@ function updateNavButtons(sec){
 }
 
 async function sendSec(n){
-  await setDoc(controlRef,{section:n,updatedAt:Date.now()},{merge:true});
-  updateNavButtons(n);
+  try{
+    await setDoc(SHARED,{teacher:{section:n,updatedAt:Date.now()}},{merge:true});
+    updateNavButtons(n);
+  }catch(e){
+    console.error('sendSec error:',e);
+    document.getElementById('ltext').textContent='Write error — check Firebase rules';
+  }
 }
 window.sendSec=sendSec;
 
 window.nextSec=()=>sendSec(Math.min(currentSec+1,8));
 window.prevSec=()=>sendSec(Math.max(currentSec-1,0));
 
-// ── Init: create lessonControl/current immediately so student page unblocks ──
-(async()=>{
-  try{
-    await setDoc(controlRef,{section:0,updatedAt:Date.now(),teacherReady:true},{merge:true});
-    document.getElementById('ldot').className='ldot live';
-    document.getElementById('ltext').textContent='Ready · waiting for student';
-    updateNavButtons(0);
-  }catch(e){
-    console.error('Could not init control doc:',e);
-    document.getElementById('ltext').textContent='Firebase error — check rules';
-  }
-})();
+// Init on load
+sendSec(0);
 
 function renderDash(data){
   document.getElementById('emptyState').style.display='none';
@@ -327,16 +324,24 @@ function renderDash(data){
   aEl.innerHTML=assignOpt.length?assignOpt.map(t=>`<span class="tag-mint">${t}</span>`).join(''):'<span class="none">None chosen yet</span>';
 }
 
-// Listen to student sessions
-const q=query(collection(db,'lessonSessions'),orderBy('updatedAt','desc'));
-onSnapshot(q,(snap)=>{
-  const ldot=document.getElementById('ldot');const ltext=document.getElementById('ltext');
-  if(snap.empty){ldot.className='ldot';ltext.textContent='No student yet';return;}
-  ldot.className='ldot live';ltext.textContent='Live · connected';
-  // Use most recently updated session
-  const latest=snap.docs[0].data();
-  renderDash(latest);
-},{error:(e)=>{document.getElementById('ldot').className='ldot';document.getElementById('ltext').textContent='Connection error';console.error(e);}});
+// Listen to shared doc for student data
+onSnapshot(SHARED,(snap)=>{
+  const ldot=document.getElementById('ldot');
+  const ltext=document.getElementById('ltext');
+  const d=snap.data();
+  if(!d || !d.student){
+    ldot.className='ldot';
+    ltext.textContent='Ready · waiting for student';
+    return;
+  }
+  ldot.className='ldot live';
+  ltext.textContent='Live · connected';
+  renderDash(d.student);
+},(e)=>{
+  document.getElementById('ldot').className='ldot';
+  document.getElementById('ltext').textContent='Connection error';
+  console.error(e);
+});
 </script>
 </body>
 </html>
