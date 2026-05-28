@@ -154,6 +154,8 @@
   .btn-mint{background:var(--mint);color:#0A0A14;}
   .btn-mint:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,200,150,.3);}
   .btn-row{display:flex;gap:9px;margin-top:20px;flex-wrap:wrap;}
+  .btn-locked{opacity:.45;cursor:not-allowed;filter:grayscale(.4);}
+  .btn-locked:hover{transform:none;box-shadow:none;}
   .tip-box{background:rgba(0,200,150,0.07);border:1px solid rgba(0,200,150,0.18);border-radius:10px;padding:12px 15px;color:#00C896bb;font-size:13px;font-style:italic;margin-bottom:14px;}
   .name-box{background:rgba(255,184,0,0.06);border:1px solid rgba(255,184,0,0.2);border-radius:14px;padding:18px;margin-bottom:18px;}
   .name-box label{display:block;color:var(--sun);font-family:'Syne',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
@@ -292,7 +294,7 @@
       </div>
       <div class="btn-row">
         <button class="btn btn-ghost" onclick="prevSec()">← Back</button>
-        <button class="btn btn-sun" onclick="nextSec()">Next Activity →</button>
+        <button class="btn btn-sun btn-locked" id="escNextBtn" onclick="tryEscapeNext()">🔒 Finish the quest first</button>
       </div>
     </div>
   </div>
@@ -396,9 +398,13 @@ function buildReading(){const c=document.getElementById('readingQs');c.innerHTML
 window.showSK=function(key,btn){if(btn){document.querySelectorAll('.sk-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}S.skTab=key;const g=document.getElementById('skGrid');g.innerHTML='';SK[key].forEach((p,i)=>{const k=key+'_'+i;const d=document.createElement('div');d.className='ph-card'+(S.skPicked[k]?' picked':'');d.innerHTML=`<div class="ph-en">${p.en}</div><div class="ph-ru">${p.ru}</div><div class="ph-ctx">💡 ${p.ctx}</div>`;d.onclick=()=>{S.skPicked[k]=!S.skPicked[k];d.classList.toggle('picked');sync();};g.appendChild(d);});sync();};
 
 function buildEP(){const b=document.getElementById('epBar');b.innerHTML='';for(let i=0;i<ESCENES.length;i++){const d=document.createElement('div');d.className='ep'+(i===0?' cur':'');d.id='ep'+i;b.appendChild(d);}}
-function renderEscene(idx){
+function escapeDone(){return Object.keys(S.escapeChoices).length>=ESCENES.length;}
+function unlockEscapeNext(){const b=document.getElementById('escNextBtn');if(b){b.classList.remove('btn-locked');b.textContent='Next Activity →';}}
+function lockEscapeNext(){const b=document.getElementById('escNextBtn');if(b){b.classList.add('btn-locked');b.textContent='🔒 Finish the quest first';}}
+window.tryEscapeNext=function(){if(escapeDone()){nextSec();}else{const b=document.getElementById('escNextBtn');if(b){b.style.transform='translateX(0)';b.animate([{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(0)'}],{duration:300});}const w=document.getElementById('esceneWrap');if(w)w.scrollIntoView({behavior:'smooth',block:'center'});}};
+window.renderEscene=function(idx){
   const wrap=document.getElementById('esceneWrap');
-  if(idx>=ESCENES.length){wrap.innerHTML='';document.getElementById('escDone').style.display='block';const good=Object.values(S.escapeChoices).filter(v=>v).length;const tot=ESCENES.filter(s=>s.type==='choice').length;document.getElementById('escScore').textContent=`You made ${good} out of ${tot} good decisions 🎯`;sync();return;}
+  if(idx>=ESCENES.length){wrap.innerHTML='';document.getElementById('escDone').style.display='block';const good=Object.values(S.escapeChoices).filter(v=>v).length;const tot=ESCENES.filter(s=>s.type==='choice').length;document.getElementById('escScore').textContent=`You made ${good} out of ${tot} good decisions 🎯`;unlockEscapeNext();sync();return;}
   const sc=ESCENES[idx];S.escapeCur=idx;
   for(let i=0;i<ESCENES.length;i++){const d=document.getElementById('ep'+i);if(d)d.className='ep'+(i<idx?' done':i===idx?' cur':'');}
   let html=`<div class="story-box"><strong>${sc.title}</strong><br><br>${sc.story}</div>`;
