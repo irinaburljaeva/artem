@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Last Day Before Summer 🌊</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sun: #FFB800;
+    --ocean: #0057FF;
+    --coral: #FF4D4D;
+    --mint: #00C896;
+    --sand: #FFF5E1;
+    --dark: #0A0A14;
+    --card: #ffffff;
+    --text: #1a1a2e;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ---- BACKGROUND ---- */
+  .bg-gradient {
+    position: fixed; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse at 20% 10%, #0057FF22 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 90%, #FFB80022 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 30%, #00C89611 0%, transparent 40%),
+                #0A0A14;
+  }
+
+  .wave {
+    position: fixed; bottom: 0; left: 0; right: 0; height: 120px; z-index: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120'%3E%3Cpath fill='%230057FF' fill-opacity='0.08' d='M0,64L48,58.7C96,53,192,43,288,48C384,53,480,75,576,80C672,85,768,75,864,64C960,53,1056,43,1152,42.7C1248,43,1344,53,1392,58.7L1440,64L1440,120L0,120Z'/%3E%3C/svg%3E") no-repeat bottom;
+    background-size: cover;
+    animation: waveMove 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes waveMove {
+    from { transform: translateX(-20px); }
+    to { transform: translateX(20px); }
+  }
+
+  /* ---- LAYOUT ---- */
+  .container {
+    position: relative; z-index: 1;
+    max-width: 820px; margin: 0 auto; padding: 40px 20px 80px;
+  }
+
+  /* ---- HEADER ---- */
+  .header {
+    text-align: center; margin-bottom: 48px;
+    animation: fadeDown 0.7s ease both;
+  }
+
+  .tag {
+    display: inline-block;
+    background: var(--ocean);
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    padding: 4px 14px; border-radius: 20px;
+    margin-bottom: 16px; text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 800;
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  h1 span { color: var(--sun); }
+
+  .subtitle {
+    color: #ffffff66;
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  /* ---- PROGRESS BAR ---- */
+  .progress-track {
+    display: flex; gap: 8px; justify-content: center;
+    margin-bottom: 40px;
+    animation: fadeDown 0.7s 0.1s ease both;
+  }
+
+  .progress-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #ffffff22;
+    transition: background 0.4s, transform 0.3s;
+    cursor: pointer;
+  }
+  .progress-dot.active { background: var(--sun); transform: scale(1.3); }
+  .progress-dot.done { background: var(--mint); }
+
+  /* ---- SECTION ---- */
+  .section {
+    display: none;
+    animation: fadeUp 0.5s ease both;
+  }
+  .section.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- CARD ---- */
+  .card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 32px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px);
+  }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--sun);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    font-weight: 800;
+    color: white;
+    margin-bottom: 12px;
+  }
+
+  .section-desc {
+    color: #ffffffaa;
+    font-size: 15px; line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  /* ---- BINGO ---- */
+  .bingo-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .bingo-cell {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 8px 4px;
+    text-align: center;
+    font-size: 11px;
+    color: #ffffffbb;
+    cursor: pointer;
+    transition: all 0.25s;
+    user-select: none;
+    min-height: 60px;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1.3;
+  }
+
+  .bingo-cell:hover { background: rgba(255,184,0,0.15); border-color: var(--sun); }
+  .bingo-cell.marked {
+    background: var(--sun);
+    border-color: var(--sun);
+    color: var(--dark);
+    font-weight: 600;
+    transform: scale(1.04);
+  }
+  .bingo-cell.bingo-win {
+    background: var(--mint);
+    border-color: var(--mint);
+    color: var(--dark);
+  }
+
+  .bingo-free {
+    background: rgba(0,200,150,0.2) !important;
+    border-color: var(--mint) !important;
+    color: var(--mint) !important;
+    font-weight: 700;
+  }
+
+  .bingo-status {
+    text-align: center;
+    color: #ffffffaa;
+    font-size: 14px;
+    min-height: 24px;
+  }
+  .bingo-status.win { color: var(--mint); font-weight: 600; font-size: 16px; }
+
+  /* ---- SURVIVAL KIT ---- */
+  .scenario-tabs {
+    display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: transparent;
+    color: #ffffffaa;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { border-color: var(--ocean); color: white; }
+  .tab-btn.active { background: var(--ocean); border-color: var(--ocean); color: white; }
+
+  .phrases-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 500px) { .phrases-grid { grid-template-columns: 1fr; } }
+
+  .phrase-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .phrase-card:hover { border-color: var(--ocean); background: rgba(0,87,255,0.1); }
+  .phrase-card .en { color: white; font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .phrase-card .ru { color: #ffffff55; font-size: 12px; font-style: italic; }
+  .phrase-card .context { color: var(--sun); font-size: 11px; margin-top: 6px; }
+
+  /* ---- ESCAPE ROOM ---- */
+  .puzzle {
+    display: none;
+  }
+  .puzzle.active { display: block; }
+
+  .puzzle-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  }
+
+  .puzzle-num {
+    width: 44px; height: 44px;
+    background: var(--coral);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 800; color: white; font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .puzzle-title-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700; color: white; font-size: 18px;
+  }
+
+  .clue-box {
+    background: rgba(255,77,77,0.1);
+    border: 1px solid rgba(255,77,77,0.3);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+    color: #ffaaaa;
+    font-size: 15px; line-height: 1.7;
+  }
+
+  .clue-box strong { color: white; }
+
+  .answer-input {
+    width: 100%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 14px 18px;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    outline: none;
+    transition: border 0.2s;
+    margin-bottom: 12px;
+  }
+  .answer-input:focus { border-color: var(--ocean); }
+  .answer-input.correct { border-color: var(--mint) !important; }
+  .answer-input.wrong { border-color: var(--coral) !important; animation: shake 0.3s ease; }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  .hint-text {
+    font-size: 13px; color: #ffffff55; margin-bottom: 16px; min-height: 20px;
+    font-style: italic;
+  }
+  .hint-text.visible { color: var(--sun); }
+
+  .escape-progress {
+    display: flex; gap: 8px; margin-bottom: 24px;
+  }
+  .ep-dot {
+    height: 4px; flex: 1; border-radius: 2px;
+    background: rgba(255,255,255,0.1);
+    transition: background 0.4s;
+  }
+  .ep-dot.done { background: var(--mint); }
+  .ep-dot.current { background: var(--coral); }
+
+  /* ---- REFLECTION ---- */
+  .stars-row {
+    display: flex; gap: 8px; margin-bottom: 6px;
+  }
+  .star {
+    font-size: 28px; cursor: pointer;
+    transition: transform 0.2s;
+    filter: grayscale(1);
+    opacity: 0.4;
+  }
+  .star:hover, .star.active { filter: grayscale(0); opacity: 1; transform: scale(1.2); }
+
+  .reflect-label {
+    color: #ffffffaa; font-size: 13px; margin-bottom: 8px; margin-top: 16px;
+  }
+  .reflect-textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 14px;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    line-height: 1.6;
+    transition: border 0.2s;
+    margin-bottom: 12px;
+  }
+  .reflect-textarea:focus { border-color: var(--mint); }
+
+  .reflect-prompt {
+    background: rgba(0,200,150,0.08);
+    border: 1px solid rgba(0,200,150,0.2);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: #00C896cc;
+    font-size: 13px;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+
+  /* ---- SUMMER CHALLENGE ---- */
+  .challenge-list { list-style: none; }
+  .challenge-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 10px;
+    background: rgba(255,255,255,0.03);
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .challenge-item:hover { background: rgba(255,255,255,0.07); }
+  .challenge-item.chosen {
+    border-color: var(--sun);
+    background: rgba(255,184,0,0.08);
+  }
+  .ch-icon { font-size: 24px; flex-shrink: 0; }
+  .ch-text { flex: 1; }
+  .ch-title { color: white; font-weight: 500; font-size: 14px; margin-bottom: 3px; }
+  .ch-desc { color: #ffffff55; font-size: 12px; line-height: 1.5; }
+  .ch-check {
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.2);
+    flex-shrink: 0; margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .challenge-item.chosen .ch-check {
+    background: var(--sun); border-color: var(--sun); color: var(--dark);
+    font-size: 12px;
+  }
+
+  .chosen-count {
+    text-align: center; color: #ffffffaa; font-size: 13px; margin-top: 8px;
+    min-height: 20px;
+  }
+  .chosen-count.ready { color: var(--sun); font-weight: 600; }
+
+  /* ---- BUTTONS ---- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 28px;
+    border-radius: 50px;
+    border: none;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--sun);
+    color: var(--dark);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,184,0,0.3); }
+
+  .btn-secondary {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .btn-secondary:hover { border-color: white; }
+
+  .btn-ocean {
+    background: var(--ocean); color: white;
+  }
+  .btn-ocean:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,87,255,0.3); }
+
+  .btn-mint {
+    background: var(--mint); color: var(--dark);
+  }
+  .btn-mint:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,200,150,0.3); }
+
+  .btn-row {
+    display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap;
+  }
+
+  /* ---- FINAL SCREEN ---- */
+  .final-card {
+    text-align: center;
+    padding: 60px 40px;
+  }
+  .final-emoji { font-size: 64px; margin-bottom: 20px; display: block;
+    animation: bounce 1s ease infinite alternate;
+  }
+  @keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-12px); }
+  }
+  .final-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800; color: white; margin-bottom: 12px;
+  }
+  .final-subtitle { color: #ffffffaa; font-size: 16px; line-height: 1.7; margin-bottom: 32px; }
+
+  .confetti-particle {
+    position: fixed;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    pointer-events: none;
+    animation: confettiFall linear forwards;
+    z-index: 999;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ---- TIMER ---- */
+  .timer-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,77,77,0.15);
+    border: 1px solid rgba(255,77,77,0.3);
+    border-radius: 20px;
+    padding: 6px 14px;
+    color: #FF4D4D;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px; font-weight: 700;
+    margin-bottom: 16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-gradient"></div>
+<div class="wave"></div>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="tag">B2 English · Last Lesson</div>
+    <h1>Last Day<br><span>Before Summer</span> ☀️</h1>
+    <p class="subtitle">Four activities · Fun, useful, memorable</p>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-track" id="progressTrack">
+    <div class="progress-dot active" onclick="goTo(0)"></div>
+    <div class="progress-dot" onclick="goTo(1)"></div>
+    <div class="progress-dot" onclick="goTo(2)"></div>
+    <div class="progress-dot" onclick="goTo(3)"></div>
+    <div class="progress-dot" onclick="goTo(4)"></div>
+  </div>
+
+  <!-- ========== SECTION 1: BINGO ========== -->
+  <div class="section active" id="sec0">
+    <div class="card">
+      <div class="section-label">Activity 1 · 10 min</div>
+      <div class="section-title">Summer Plans Bingo 🎰</div>
+      <div class="section-desc">
+        Click a square if it applies to your summer. Tell your teacher <strong>one sentence</strong> about each one you mark — use future tenses or conditionals. Get 5 in a row to win!
+      </div>
+
+      <div class="bingo-grid" id="bingoGrid"></div>
+      <div class="bingo-status" id="bingoStatus">Click squares that apply to your summer plans!</div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="resetBingo()">↺ Reset</button>
+        <button class="btn btn-primary" onclick="nextSection()">Next Activity →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION 2: SURVIVAL KIT ========== -->
+  <div class="section" id="sec1">
+    <div class="card">
+      <div class="section-label">Activity 2 · 15 min</div>
+      <div class="section-title">English Survival Kit 🧳</div>
+      <div class="section-desc">
+        Real phrases for real summer situations. Pick a scenario — read, discuss, and add your own twist. Which ones will you actually use?
+      </div>
+
+      <div class="scenario-tabs" id="scenarioTabs">
+        <button class="tab-btn active" onclick="showScenario('travel')">✈️ Travel</button>
+        <button class="tab-btn" onclick="showScenario('gaming')">🎮 Gaming</button>
+        <button class="tab-btn" onclick="showScenario('media')">🎬 Series & Films</button>
+        <button class="tab-btn" onclick="showScenario('social')">💬 Online Chat</button>
+      </div>
+
+      <div class="phrases-grid" id="phrasesGrid"></div>
+
+      <div class="reflect-prompt">
+        💡 <strong>Discussion:</strong> Pick 2 phrases and use them in a sentence about YOUR summer. Your teacher will respond in character!
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="prevSection()">← Back</button>
+        <button class="btn btn-primary" onclick="nextSection()">Next Activity →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION 3: ESCAPE ROOM ========== -->
+  <div class="section" id="sec2">
+    <div class="card">
+      <div class="section-label">Activity 3 · 20 min</div>
+      <div class="section-title">Escape Room: Stranded in London 🔐</div>
+      <div class="section-desc">
+        You've just landed at Heathrow with a dead phone and no cash. Solve 4 puzzles to get to your hotel!
+      </div>
+
+      <div class="escape-progress" id="escapeProg"></div>
+
+      <!-- PUZZLE 1 -->
+      <div class="puzzle active" id="puzzle0">
+        <div class="puzzle-header">
+          <div class="puzzle-num">1</div>
+          <div>
+            <div class="puzzle-title-text">The Notice Board</div>
+            <div style="color:#ffffff55;font-size:13px">Read carefully — one detail matters</div>
+          </div>
+        </div>
+        <div class="clue-box">
+          You find a notice board at the airport. It reads:<br><br>
+          <em>"Lost & Found: Items must be claimed within <strong>48</strong> hours. The office is located on Level 2, past the <strong>currency exchange</strong>, next to Gate B. Open Monday–Saturday, <strong>9am–6pm</strong>. Items not claimed will be donated to charity."</em><br><br>
+          Your bag went missing. It's <strong>Sunday, 8:45am</strong>. What should you do <em>first</em>? (Answer in one full sentence — use a modal verb)
+        </div>
+        <input class="answer-input" id="ans0" placeholder="You should / You'd better / You ought to..." onkeydown="if(event.key==='Enter') checkAnswer(0)">
+        <div class="hint-text" id="hint0"></div>
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="showHint(0)">💡 Hint</button>
+          <button class="btn btn-ocean" onclick="checkAnswer(0)">Check →</button>
+        </div>
+      </div>
+
+      <!-- PUZZLE 2 -->
+      <div class="puzzle" id="puzzle1">
+        <div class="puzzle-header">
+          <div class="puzzle-num">2</div>
+          <div>
+            <div class="puzzle-title-text">The Tube Map</div>
+            <div style="color:#ffffff55;font-size:13px">Find the odd one out</div>
+          </div>
+        </div>
+        <div class="clue-box">
+          A stranger gives you a riddle to find a free WiFi hotspot:<br><br>
+          <em>"I am a London Underground line. My colour is associated with royalty and luxury. I run through King's Cross, Oxford Circus and Brixton. The other lines are Central, Northern, and Jubilee — but I'm the one you want."</em><br><br>
+          What line is described? (just the name)
+        </div>
+        <input class="answer-input" id="ans1" placeholder="The ___ line" onkeydown="if(event.key==='Enter') checkAnswer(1)">
+        <div class="hint-text" id="hint1"></div>
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="showHint(1)">💡 Hint</button>
+          <button class="btn btn-ocean" onclick="checkAnswer(1)">Check →</button>
+        </div>
+      </div>
+
+      <!-- PUZZLE 3 -->
+      <div class="puzzle" id="puzzle2">
+        <div class="puzzle-header">
+          <div class="puzzle-num">3</div>
+          <div>
+            <div class="puzzle-title-text">The Awkward Conversation</div>
+            <div style="color:#ffffff55;font-size:13px">Choose the most natural response</div>
+          </div>
+        </div>
+        <div class="clue-box">
+          You approach a local for directions. They say:<br><br>
+          <em>"Sorry mate, you've totally lost me — are you after the tube or d'you want the bus? Either way, you're proper far from Zone 1."</em><br><br>
+          Which response sounds most natural for a B2 English speaker? Type the letter: <strong>A, B, or C</strong><br><br>
+          <strong>A:</strong> "I want underground, please."<br>
+          <strong>B:</strong> "I'd rather take the tube if it's not too complicated — I'm completely turned around to be honest."<br>
+          <strong>C:</strong> "The tube is my preference for transportation to the central zone."
+        </div>
+        <input class="answer-input" id="ans2" placeholder="A, B, or C" onkeydown="if(event.key==='Enter') checkAnswer(2)">
+        <div class="hint-text" id="hint2"></div>
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="showHint(2)">💡 Hint</button>
+          <button class="btn btn-ocean" onclick="checkAnswer(2)">Check →</button>
+        </div>
+      </div>
+
+      <!-- PUZZLE 4 -->
+      <div class="puzzle" id="puzzle3">
+        <div class="puzzle-header">
+          <div class="puzzle-num">4</div>
+          <div>
+            <div class="puzzle-title-text">The Hotel Voicemail</div>
+            <div style="color:#ffffff55;font-size:13px">Fast listening challenge</div>
+          </div>
+        </div>
+        <div class="clue-box">
+          You find a working phone and hear this voicemail:<br><br>
+          <em>"Hi, this is a message for our guest arriving today. Your room won't be ready until 3pm — we do apologise for any inconvenience. In the meantime, feel free to leave your luggage at reception and enjoy our complimentary breakfast until noon. If you need anything, just ask for Sarah."</em><br><br>
+          What TWO things can the guest do while waiting? Answer in your own words.
+        </div>
+        <input class="answer-input" id="ans3" placeholder="They can... and they can..." onkeydown="if(event.key==='Enter') checkAnswer(3)">
+        <div class="hint-text" id="hint3"></div>
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="showHint(3)">💡 Hint</button>
+          <button class="btn btn-ocean" onclick="checkAnswer(3)">Check →</button>
+        </div>
+      </div>
+
+      <div id="escapeComplete" style="display:none; text-align:center; padding: 20px 0;">
+        <div style="font-size:48px;margin-bottom:12px">🎉</div>
+        <div style="font-family:'Syne',sans-serif;color:white;font-size:20px;font-weight:700;margin-bottom:8px">You're out! Hotel reached!</div>
+        <div style="color:#ffffffaa;font-size:14px;margin-bottom:20px">All 4 puzzles solved. You'd survive London 🇬🇧</div>
+      </div>
+
+      <div class="btn-row" style="margin-top:8px">
+        <button class="btn btn-secondary" onclick="prevSection()">← Back</button>
+        <button class="btn btn-primary" id="btnNextEscape" onclick="nextSection()">Next Activity →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION 4: REFLECTION ========== -->
+  <div class="section" id="sec3">
+    <div class="card">
+      <div class="section-label">Activity 4 · 10 min</div>
+      <div class="section-title">Rate Your Year 📊</div>
+      <div class="section-desc">
+        Your English, your honest take. Answer in full sentences — this is speaking practice and a real reflection.
+      </div>
+
+      <div id="reflectQuestions"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="prevSection()">← Back</button>
+        <button class="btn btn-primary" onclick="nextSection()">Final Step →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION 5: SUMMER CHALLENGE ========== -->
+  <div class="section" id="sec4">
+    <div class="card">
+      <div class="section-label">Activity 5 · Bonus</div>
+      <div class="section-title">Your Summer Challenge Card 🌊</div>
+      <div class="section-desc">
+        Choose <strong>3 challenges</strong> to do this summer. No pressure — just pick the ones you'd actually do.
+      </div>
+
+      <ul class="challenge-list" id="challengeList"></ul>
+      <div class="chosen-count" id="chosenCount">Choose 3 challenges</div>
+
+      <div id="finalMsg" style="display:none">
+        <div class="reflect-prompt" style="text-align:center; margin-top:20px; color:var(--mint)">
+          ✅ Perfect! Screenshot this page and come back in September ready to tell me how it went!
+        </div>
+        <div class="btn-row" style="justify-content:center">
+          <button class="btn btn-mint" onclick="showFinal()">🎉 Finish the Lesson!</button>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="prevSection()">← Back</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== FINAL ========== -->
+  <div class="section" id="secFinal">
+    <div class="card final-card">
+      <span class="final-emoji">🏖️</span>
+      <div class="final-title">Have an amazing summer!</div>
+      <div class="final-subtitle">
+        You smashed B2 this year. Keep English alive over summer —<br>
+        even 10 minutes a day makes a massive difference.<br><br>
+        See you in September! 🚀
+      </div>
+      <button class="btn btn-primary" onclick="launchConfetti()" style="margin: 0 auto; display:inline-flex;">
+        🎊 Celebrate!
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ---- DATA ----
+const BINGO_ITEMS = [
+  "I'll travel abroad", "I'm staying home", "I'll binge a series",
+  "I'll learn something new", "I'll work or intern",
+  "I'll spend time with family", "I'll go to the beach",
+  "I'll read a book", "I'll stay up past 3am",
+  "I'll take up a hobby", "FREE", "I'll meet new people",
+  "I'll watch sport", "I'll cook something new", "I'll visit a city",
+  "I might get a tan", "I'll listen to podcasts", "I'll go to concerts/festivals",
+  "I'll spend less on social media", "I'll exercise more",
+  "I'll sleep in every day", "I'll make money", "I'll travel by train",
+  "I'll miss studying (a little)", "I'll lose track of the date"
+];
+
+const SCENARIOS = {
+  travel: [
+    { en: "Could you point me in the right direction?", ru: "Не подскажете, куда идти?", context: "Asking for directions politely" },
+    { en: "Is this included in the price?", ru: "Это входит в стоимость?", context: "At hotel / on a tour" },
+    { en: "I seem to have lost my way.", ru: "Кажется, я заблудился.", context: "Natural, not robotic" },
+    { en: "Do you happen to know if...?", ru: "Не знаете ли вы случайно...?", context: "Soft, polite opener" },
+    { en: "I'm afraid there's been a mix-up.", ru: "Похоже, произошла путаница.", context: "Dealing with a problem" },
+    { en: "Would it be possible to...?", ru: "Было бы возможно...?", context: "Polite request upgrade" }
+  ],
+  gaming: [
+    { en: "I got absolutely destroyed.", ru: "Меня разнесли в пух и прах.", context: "Casual gaming slang" },
+    { en: "GG, no cap.", ru: "Честно, хорошая игра.", context: "Modern online slang" },
+    { en: "Can we run it back?", ru: "Сыграем ещё раз?", context: "After a match" },
+    { en: "I'm on a losing streak.", ru: "У меня серия поражений.", context: "Common gaming phrase" },
+    { en: "That was absolutely clutch.", ru: "Это был невероятный момент.", context: "Praise / reaction" },
+    { en: "Don't flame me, I'm trying.", ru: "Не ругайтесь, я стараюсь.", context: "Team chat" }
+  ],
+  media: [
+    { en: "It really grew on me.", ru: "Оно на меня постепенно подействовало.", context: "Changed opinion over time" },
+    { en: "The writing is tight.", ru: "Сценарий очень крепкий.", context: "Reviewing a show" },
+    { en: "I didn't see that plot twist coming.", ru: "Не ожидал такого поворота.", context: "Discussing spoilers" },
+    { en: "It's binge-worthy, honestly.", ru: "Честно, засмотришься.", context: "Recommendation" },
+    { en: "They really dropped the ball in season 2.", ru: "Во 2 сезоне всё пошло не так.", context: "Casual critique" },
+    { en: "I'm saving that one for a rainy day.", ru: "Оставлю на потом.", context: "About something on your list" }
+  ],
+  social: [
+    { en: "Just to clarify what I meant...", ru: "Чтобы прояснить, что я имел в виду...", context: "Online misunderstanding" },
+    { en: "No worries at all!", ru: "Всё нормально, без обид.", context: "Being reassuring" },
+    { en: "Catch you later!", ru: "Увидимся позже!", context: "Casual goodbye" },
+    { en: "That's a fair point, actually.", ru: "Это, пожалуй, справедливо.", context: "Acknowledging someone's argument" },
+    { en: "I'm not gonna lie...", ru: "Честно говоря...", context: "Informal opener" },
+    { en: "Hit me up if you're in town.", ru: "Напиши, если будешь в городе.", context: "Keeping in touch" }
+  ]
+};
+
+const PUZZLES = {
+  hints: [
+    "The office is closed on Sundays — what does that mean for your plan? Use 'should', 'had better', or 'ought to'.",
+    "Think about which Tube line is purple/violet in colour.",
+    "B sounds the most natural — it uses informal phrases ('to be honest', 'turned around') and modal verbs correctly.",
+    "Listen for two specific offers the hotel makes: one about luggage, one about food."
+  ],
+  answers: [
+    ["should", "better", "ought", "wait", "come back", "monday", "return"],
+    ["victoria", "the victoria"],
+    ["b"],
+    ["luggage", "bag", "breakfast", "eat", "leave", "store"]
+  ]
+};
+
+const REFLECT_QUESTIONS = [
+  { q: "On a scale of 1–5, how confident are you speaking English now compared to September?", stars: true },
+  { q: "What's the one thing you're most proud of achieving in English this year?", placeholder: "I'm most proud of..." },
+  { q: "What do you wish you'd spent more time on?", placeholder: "I think I should have..." },
+  { q: "What's one English goal you'd like to set for next year?", placeholder: "Next year I want to..." }
+];
+
+const CHALLENGES = [
+  { icon: "🎬", title: "Watch 3 episodes without subtitles", desc: "Choose any show you already know well. Focus on feeling, not understanding every word." },
+  { icon: "📝", title: "Keep a micro-journal in English", desc: "3 sentences per day about what happened. Use your phone's notes app." },
+  { icon: "🎵", title: "Deep-dive one English song", desc: "Look up lyrics, understand every line, then sing along. Bonus: explain it to someone." },
+  { icon: "💬", title: "Have one real conversation in English", desc: "With a native speaker online, a tourist, or even an AI chatbot. Just talk." },
+  { icon: "📖", title: "Read 50 pages of an English book", desc: "Choose whatever genre you love — fiction, sci-fi, horror. No shame in YA!" },
+  { icon: "🎙️", title: "Record yourself speaking for 2 minutes", desc: "Talk about your summer. Listen back. You'll be surprised how good you sound." },
+  { icon: "🃏", title: "Learn 50 new words on Anki / Quizlet", desc: "Pick a theme: music, tech, slang, food. 10 words a week = done by August." },
+  { icon: "🌍", title: "Follow 3 English-only accounts", desc: "News, humour, science — whatever interests you. Passive input still counts." }
+];
+
+// ---- STATE ----
+let currentSection = 0;
+let bingoMarked = new Set();
+let escapeSolved = [false, false, false, false];
+let currentPuzzle = 0;
+let chosenChallenges = new Set();
+let starRatings = {};
+
+// ---- INIT ----
+function init() {
+  buildBingo();
+  showScenario('travel');
+  buildEscapeProgress();
+  buildReflection();
+  buildChallenges();
+}
+
+// ---- NAVIGATION ----
+function goTo(n) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const target = n === 5 ? 'secFinal' : 'sec' + n;
+  document.getElementById(target).classList.add('active');
+  currentSection = n;
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextSection() { goTo(Math.min(currentSection + 1, 5)); }
+function prevSection() { goTo(Math.max(currentSection - 1, 0)); }
+
+function updateProgress() {
+  const dots = document.querySelectorAll('.progress-dot');
+  dots.forEach((d, i) => {
+    d.classList.remove('active', 'done');
+    if (i < currentSection) d.classList.add('done');
+    else if (i === currentSection) d.classList.add('active');
+  });
+}
+
+// ---- BINGO ----
+function buildBingo() {
+  const grid = document.getElementById('bingoGrid');
+  grid.innerHTML = '';
+  BINGO_ITEMS.forEach((item, i) => {
+    const cell = document.createElement('div');
+    cell.className = 'bingo-cell' + (item === 'FREE' ? ' bingo-free marked' : '');
+    cell.textContent = item;
+    cell.dataset.index = i;
+    if (item === 'FREE') bingoMarked.add(i);
+    cell.onclick = () => toggleBingo(i, cell);
+    grid.appendChild(cell);
+  });
+}
+
+function toggleBingo(i, cell) {
+  if (BINGO_ITEMS[i] === 'FREE') return;
+  if (bingoMarked.has(i)) { bingoMarked.delete(i); cell.classList.remove('marked'); }
+  else { bingoMarked.add(i); cell.classList.add('marked'); }
+  checkBingoWin();
+}
+
+function checkBingoWin() {
+  const lines = [
+    [0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24],
+    [0,5,10,15,20],[1,6,11,16,21],[2,7,12,17,22],[3,8,13,18,23],[4,9,14,19,24],
+    [0,6,12,18,24],[4,8,12,16,20]
+  ];
+  const status = document.getElementById('bingoStatus');
+  let won = false;
+  lines.forEach(line => {
+    if (line.every(i => bingoMarked.has(i))) {
+      won = true;
+      line.forEach(i => document.querySelectorAll('.bingo-cell')[i].classList.add('bingo-win'));
+    }
+  });
+  if (won) { status.textContent = '🎉 BINGO! Now tell your teacher about each marked square!'; status.className = 'bingo-status win'; }
+  else { status.textContent = `${bingoMarked.size - 1} squares marked — keep going!`; status.className = 'bingo-status'; }
+}
+
+function resetBingo() { bingoMarked.clear(); buildBingo(); document.getElementById('bingoStatus').textContent = 'Click squares that apply to your summer plans!'; }
+
+// ---- SURVIVAL KIT ----
+function showScenario(key) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  const grid = document.getElementById('phrasesGrid');
+  grid.innerHTML = '';
+  SCENARIOS[key].forEach(p => {
+    grid.innerHTML += `<div class="phrase-card">
+      <div class="en">${p.en}</div>
+      <div class="ru">${p.ru}</div>
+      <div class="context">💡 ${p.context}</div>
+    </div>`;
+  });
+}
+
+// ---- ESCAPE ROOM ----
+function buildEscapeProgress() {
+  const bar = document.getElementById('escapeProg');
+  bar.innerHTML = '';
+  for (let i = 0; i < 4; i++) {
+    const d = document.createElement('div');
+    d.className = 'ep-dot' + (i === 0 ? ' current' : '');
+    d.id = 'ep' + i;
+    bar.appendChild(d);
+  }
+}
+
+function checkAnswer(n) {
+  const input = document.getElementById('ans' + n);
+  const val = input.value.toLowerCase().trim();
+  if (!val) return;
+  const accepted = PUZZLES.answers[n];
+  const correct = accepted.some(a => val.includes(a));
+
+  if (correct) {
+    input.classList.add('correct');
+    input.classList.remove('wrong');
+    escapeSolved[n] = true;
+    document.getElementById('ep' + n).className = 'ep-dot done';
+
+    const next = n + 1;
+    if (next < 4) {
+      setTimeout(() => {
+        document.getElementById('puzzle' + n).classList.remove('active');
+        document.getElementById('puzzle' + next).classList.add('active');
+        document.getElementById('ep' + next).classList.add('current');
+        currentPuzzle = next;
+      }, 600);
+    } else {
+      setTimeout(() => {
+        document.getElementById('puzzle3').classList.remove('active');
+        document.getElementById('escapeComplete').style.display = 'block';
+      }, 600);
+    }
+  } else {
+    input.classList.add('wrong');
+    input.classList.remove('correct');
+    setTimeout(() => input.classList.remove('wrong'), 400);
+    document.getElementById('hint' + n).textContent = '✗ Not quite — try again!';
+    document.getElementById('hint' + n).className = 'hint-text visible';
+  }
+}
+
+function showHint(n) {
+  const h = document.getElementById('hint' + n);
+  h.textContent = '💡 ' + PUZZLES.hints[n];
+  h.className = 'hint-text visible';
+}
+
+// ---- REFLECTION ----
+function buildReflection() {
+  const container = document.getElementById('reflectQuestions');
+  REFLECT_QUESTIONS.forEach((q, i) => {
+    let html = `<div class="reflect-label">${i + 1}. ${q.q}</div>`;
+    if (q.stars) {
+      html += `<div class="stars-row" id="stars${i}">`;
+      for (let s = 1; s <= 5; s++) html += `<span class="star" onclick="setStar(${i},${s})">⭐</span>`;
+      html += `</div>`;
+    } else {
+      html += `<textarea class="reflect-textarea" rows="2" placeholder="${q.placeholder}"></textarea>`;
+    }
+    container.innerHTML += html;
+  });
+}
+
+function setStar(q, val) {
+  starRatings[q] = val;
+  const stars = document.querySelectorAll(`#stars${q} .star`);
+  stars.forEach((s, i) => { s.classList.toggle('active', i < val); });
+}
+
+// ---- CHALLENGES ----
+function buildChallenges() {
+  const list = document.getElementById('challengeList');
+  CHALLENGES.forEach((c, i) => {
+    list.innerHTML += `<li class="challenge-item" id="ch${i}" onclick="toggleChallenge(${i})">
+      <span class="ch-icon">${c.icon}</span>
+      <div class="ch-text">
+        <div class="ch-title">${c.title}</div>
+        <div class="ch-desc">${c.desc}</div>
+      </div>
+      <div class="ch-check" id="chk${i}"></div>
+    </li>`;
+  });
+}
+
+function toggleChallenge(i) {
+  if (chosenChallenges.has(i)) {
+    chosenChallenges.delete(i);
+    document.getElementById('ch' + i).classList.remove('chosen');
+    document.getElementById('chk' + i).textContent = '';
+  } else {
+    chosenChallenges.add(i);
+    document.getElementById('ch' + i).classList.add('chosen');
+    document.getElementById('chk' + i).textContent = '✓';
+  }
+  const count = chosenChallenges.size;
+  const counter = document.getElementById('chosenCount');
+  if (count >= 3) {
+    counter.textContent = `✅ ${count} challenges chosen — great selection!`;
+    counter.className = 'chosen-count ready';
+    document.getElementById('finalMsg').style.display = 'block';
+  } else {
+    counter.textContent = `${count}/3 chosen — pick ${3 - count} more`;
+    counter.className = 'chosen-count';
+    document.getElementById('finalMsg').style.display = 'none';
+  }
+}
+
+function showFinal() { goTo(5); launchConfetti(); }
+
+// ---- CONFETTI ----
+function launchConfetti() {
+  const colors = ['#FFB800', '#0057FF', '#FF4D4D', '#00C896', '#ffffff'];
+  for (let i = 0; i < 80; i++) {
+    setTimeout(() => {
+      const p = document.createElement('div');
+      p.className = 'confetti-particle';
+      p.style.cssText = `
+        left: ${Math.random() * 100}vw;
+        top: -20px;
+        background: ${colors[Math.floor(Math.random() * colors.length)]};
+        animation-duration: ${1.5 + Math.random() * 2}s;
+        animation-delay: ${Math.random() * 0.5}s;
+        transform: rotate(${Math.random() * 360}deg);
+        width: ${6 + Math.random() * 10}px;
+        height: ${6 + Math.random() * 10}px;
+        border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+      `;
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 4000);
+    }, i * 30);
+  }
+}
+
+init();
+</script>
+</body>
+</html>
