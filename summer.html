@@ -806,6 +806,58 @@ function renderEscene(idx){
     html+='</div>';
     html+=`<div class="scene-feedback" id="efb${idx}"></div>`;
     html+=`<div class="scene-nav" id="enav${idx}" style="display:none"><button class="btn btn-ocean" onclick="renderEscene(${idx+1})">Next Scene →</button></div>`;
+ if(sc.type==='choice'){
+
+  // existing choice code
+
+}
+else if(sc.type==='metro'){
+
+  html+=`
+    <input
+      class="fill-input"
+      id="metroInput"
+      placeholder="${sc.placeholder}"
+      onkeydown="if(event.key==='Enter')checkMetro(${idx})"
+    >
+
+    <div class="hint-txt" id="metroHint"></div>
+
+    <div class="scene-nav">
+
+      <button
+        class="btn btn-ghost"
+        onclick="
+          window.open(
+            'https://www.visitlondon.com/-/media/files/london/visit/maps-and-guides/tube-maps/tube-map-2025.pdf?rev=8e7da6b3c8954f3dab53b7600bd438cd',
+            '_blank'
+          )
+        "
+      >
+        🗺️ Open Tube Map
+      </button>
+
+      <button
+        class="btn btn-ghost"
+        onclick="
+          document.getElementById('metroHint').textContent='💡 ${sc.hint}';
+          document.getElementById('metroHint').className='hint-txt show';
+        "
+      >
+        💡 Hint
+      </button>
+
+      <button
+        class="btn btn-ocean"
+        onclick="checkMetro(${idx})"
+      >
+        Check →
+      </button>
+
+    </div>
+  `;
+
+}
   } else if(sc.type==='fill'){
     html+=`<div class="cipher-box" id="cipherBox">${sc.cipher.split('').join(' &nbsp; ')}</div>`;
     html+=`<input class="fill-input" id="efill" placeholder="${sc.placeholder}" oninput="S.escapeFill=this.value;sync()" onkeydown="if(event.key==='Enter')chkFill(${idx})">`;
@@ -846,7 +898,41 @@ window.chkFill=function(idx){
   }
   sync();
 };
+window.checkMetro=function(idx){
+  const sc=ESCENES[idx];
+  const inp=document.getElementById('metroInput');
 
+  const val=inp.value.toLowerCase().trim();
+
+  if(
+    val.includes('piccadilly')
+  ){
+    inp.className='fill-input correct';
+
+    S.escapeChoices[idx]=true;
+
+    const fb=document.createElement('div');
+    fb.className='scene-feedback show good';
+    fb.textContent=sc.fb;
+
+    inp.after(fb);
+
+    sync();
+
+    setTimeout(()=>{
+      renderEscene(idx+1);
+    },1200);
+
+  } else {
+
+    inp.className='fill-input wrong';
+
+    setTimeout(()=>{
+      inp.className='fill-input';
+    },400);
+
+  }
+}
 // ---- WYR ----
 function buildWYR(){
   const prog=document.getElementById('wyrProgress');
